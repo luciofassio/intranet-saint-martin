@@ -1,0 +1,1004 @@
+/* CSS per sito gestione Oratorio
+   creato da Marco Fogliadini
+   marzo 2008-ottobre 2009
+   CSS per pagina Anagrafica
+   Versione per Mozilla Firefox
+*/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 980px;
+  height: 520px;
+}
+
+/************************* REGOLE IMPAGINAZIONE STRUTTURA PAGINA ***********************/
+#barratop{
+  width: 980px;
+  height: 20px;
+  position: absolute;
+  background: green;
+  top: 20px;
+  -moz-border-radius: 7px;
+}
+
+#barrabottom{
+  width: 980px;
+  height: 5px;
+  position: absolute;
+  background: green;
+  top: 500px;
+  -moz-border-radius: 7px;
+}
+
+#intestazione {
+  position: relative;
+  left:30px;
+  padding: 2px;
+  z-index:10;
+  
+}
+
+#scritta_barra{
+  position: absolute;
+  top: 21px;
+  left: 100px;
+  color: white;
+  font-weight: bold;
+}
+
+#scritta_location{
+  position: absolute;
+  top: 510px;
+  left: 50px;
+  color: grey;
+}
+
+#mydata {
+  position: absolute;
+  top: 45px;
+  left: 732px;
+  width: 250px;
+  color: grey;
+  text-align: right;
+}
+
+/*****************************************************************************************/
+
+/*********************** REGOLE IMPAGINAZIONE CAMPI DI RICERCA ISCRITTI ******************/
+
+#campi_ricerca {
+  visibility: hidden;
+  position: absolute;
+  width: 800px;
+  height: 70px;
+  top: 180px;
+  left: 120px;
+}
+
+fieldset.cornice {
+  height: 50px;
+  border: 1px dotted #FF8C00;
+   -moz-border-radius: 7px;
+ }
+
+#etichettacognome {
+  position: relative;
+  top: 5px;
+  left: 10px;
+  height: 25px;
+ }
+
+#etichettanome {
+  position: relative;
+  top: -20px;
+  left: 250px;
+  height: 25px;
+ }
+ 
+ #nuovoiscritto{
+  position: relative;
+  top: 10px;
+  left: 690px;
+ }
+ 
+ #newentry {
+  height: 30px;
+  width: 110px;
+ }
+/* *************************************************************************************** */
+
+/************************* REGOLE IMPAGINAZIONE BARRA DI NAVIGAZIONE ***********************/
+#mybarranavigazione{
+  position: absolute;
+  top: 45px;
+  left: 100px;
+}
+/* *************************************************************************************** */
+
+/************************* REGOLE OPERATORE CONNESSO ***********************/
+#myoperatore{
+  position: absolute;
+  width: 400px;
+  top: 510px;
+  left: 588px;
+  text-align: right;
+  color: grey;
+}
+/* *************************************************************************************** */
+
+/************************* REGOLE TABELLA FUNZIONI (DATI ANAGRAFICI, RUBRICA, ECC.)**********/
+#tabella_funzioni{
+  visibility: hidden;
+  position: absolute;
+  top: 85px;
+  left: 50px;
+}
+
+#funzioni_tabella{
+  width: 750px;
+  height: 25px;
+ 
+}
+
+td {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+   -moz-border-radius: 7px;
+}
+
+td.NoTabSelected {
+  background: #FF8C00;
+}
+
+td.TabSelected {
+  background: green;
+}
+
+#div_dati_funzioni{
+  visibility: hidden;
+  position: absolute; 
+  width: 935px;
+  height: 375px;
+  top: 115px;
+  left: 50px;
+  background: #CCFFCC/*#99FF99*/;
+  -moz-border-radius: 7px;
+}
+/* *************************************************************************************** */
+
+/************************* REGOLE PER PASSAGGIO MOUSE SUI LINK **********/
+
+A          { text-decoration:none; }
+A          { font-weight:bold; color: green; }
+A:hover    { text-decoration: underline; color: #FF8C00; }
+
+/******** LINK TABELLA FUNZIONI *********/
+A.cellaselezionata          { text-decoration:none; }
+A.cellaselezionata          { font-weight:bold; color: white; }
+A.cellaselezionata:hover    { text-decoration: underline; color: white;}
+
+/* *************************************************************************************** */
+
+/************************* REGOLE SEZIONE DATI ANAGRAFICI **********/
+#myDatiAnagrafici {
+  visibility: hidden;
+  position: absolute;
+  width: 660px;
+  height: 360px;
+  top: 120px;
+  left: 55px;
+  border: 1px dotted grey;
+  -moz-border-radius: 7px;
+}
+
+#imgnomecognome {
+  position: relative;
+  height: 20px;
+  width: 40px;
+  top: 10px;
+  left: 10px;
+}
+
+#nomecognome {
+  position: relative;
+  height: 20px;
+  width: 580px;
+  top: 0px;
+  left: 65px;
+}
+
+#datanascita {
+  position: relative;
+  height: 20px;
+  width: 570px;
+  top: 30px;
+  left: 10px;
+}
+
+#imgdatanascita {
+  position: relative;
+  height: 20px;
+  width: 50px;
+  top: -5px;
+  left: 580px;
+}
+
+#dataN {
+  text-align: center;
+}
+
+#imgindirizzo {
+  position: relative;
+  height: 20px;
+  width: 50px;
+  top: 25px;
+  left: 10px;
+}
+
+#div_indirizzo {
+  position: relative;
+  height: 20px;
+  width: 580px;
+  top: 20px;
+  left: 75px;
+}
+
+#citta {
+  position: relative;
+  height: 20px;
+  width: 580px;
+  top: 50px;
+  left: 5px;
+}
+
+#imgcitta {
+  position: relative;
+  height: 20px;
+  width: 50px;
+  top: 20px;
+  left: 480px;
+}
+
+#div_cap {
+  position: relative;
+  height: 20px;
+  width: 300px;
+  top: 30px;
+  left: 330px;
+}
+
+#email {
+  position: relative;
+  height: 20px;
+  width: 620px;
+  top: 60px;
+  left: 10px;
+}
+
+#parrocchia {
+  position: relative;
+  height: 20px;
+  width: 620px;
+  top: 90px;
+  left: 10px;
+}
+
+#sped_materiale {
+  position: relative;
+  width:580px;
+  font-weight: bold;
+  height: 20px;
+  top: 130px;
+  left: 10px;
+}
+
+/* *************************************************************************************** */
+
+/************************* REGOLE SEZIONE INFO **********/
+
+#mylettera {
+  position: relative;
+  top: 6px;
+  left:680px;
+  width: 25px;
+  height: 20px;
+}
+
+#info {
+  position: absolute;
+  width: 200px;
+  height: 20px;
+  top: 7px;
+  left: 710px;
+  text-align: center;
+  font-weight: bold;
+  color: green;
+}
+
+#dati_info{
+  position: absolute;
+  width: 200px;
+  top: 35px;
+  left: 680px;
+}
+
+#rigaorizzontale {
+  position: relative;
+	width: 250px;	
+	top: 10px;
+	left: 680px;
+	border-bottom: 1px dotted grey;
+}
+
+#table_info{
+   width: 250px;
+   height: 150px;
+}
+
+th {
+  border-bottom: 1px dotted grey;
+}
+
+th.iscritto {
+  text-transform: uppercase;
+}
+
+th.info_sx {
+  text-align: left;
+}
+
+th.info_dx {
+  text-align: right;
+  font-weight: normal;
+}
+
+/* *************************************************************************************** */
+
+/************************** REGOLE IMPAGINAZIONE GESTIONE PARENTELA *********************** */
+#gestione_parentela {
+  visibility: hidden;
+  position: absolute;
+  width: 660px;
+  height: 360px;
+  top: 120px;
+  left: 55px;
+  border: 1px dotted grey;
+  -moz-border-radius: 7px;
+}
+
+#imgFamiglia {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 120px; 
+  border-right: 1px dotted grey;
+  border-bottom: 1px dotted grey;
+}
+
+#cognome_parente{
+    position: relative;
+    top: 10px;
+    left: 110px;
+    width: 540px;
+}
+
+#CognomeParente{
+  font-weight: bold;
+}
+
+#grado_parentela{
+    position: relative;
+    top: 30px;
+    left: 110px;
+    width: 540px;
+}
+
+#GradoParentela {
+  width: 270px;
+  font-weight: bold;
+ 
+}
+
+#ruolo_parentela{
+  position: relative;
+  top: 50px;
+  left: 110px;
+  width: 540px;
+}
+
+#RuoloParentela {
+  width: 270px;
+  font-weight: bold;
+}
+
+#tabella_parentela{
+  position: relative;
+  top:110px;
+  left: 10px;
+}
+
+#TabellaParentela {
+  border: 1px dotted grey;
+  width: 640px;
+}
+
+table.layout_tabella_parentela th.cella_parentela_dispari {
+  text-align: center;
+  font-weight: normal;
+  background: #CCFF99;/*#CCFF99;*/
+}
+ 
+table.layout_tabella_parentela th.cella_parentela_pari {
+  text-align: center;
+  font-weight: normal;
+  background: #CCCC99;
+}
+
+form.parentela label.fixedwidth {
+  display: block;
+  width: 200px;
+  float: left;
+}
+
+/* *************************************************************************************** */
+
+/************************** REGOLE IMPAGINAZIONE PULSANTI & PULSANTIERE *********************** */
+#pulsantiera { /* dati anagrafici */
+  visibility: hidden;
+  position: absolute;
+  height: 60px;
+  top: 430px;
+  left: 730px;
+}
+
+#div_btnchiudischeda {
+  position: relative;
+  top: 5px;
+}
+
+#div_btnchiudischeda1 {
+  position: relative;
+  top: 5px;
+} 
+
+#div_btnchiudischeda2 {
+  position: relative;
+  top: 5px;
+} 
+
+#btnsalvadati {
+  width: 175px;
+}
+
+#btnchiudischeda {
+  width: 250px;
+} 
+
+#btnchiudischeda1 {
+  width: 250px;
+} 
+
+#btnchiudischeda2 {
+  width: 250px;
+} 
+#pulsantiera1 { /* rubrica telefonica */
+  visibility: hidden;
+  position: absolute;
+  height: 60px;
+  top: 430px;
+  left: 730px;
+}
+
+#pulsantiera2 { /* gestione parentela */
+  visibility: hidden;
+  position: absolute;
+  height: 60px;
+  top: 430px;
+  left: 730px;
+}
+
+#aggiungi_parente{
+  width:115px;
+}
+
+#cancella_parente{
+  width:115px;
+}
+/* *************************************************************************************** */
+
+/************************** REGOLE IMPAGINAZIONE VECCHIA PAGINA ANAGRAFICA *********************** */
+.buttonrubrica {
+  height: 30px;
+  width: 180px;
+  position: relative;
+  top: -12px;
+  left: 10px;
+}
+.nrtelefonox {
+  width: 430px;
+}
+
+/* *************************************************************************************** */
+
+/* REGOLE PER IMPAGINAZIONE SEZIONE TESSERAMENTO */
+
+#myTesseramenti {
+  visibility: hidden;
+  position: absolute;
+  width: 660px;
+  height: 360px;
+  top: 120px;
+  left: 55px;
+  border: 1px dotted grey;
+  -moz-border-radius: 7px;
+}
+
+blockquote.bloccoTess label.myfixedwidth {
+  position: relative;
+  display: block;
+  width: 180px;
+  float: left;
+}
+
+table.quote th.quota {
+    text-align: left;
+}
+
+#imgTesseramenti {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 340px; 
+  border-right: 1px dotted grey;
+}
+
+#DTesseramento {
+  position: relative;
+  top: 10px;
+  left: 150px;
+  width: 350px;
+}
+
+#bottone_data_t {
+  position: relative;
+  top: 0px;
+  left: 10px;
+}
+
+#DScadenzaTesseramento {
+  position: relative;
+  top: 40px;
+  left: 150px;
+  width: 350px;
+}
+
+#opzioni_quote { 
+  position: relative;
+  top: 70px;
+  left: 145px;
+  width: 350px;
+}
+
+#quote_tesseramenti {
+  position: relative;
+  left: -60px;
+  border: 1px dotted grey;
+  width: 235px;
+
+}
+
+.myaltraquota {
+  text-align: right;
+  font-weight: bold;
+  color: #000088;
+  background: white;
+  border:1px dotted grey;
+}
+
+.myaltraquota_x {
+  text-align: right;
+  font-weight: bold;
+  color: grey;
+  background: white;
+  border:1px dotted grey;
+}
+
+#quota_versata {
+  position: relative;
+  top: 100px;
+  left: 150px;
+  width: 350px;
+}
+
+#myquotaversata {
+  color: red;
+  font-weight: bold;
+  text-align: right;
+  border: 1px dotted grey;
+  background: white;
+}
+
+#sconto {
+  visibility: hidden;
+  position: relative;
+  top: 100px;
+  left: 150px;
+  width: 350px;
+}
+
+#temperaneo {
+  visibility: hidden;
+  position: relative;
+  top: 120px;
+  left: 150px;
+  width: 350px;
+}
+/* *************************************************************************************** */
+
+/* REGOLE PER IMPAGINAZIONE SEZIONE CATECHISMI */
+
+#classecatechismo {
+  visibility: hidden;
+  position: absolute;
+  width: 660px;
+  height: 360px;
+  top: 120px;
+  left: 55px;
+  border: 1px dotted grey;
+  -moz-border-radius: 7px;
+}
+
+#imgCatechismo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 340px; 
+  border-right: 1px dotted grey;
+}
+
+#myclasse {
+  position: relative;
+  top: 30px;
+  left: 200px;
+  width: 350px;
+}  
+
+#myclassi{
+  position: relative;
+  width: 180px;
+  left: 27px;
+}
+
+#sezionecatechismo {
+  position: relative;
+  top: 50px;
+  left: 200px;
+  width: 350px;
+}  
+
+#mysezione {
+  position: relative;
+  width: 180px;
+  left: 20px;
+}
+
+#partecipazione {
+  position: relative;
+  top: 80px;
+  left: 200px;
+  width: 350px;
+  height: 30px;
+  border-bottom: 1px dotted grey;
+}
+
+#imgBambiniScuola{
+  position: absolute;
+  top: 115px;
+  left: 520px;
+  width: 350px;
+  height: 30px;
+}
+
+#nonpartecipazione {
+  position: relative;
+  top: 110px;
+  left: 200px;
+  width: 350px;
+  height: 30px;
+  border-bottom: 1px dotted grey;
+}
+
+#imgDivieto{
+  position: absolute;
+  top: 175px;
+  left: 520px;
+  width: 350px;
+  height: 30px;
+}
+
+#partecipazionesaltuaria {
+  position: relative;
+  top: 140px;
+  left: 200px;
+  width: 350px;
+  height: 30px;
+  border-bottom: 1px dotted grey;
+}
+
+#imgBambini{
+  position: absolute;
+  top: 230px;
+  left: 520px;
+  width: 350px;
+  height: 30px;
+}
+
+#coro {
+  position: relative;
+  top: 170px;
+  left: 200px;
+  width: 350px;
+  height: 30px;
+  border-bottom: 1px dotted grey;
+}
+
+/* REGOLE PER IMPAGINAZIONE SEZIONE RUOLO */
+#ruolo {
+  visibility: hidden;
+  position: absolute;
+  width: 660px;
+  height: 360px;
+  top: 120px;
+  left: 55px;
+  border: 1px dotted grey;
+  -moz-border-radius: 7px;
+}
+
+#sezioneruoli {
+  position: relative;
+  top: 25px;
+  left: 200px;
+  width: 350px;
+}  
+
+/* *************************************************************************************** */
+
+.campoestratto {
+  /*color: #FF4500;*/
+  color: #000088;
+  font-weight: bold;
+  border: 1px dotted grey;
+ /* -moz-border-radius: 7px;*/
+}
+
+.campitesseramenti {
+  color: grey;
+  font-weight: bold;
+  text-align: center;
+  border:1px dotted grey;
+  background: white;
+}
+
+.campitesseramentix {
+  color: #C0C0C0;
+  font-weight: bold;
+  text-align: center;
+  border:1px dotted grey;
+}
+
+#myquotax {
+  text-align: right;
+  font-weight: bold;
+  color: #C0C0C0;
+  border:1px dotted grey;
+}
+
+/* REGOLE PER IMPAGINARE IL SUGGEST DEI COGNOMI ISCRITTI COMUNI E PARROCCHIE*/
+	h3 {
+		margin: 0px;
+		padding: 0px;	
+	}
+
+	.suggestionsBox {
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #000000;
+		position: relative;
+		left: 30px;
+		margin: 10px 0px 0px 0px;
+		width: 200px;
+		background-color: #FFFFFF;
+		-moz-border-radius: 7px;
+		/*-webkit-border-radius: 7px;*/
+		border: 2px solid #000;	
+		color: #000000;
+		z-index:10;
+	}
+	
+	.suggestionsBoxParrocchie {
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #000000;
+		position: absolute;
+    	
+    left: 190px;
+		margin: 10px 0px 0px 0px;
+		width: 200px;
+		background-color: #FFFFFF;
+		-moz-border-radius: 7px;
+		/*-webkit-border-radius: 7px;*/
+		border: 2px solid #000;	
+		color: #000000;
+		z-index:10;
+	}
+	
+	.suggestionsBoxParentela {
+		font-family: Helvetica;
+		font-size: 12px;
+		color: #000000;
+		position: absolute;
+    	
+    left: 200px;
+		margin: 10px 0px 0px 0px;
+		width: 200px;
+		background-color: #FFFFFF;
+		-moz-border-radius: 7px;
+		/*-webkit-border-radius: 7px;*/
+		border: 2px solid #000;	
+		color: #000000;
+		z-index:10;
+	}
+	
+	.suggestionList {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	.suggestionList li {
+		margin: 0px 0px 3px 0px;
+		padding: 3px;
+		cursor: pointer;
+		list-style-type: none;
+	}
+	
+	.suggestionList li:hover {
+		background-color: #659CD8;
+	}
+	
+/* REGOLE PER SEGNALAZIONE ERRORI DA PHP */
+#stampamessaggio{
+  width: 550px;
+  height: 50px;
+  position: absolute;
+  background: white;
+  border:3px solid green;
+  -moz-border-radius: 7px;
+  top: 200px;
+  left: 270px;
+  z-index: 1;
+  padding: 5px;
+}
+
+table.tabellamessaggi th.testo {
+  color: black;
+  font-size: small;
+}
+
+.testomessaggio {
+  width: 460px;
+}
+#messaggio {
+  font-family: Arial;
+  font-weight: bold;
+  position: relative;
+  top:-40px;
+  left: 50px;
+  color: black;
+}
+
+#erroresalvataggio {
+  width: 450px;
+  height: 200px;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  background: red;
+  color: white;
+  padding: 10px;
+  border: 5px solid yellow;
+  z-index: 1;
+  visibility: visible;
+}
+
+.errore {
+  width: 450px;
+  height: 200px;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  background: red;
+  color: white;
+  padding: 10px;
+  border: 5px solid yellow;
+  z-index: 1;
+}
+
+p.erroreconnessione {
+  text-align: center;
+}
+
+#erroreokbottone {
+  position: absolute;
+  left: 85%;
+  top: 80%;
+}
+/* *************************************************************************************** */
+
+/************************** REGOLE IMPAGINAZIONE RUBRICA TELEFONICA *********************** */
+#rubrica_telefono {
+  visibility: hidden;
+  position: absolute;
+  width: 660px;
+  height: 360px;
+  top: 120px;
+  left: 55px;
+  border: 1px dotted grey;
+  -moz-border-radius: 7px;
+}
+
+#imgtelefono{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 340px; 
+  border-right: 1px dotted grey;
+}
+
+#tabella_phone {
+  position: absolute;
+  width: 540px;
+  top: 10px;
+  left: 155px;
+}
+
+#TabellaPhone {
+  border: 1px dotted grey;
+  height: 300px;
+}
+
+table.layout_tabella_rubrica th.cella_phone_dispari {
+  text-align: center;
+  font-weight: bold;
+  background: #CCFF99;/*#CCFF99;*/
+}
+
+table.layout_tabella_rubrica th.cella_phone_pari {
+  text-align: center;
+  font-weight: bold;
+  background: #CCCC99;/*#CCFF99;*/
+}
+
+#campi_phone {
+  position: absolute;
+  top: 20px;
+  left: 110px;
+}
+
+#tipo_phone {
+  font-weight: bold;
+  width: 91%;
+}
+
+.phone {
+  font-weight: bold;
+  color: green;
+  border: 1px dotted grey;
+}
+/* *************************************************************************************** */

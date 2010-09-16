@@ -1,0 +1,624 @@
+/* CSS per sito gestione Oratorio
+   creato da Marco Fogliadini
+   versione 1 - marzo 2008
+*/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 960px;
+  height: 520px;
+}
+
+h3 {
+	margin: 0px;
+	padding: 0px;	
+}
+
+.suggestionsBox {
+	font-family: Helvetica;
+	font-size: 11px;
+	color: #000000;
+	background-color: #FFFFFF;
+	border: 2px solid #000000;	
+	position: relative;
+	left: 217px;
+	top: 52px;
+	margin: 10px 15px 0px 0px;
+	width: 200px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	display:none;
+	z-index:10;
+}
+
+
+.suggestionList {
+	margin: 0px;
+	padding: 0px;
+}
+
+.suggestionList li {
+	
+	margin: 0px 0px 3px 0px;
+	padding: 3px;
+	cursor: pointer;
+	list-style-type: none;
+}
+
+.suggestionList li:hover {
+	background-color: #659CD8;
+}
+
+.suggestionPointer {
+	position: relative; 
+	top: -14px; 
+	left: 10px;
+}
+
+#logo {
+	position: absolute;
+	left: 15px;
+	top: 15px;
+}
+
+#campiricerca {
+  width: 850px;
+  position: absolute;
+  top: 5px;
+  left: 140px;
+}
+
+#etichette {
+  position: relative;
+  top: 5px;
+  left: 10px;
+  height: 50px;
+ }
+
+#barranavigazione {
+  position: absolute;
+  top: 100px;
+  left: 140px;
+  color: green;
+}
+
+#nomepagina {
+  font-size: small;
+  color: red;
+  position: absolute;
+  top: 100px;
+  left: 595px;
+  width: 850px;
+}
+
+#dataprenotazioni {
+  font-size: small;
+  font-weight: bold;
+  text-align: right;
+  color: #000088;
+  width: 300px;
+  position: absolute;
+  top: 100px;
+  left: 690px;
+}
+
+#rigaorizzontale {
+	position: absolute;
+	width: 970px;	
+	top:120px;
+	left: 20px;
+}
+#sceltaprenotazioni {
+  width: 780px;
+  position: absolute;
+  top: 290px;
+  left: 20px;
+}
+
+#checkscelte {
+	position: relative;
+	top: 10px;
+	left: 7px;
+	height: 270px;
+}
+
+#iscrizioni {
+  width: 780px;
+  position: absolute;
+  top: 140px;
+  left: 20px;
+}
+
+#iscrizionedati {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  height: 110px;
+}
+
+#TestoNote {
+  position: absolute;
+  top: -12px;
+  left: 500px;
+  width: 300px;
+  color: black;
+  font-weight: bold;
+}
+#conteggi {
+  position: absolute;
+  top: 140px;
+  left: 810px;
+  width: 172px;
+  height: 140px;
+}
+
+#conteggifs {
+  width: 90%;
+  height: 90%;
+}
+
+#etichetteconteggi {
+  position: relative;
+  top: 0px;
+  left: 8px;
+  height: 150px;
+}
+
+#campipagamenti {
+	position: relative;
+	top: 10px;
+	left: 10px;
+	height: 100px;
+}
+
+#cenafinaleER {
+	position: absolute;
+	top: 290px;
+	left: 810px;
+	height: 100px;
+	width: 180px;
+}
+
+#cenafinalefs {
+  width: 90%;
+  height: 95%;
+}
+
+#conteggiocomplessivo {
+	position: absolute;
+	top: 410px;
+	left: 810px;
+	height: 173px;
+	width: 180px;
+}
+
+#conteggiocomplessivofs {
+  width: 90%;
+  height: 95%;
+}
+
+#PrenCenaFinale {
+	position: relative;
+	top: 5px;
+	left: 5px;
+	height: 20px;
+}
+
+#OspitiNr {
+	position: relative;
+	top: 20px;
+	left: 5px;
+	height: 40px;
+}
+
+#TotaleCosto {
+	position: relative;
+	top: 20px;
+	left: 5px;
+	height: 50px;
+}
+
+#CenaFinalePagamento {
+	position: relative;
+	top: 10px;
+	left: 5px;
+	height: 50px;
+}
+#salvaprenotazioni {
+  position: absolute;
+  top: 550px;
+  left: 830px;
+}
+
+#saluto {
+  width: 500px;
+  position: absolute;
+  top: 55px;
+  left: 260px;
+  text-align: justify;
+}
+
+#menuhome {
+  position: absolute;
+  top: 150px;
+  left: 70px;
+  width: 700px;
+  text-align: left;
+}
+
+#datahomepage {
+  color: #FF8C00;
+  font-size: small;
+  font-weight: bold;
+  text-align: right;
+  position: absolute;
+  top: 30px;
+  left: 240px;
+  width: 500px;
+}
+
+#incostruzione {
+  position: absolute;
+  top: 100px;
+  left: 300px;
+}
+
+#anagraficahome {
+	position: absolute;
+	top: 60px;
+	left: 120px;
+}
+
+#prenotazionihome {
+	position: absolute;
+	top: 150px;
+	left: 120px;
+}
+
+#stamparapportihome {
+	position: absolute;
+	top: 240px;
+	left: 120px;
+}
+
+#escihome {
+	position: absolute;
+	top: 60px;
+	left: 460px;
+}
+
+#contasoldihome {
+	position: absolute;
+	top: 330px;
+	left: 120px;
+}
+
+/****************** REGOLE PER IMPAGINAZIONE LOGON E HOME PAGE GESTIONE ORATORIO*/
+#barratop{
+  width: 980px;
+  height: 20px;
+  position: absolute;
+  background: green;
+  top: 20px;
+  -moz-border-radius: 7px;
+}
+
+#barrabottom{
+  width: 980px;
+  height: 5px;
+  position: absolute;
+  background: green;
+  top: 500px;
+  -moz-border-radius: 7px;
+}
+
+#intestazione {
+  position: relative;
+  left:30px;
+  padding: 2px;
+  z-index:10;
+  
+}
+
+#scritta_barra{
+  position: absolute;
+  top: 21px;
+  left: 100px;
+  color: white;
+  font-weight: bold;
+}
+
+#scritta_location{ /* location=dove ci si trova con le pagine web all'interno del programma */
+  position: absolute;
+  top: 45px;
+  left: 280px;
+  color: green;
+}
+
+#mybarranavigazione{
+  position: absolute;
+  top: 45px;
+  left: 100px;
+}
+
+#mymenuhome {
+  position: absolute;
+  top: 80px;
+  left: 260px;
+  width: 700px;
+  text-align: left;
+}
+
+#scritta_saluto{
+  position: absolute;
+  top: 100px;
+  left: 360px;
+  color: black;
+}
+
+#mydata {
+  position: absolute;
+  top: 45px;
+  left: 732px;
+  width: 250px;
+  color: grey;
+  text-align: right;
+  
+}
+
+#datilogin {
+	position: absolute;
+	top: 150px;
+	left: 260px;
+	height: 300px;
+	width: 450px;
+	text-align: left;
+}
+
+#datiloginfs{
+	position:absolute;
+  width:100%;
+  height:100%;
+  border: 1px dotted  #FF8C00; /*#FF8C00*/
+  -moz-border-radius: 7px
+}
+
+#myoperatore{
+  position: absolute;
+  width: 400px;
+  top: 510px;
+  left: 588px;
+  text-align: right;
+  color: grey;
+}
+
+#nomeutente {
+	position: absolute;
+	top: 60px;
+	left: 80px;
+	width: 300px;
+}
+
+#password {
+	position: absolute;
+	top: 150px;
+	left: 80px;
+	width: 300px;
+}
+
+#bottonentra  {
+  position: absolute;
+  top: 250px;
+  left: 200px;
+}
+
+form.verificautente label.posizione {
+  display: block;
+  width: 90px;
+  float: left;
+}
+
+#errore_login {
+  position: absolute;
+  top:390px;
+  left:370px;
+  color: red;
+  font-weight:bold;
+  text-align: center;
+}
+
+#crediti { /* posiziona in pagina il copyright e la voce "Release & Credits" */
+  position: absolute;
+  top:510px;
+  color: grey;
+}
+
+#release_credits { /* div che mostra la versione del software e i suoi crediti */
+  visibility: hidden;
+  position: absolute;
+  top: 110px;
+  left: 370px;
+  width: 500px;
+  height: 300px;
+  background: white;
+  border: 3px solid #FF8C00;
+  -moz-border-radius: 7px
+}
+
+#image_crediti{
+  position: relative;
+  width:100px;
+  top: 10px;
+  left: 10px;
+  padding-right: 3px;
+  padding-bottom: 120px;
+  border-right: 1px dotted grey;
+}
+
+#crediti_scritta{
+  position: absolute;
+  top: 0px;
+  left:100px;
+}
+
+.scritta_crediti_titolo{ /* regola la scritta Gestione Oratorio */
+  font-family: Arial Black, sans-serif;
+  font-size: large;
+  text-align: center;
+  top: 10px;
+}
+
+#scritta_forbidden{
+  position: absolute;
+  top: 220px;
+  left: 5px;
+  text-align: center;
+  width:490px;
+  font-weight: bold;
+  border-top: 1px dotted grey;
+}
+
+#ChiudiCrediti{
+  width: 100px;
+  left: 200px;
+}
+
+
+ul{
+  line-height: 180%;
+}
+
+/****** FINE REGOLE IMPAGINAZIONE LOGON *************/
+
+
+p.chiudipagamenti {
+text-align: right;
+}
+
+A          { text-decoration:none; }
+A          { font-weight:bold; color: green; }
+A:hover    { text-decoration: underline; color: #FF8C00; }
+
+
+/* REGOLE PER IMPAGINARE LA TABELLA DELLE PRENOTAZIONI */
+td {
+  text-align: center;
+  height: 27px;
+  width: 77px;
+}
+
+th {
+  padding: 5px;
+  text-align: left;
+  width: 30px;
+  background:#8B4513;
+  color:yellow;
+}
+
+th.abbonamento {
+  text-align: center;
+}
+.giornoattivo {
+  background: #ADFF2F;
+  font-weight: bold;
+}
+
+.giornopassivo {
+  background: #FFA500;
+}
+
+.giornotrascorso {
+  background: #BDB76B;
+}
+
+/* REGOLE PER IMPAGINARE LA TABELLA DEL MENU DELL'HOME PAGE */
+td.cellaimmagini {
+  width: 85px;
+  padding: 10px;
+}
+
+td.celladescrizione {
+  width: 210px;
+  text-align: left;
+  padding: 10px;
+}
+
+/* CLASSI DI COLORE */
+.violagrassetto {
+  font-weight: bold;
+  color: purple;
+}
+
+.rosso {
+  color: red;
+  font-weight: normal;
+  font-size: small;
+  font-family: arial;
+}
+
+.nero {
+  color: black;
+  font-weight: normal;
+  font-size: small;
+  font-family: arial;
+}
+
+.campoerrato {
+  color: white;
+  background: red;
+}
+
+/* REGOLE PER IMPAGINARE IL LISTINO PREZZI ER */
+.colorelistino {
+  background: #000000;
+}
+
+.note {
+  color:yellow;
+
+}
+
+table.listino caption {
+  font-size: small;
+  font-weight: bold;
+  color:yellow;
+}
+
+table.listino th.header {
+  font-size: x-small;
+  font-weight: bold;
+  text-align: center;
+  color:yellow;
+  background: red;
+  width: 21%;
+  height: 62px;
+}
+
+table.listino th.ruoli {
+  font-size: x-small;
+  font-weight: bold;
+  color:purple;
+  background: #BDB76B;
+}
+
+table.listino td {
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  width: 21%;
+  height: 62px;
+  background: #BDB76B;
+  color: purple;
+}
+/* *********** FINE REGOLE TABELLA LISTINO PREZZI ER ****************** */
+
+#inseriscisquadre {
+  position: absolute;
+  width:  500px;
+}
+
+body.squadre {
+  background: #BDB76B;
+}

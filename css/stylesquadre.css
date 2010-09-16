@@ -1,0 +1,100 @@
+/* CSS per sito gestione Oratorio
+   creato da Marco Fogliadini
+   versione 1 - marzo 2008
+   pagina squadre
+*/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 500px;
+  height: 500px;
+  background: #BDB76B;
+}
+
+fieldset {
+padding: 5px;
+}
+
+#gufo {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+#inseriscisquadre {
+  position: absolute;
+  top: 135px;
+  left: 5px;
+  width: 510px;
+  
+}
+
+#iscritto {
+  position: absolute;
+  top: 10px;
+  left: 130px;
+  height: 180px;
+  width: 380px;
+}
+
+#nomeiscritto {
+  position: relative;
+  top: 20px;
+  left: 0px;
+  text-align: right;
+  height: 90px;
+}
+
+#info {
+  position: absolute;
+  top: 25px;
+  left: 150px;
+}
+
+#bottoneiscritti {
+  position: absolute;
+  top: 90px;
+  left: 150px;
+}
+
+#bottoneiscrivi {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  height: 40px;
+}
+
+#bottonemodifica {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  height: 40px;
+}
+
+#posizionelista {
+  position: absolute;
+  top: 270px;
+  visibility: visible;
+  width: 150px;
+}
+
+#operazioni {
+  position: absolute;
+  top: 270px;
+  left: 313px;
+  width: 200px;
+}
+
+option.listaiscritti {
+  font-size: small;
+  font-weight: bold;
+  color: purple;
+}
+
+.cognomenome {
+  background: yellow;
+  color: purple;
+  font-weight: bold;
+}
