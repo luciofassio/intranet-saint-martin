@@ -1,0 +1,17 @@
+se postback
+	se salvataggio
+		se hdnID non vuoto
+			usa evento da post
+		altrimenti
+			usa evento corrente
+		finese
+	altrimenti
+		se hdnID non vuoto
+			usa evento da post
+		altrimenti
+			usa evento corrente
+		finese
+	finese
+altrimenti
+	usa evento corrente
+finese
