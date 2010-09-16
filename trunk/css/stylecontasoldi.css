@@ -1,0 +1,192 @@
+/* CSS per sito gestione Oratorio
+   creato da Marco Fogliadini
+   versione 1 - marzo 2008
+   pagina web contasoldi
+*/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 800px;
+  height: 560px;
+  margin-left: 190px;
+}
+
+/****************** REGOLE PER IMPAGINAZIONE LOGON E HOME PAGE GESTIONE ORATORIO*/
+#barratop{
+  width: 800px;
+  height: 20px;
+  position: absolute;
+  background: green;
+  top: 20px;
+  -moz-border-radius: 7px;
+}
+
+#barrabottom{
+  width: 800px;
+  height: 5px;
+  position: absolute;
+  background: green;
+  top: 500px;
+  -moz-border-radius: 7px;
+}
+
+#intestazione {
+  position: relative;
+  left:30px;
+  padding: 2px;
+  z-index:10;
+  
+}
+
+#scritta_barra{
+  position: absolute;
+  top: 21px;
+  left: 280px;
+  color: white;
+  font-weight: bold;
+}
+
+#mybarranavigazione{
+  position: absolute;
+  top: 45px;
+  left: 280px;
+}
+
+#mydata {
+  position: absolute;
+  top: 45px;
+  left: 732px;
+  width: 250px;
+  color: grey;
+  text-align: right;
+}
+
+#scritta_location{ /* location=dove ci si trova con le pagine web all'interno del programma */
+  position: absolute;
+  top: 510px;
+  left: 190px;
+  color: grey;
+}
+
+#myoperatore{
+  position: absolute;
+  width: 400px;
+  top: 510px;
+  left: 588px;
+  text-align: right;
+  color: grey;
+}
+
+#foto {
+  position: absolute;
+  top: 75px;
+  left: 220px;
+ 
+}
+
+#idtabella {
+  position: absolute;
+  top: 120px;
+  left: 370px;
+  text-align: justify;
+}
+
+/**************************************************************************************/
+
+A          { text-decoration:none; }
+A          { font-weight:bold; color: green; }
+A:hover    { text-decoration: underline; color: #FF8C00; }
+
+/**************************************************************************************/
+
+/* REGOLE PER SEGNALAZIONE ERRORI DA PHP */
+#stampamessaggio{
+  width: 550px;
+  height: 50px;
+  position: absolute;
+  background: white;
+  border:3px solid green;
+  -moz-border-radius: 7px;
+  top: 200px;
+  left: 330px;
+  z-index: 1;
+  padding: 5px;
+}
+
+table.tabellamessaggi th.testo {
+  background:white;
+  color: black;
+  font-size: small;
+  border-bottom:1px dotted grey;
+}
+
+.testomessaggio {
+  width: 460px;
+  background:white;
+  color: black;
+  border-bottom:1px dotted grey;
+}
+
+#messaggio {
+  font-family: Arial;
+  font-weight: bold;
+  position: relative;
+  top:-40px;
+  left: 50px;
+  color: black;
+}
+
+/* REGOLE PER IMPAGINARE LA TABELLA CON TAGLI DELL'EURO*/
+td {
+  text-align: center;
+  height: 27px;
+  width: 77px;
+  font-weight: bold;
+}
+
+th {
+  padding: 5px;
+  text-align: center;
+  width: 30px;
+  background:#8B4513;
+  color:yellow;
+}
+
+td.intestazione {
+  background: #ADFF2F;
+  font-weight: bold;
+}
+
+td.monete {
+  background: #FFA500;
+}
+
+td.banconote {
+  background: #BDB76B;
+}
+
+td.altrimporti {
+  text-align: left;
+  background: #ADFF2F;
+  font-weight: bold;
+}
+
+.campomonete {
+  text-align: right;
+  font-weight: bold;
+  color: purple;
+}
+
+.campobanconote {
+  text-align: right;
+  color: red;
+  font-weight: bold;
+}
+
+.campoaltrimporti {
+  text-align: right;
+  font-weight: bold;
+  color: blue;
+}

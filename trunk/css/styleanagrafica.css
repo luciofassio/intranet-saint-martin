@@ -1,0 +1,278 @@
+/* CSS per sito gestione Oratorio
+   creato da Marco Fogliadini
+   versione 1 - marzo 2008
+   CSS per pagina Anagrafica
+   Versione per Mozilla Firefox
+*/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 960px;
+  height: 520px;
+}
+
+#campiricerca {
+  width: 850px;
+  position: absolute;
+  top: 5px;
+  left: 140px;
+}
+
+#etichette {
+  position: relative;
+  top: 5px;
+  left: 10px;
+  height: 50px;
+ }
+
+#barranavigazione {
+  position: absolute;
+  top: 100px;
+  left: 140px;
+  color: green;
+}
+
+#nomepagina {
+  font-size: small;
+  color: red;
+  position: absolute;
+  top: 100px;
+  left: 550px;
+  width: 850px;
+}
+
+#dataprenotazioni {
+  font-size: small;
+  font-weight: bold;
+  text-align: right;
+  color: #000088;
+  width: 300px;
+  position: absolute;
+  top: 100px;
+  left: 690px;
+}
+
+#rigaorizzontale {
+	position: absolute;
+	width: 970px;	
+	top:120px;
+	left: 20px;
+}
+
+fieldset.dati {
+  height: 420px;
+}
+#datianagrafici {
+  position: absolute;
+  width: 660px;
+  height: 500px;
+  top: 140px;
+  left: 20px;
+}
+
+#imgnomecognome {
+  position: relative;
+  height: 20px;
+  top: 10px;
+  left: 10px;
+}
+
+#nomecognome {
+  position: relative;
+  height: 20px;
+  top: -35px;
+  left: 65px;
+}
+
+#datanascita {
+  position: relative;
+  height: 20px;
+  top: -5px;
+  left: 10px;
+}
+
+#imgdatanascita {
+  position: relative;
+  height: 20px;
+  top: -40px;
+  left: 590px;
+}
+
+#dataN {
+  text-align: center;
+  }
+
+#imgindirizzo {
+  position: relative;
+  height: 20px;
+  top: -50px;
+  left: 10px;
+}
+
+#div_indirizzo {
+  position: relative;
+  height: 20px;
+  top: -90px;
+  left: 75px;
+}
+
+#citta {
+  position: relative;
+  height: 20px;
+  top: -65px;
+  left: 5px;
+}
+
+#imgcitta {
+  position: relative;
+  height: 20px;
+  top: 20px;
+  left: 480px;
+}
+
+#spedmateriale {
+  position: relative;
+  height: 20px;
+  top: -45px;
+  left: 10px;
+}
+
+#telefono {
+  position: relative;
+  height: 20px;
+  top: -30px;
+  left: 10px;
+}
+
+#imgtelefono{
+  position: absolute;
+  top: 290px;
+  left: 490px;
+  text-align: center;
+}
+
+#email {
+  position: relative;
+  height: 0px;
+  top: -10px;
+  left: 10px;
+}
+
+.nrtelefonox {
+  width: 430px;
+}
+
+/* regole per div e campi tesseramenti */
+fieldset.tesseramento {
+  width: 290px;
+  height: 165px;
+}
+
+#myTesseramenti {
+  position: absolute;
+  top: 140px;
+  left: 690px;
+}
+
+#DTesseramento {
+  position: relative;
+  top: 20px;
+  left: 0px;
+}
+
+#sconto {
+  position: relative;
+  top: 40px;
+  left: 0px;
+}
+
+#temperaneo {
+  position: relative;
+  top: 50px;
+  left: 45px;
+}
+
+/* REGOLE PER IMPAGINAZIONE SEZIONE CATECHISMI */
+
+fieldset.catechismoclassi {
+  width: 280px;
+  height: 190px;
+}
+
+#classecatechismo {
+  position: absolute;
+  top: 320px;
+  left: 690px;
+}
+
+#sezionecatechismo {
+  position: relative;
+  top: 10px;
+  left: 16px;
+}  
+
+#partecipazione {
+  position: relative;
+  top: 20px;
+  left: 0px;
+}
+
+#nonpartecipazione {
+  position: relative;
+  top: 25px;
+  left: 0px;
+}
+
+#partecipazionesaltuaria {
+  position: relative;
+  top: 30px;
+  left: 0px;
+}
+
+#coro {
+  position: relative;
+  top: 40px;
+  left: 0px;
+}
+
+#pulsantiera {
+  position: absolute;
+  top: 210px;
+  left: 28px;
+}  
+
+A          { text-decoration:none; }
+A          { font-weight:bold; color: green; }
+A:hover    { text-decoration: underline; color: #FF8C00; }
+
+.campoestratto {
+/*color: #FF4500;*/
+  color: #000088;
+  font-weight: bold;
+}
+
+.campitesseramenti {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+.campitesseramentix {
+  color: #C0C0C0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.quota {
+  text-align: right;
+  font-weight: bold;
+  color: red;
+}
+
+.quotax {
+  text-align: right;
+  font-weight: bold;
+  color: #C0C0C0;
+}

@@ -1,0 +1,160 @@
+/*  CSS Document
+    FOGLIO DI stile per pagine di contabilità
+*/
+
+
+
+/************************* REGOLE SELETTORI ***********************/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 800px;
+  height: 560px;
+  margin-left: 190px;
+  /*border: 1px solid yellow;*/
+}
+
+A          { text-decoration:none; }
+A          { font-weight:bold; color: green; }
+A:hover    { text-decoration: underline; color: #FF8C00; }
+
+
+/************************* REGOLE IDENTIFICATORI ***********************/
+#barratop{
+  width: 800px;
+  height: 20px;
+  position: absolute;
+  background: green;
+  top: 20px;
+  -moz-border-radius: 7px;
+}
+
+#barrabottom{
+  width: 800px;
+  height: 5px;
+  position: absolute;
+  background: green;
+  top: 500px;
+  -moz-border-radius: 7px;
+}
+
+#intestazione {
+  position: relative;
+  left:30px;
+  padding: 2px;
+  z-index:10;
+  
+}
+
+#scritta_barra{
+  position: absolute;
+  top: 21px;
+  left: 280px;
+  color: white;
+  font-weight: bold;
+}
+
+#scritta_contabilita{
+  position: absolute;
+  top: 45px;
+  left: 280px;
+  color: green;
+}
+
+#mydata {
+  position: absolute;
+  top: 45px;
+  left: 732px;
+  width: 250px;
+  color: grey;
+  text-align: right;
+  
+}
+#mainmenu {
+  position: relative;
+  width: 700px;
+  height: 400px;
+  top: 30px;
+  left: 80px;
+  
+}
+
+#gestionecapitoli {
+  position: relative;
+  top: 20px;
+  width: 310px;
+  height: 160px;
+  /*border: 1px solid yellow;*/
+}
+
+#scrittagestionecapitoli {
+  position: absolute;
+  top: 85px;
+  left:150px;
+  width: 150px;
+}
+
+#gestionevoci{
+  position: relative;
+  top: 60px;
+  width: 310px;
+  height: 160px;
+  /*border: 1px solid yellow;*/
+}
+
+#scrittagestionevoci {
+  position: absolute;
+  top: 275px;
+  left:150px;
+  width: 150px;
+}
+
+#stampamovimenti{
+  position: absolute;
+  top: 20px;
+  left:400px;
+  width: 310px;
+  height: 160px;
+ /*border: 1px solid yellow;*/
+}
+
+#scrittastampamovimenti {
+  position: absolute;
+  top: 85px;
+  left: 550px;
+  width: 150px;
+}
+
+#gestionebilancio{
+  position: absolute;
+  top: 220px;
+  left: 400px;
+  width: 310px;
+  height: 160px;
+  /*border: 1px solid yellow;*/
+}
+
+#scrittagestionebilancio{
+  position: absolute;
+  top: 275px;
+  left: 550px;
+  width: 250px;
+}
+
+#homepage {
+  position: absolute;
+  top:510px;
+  font-weight: bold;
+  color: green;
+}
+
+#versione {
+  position: absolute;
+  top: 480px;
+  left: 900px;
+  color: grey;
+  
+}
+
