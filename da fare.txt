@@ -1,0 +1,73 @@
+Cose da fare
+
+v Cambiare il meccanismo di attivazione javascript; il loop su tutti i controlli causa effetti collaterali non previsti
+v Individuare i controlli adiacenti a quello considerato (per nome?)
+v Capire come funziona il passaggio di parametri in js
+v Trovare un manuale di javascript
+v Routine di validazione generale
+v Perchè il dannato postback non si riesce a impostare con la submit da javascript?????
+v Bisogna centralizzare la lettura dati che adesso è divisa in due parti
+v Non riesco a passare il recordset tra le functions ???
+v trovare come sapere quando una risorsa è unknown per trattare i resultset MySql vuoti
+v non funziona il controllo sul check di iscrizione
+v si può prenotare se non si è iscritti a ER? no, bisognerebbe fare l'iscrizione
+v dopo la cancellazione delle prenotazioni non ricarica da db e quindi riscrive le prenotazioni dal POST
+v aggiornare dati cena finale
+v inserire prezzi in automatico
+v calcolare totale dovuto
+v dopo aggiornamento dati iscrizione non ricarica da db
+v rosso sul pagato solo se inferiore al calcolato
+v l'autocomplete si vede male in IE (modificare anche in FF)  
+v il totale dovuto non viene postato perchè è disabled; il submit in js non funziona
+v non funziona + con FF?!?!? con il button non va in Request l'etichetta del bottone
+v non salva il flag di abbonamento
+v non carica il flag di abbonamento dal db
+v non carica il flag di abbonamento dal db dopo il salva
+v non salva il flag di abbonamento se non ci sono dati di prenotazione (??)
+v non carica nome squadra
+v errori js in immissione prezzo cena/pranzo
+v errori js in calcolo totali
+
+v accesso per nome oltre che per cognome
+v popolamento di ruoli sempre, popolamento listino in ajax da selezione ruolo
+v valutare tesseramento da campo bit (?)
+v conteggiare le cene finali nel report pasti
+v conteggiare gli abbonamenti nel report pasti
+====================================================================================================
+12/08/209
+v Aggiungere barcode e sesso su privacy
+  Selezione dell'evento dell'iscrizione: mantenere l'evento corrente come predefinito, anche nelle stampe
+  
+v trasformare rst eventi in array ?
+v ricaricare scheda su button a fianco di Evento con submit tipo fill()
+v sporca il background della ddl quando è selezionato un evento verde e si scorrono gli eventi nella ddl aperta
+v  non aggiorna il listino a dx su cambio di evento se non c'è ancora la prenotazione salvata: giusto perchè in assenza di un ruolo impostato non sa cosa caricare
+v crash su aggiornamento iscrizione
+v gestire squadre multievento; inserire l'evento in tutti i metodi delle squdre
+v gestire listino multievento
+v aggiungere evento gita parco acquatico nel box Cena finale; aggiungere conteggio
+  
+v Selezione della persona con lettura del barcode
+v Report iscritti all'evento: cognome, nome, squadra, pagamento
+v Report incassi evento: somma dei pagamenti, somma del dovuto
+  Report iscritti per squadra: squadra, cognome, nome
+  Eventi interni all'evento generale con listino e periodo di tempo (da data a data): es. Gardaland o gita a Comboè
+  Gestione delle famiglie numerose: il primo parente intero, il secondo sconto, dal terzo in poi gratis (da definire)
+
+====================================================================================================
+
+stampa modulo privacy:
+1. in bianco, n. copie
+2. compilato, per classe (elem, medie, superiori, giova, adult) e alfabetico
+controllare crash con apostrofo su campo note (con Linux, non accase in Windows)
+elenco iscritti per evento, per ruolo ER con selezione multipla
+elenco degli iscritti per evento, per squadra con selezione multipla squadre
+elenco degli iscritti all'evento speciale, per evento, alfabetico
+elenco degli iscritti alla cena finale, per evento, alfabetico
+elenco abbonati pranzo, cena, per evento, alfabetico
+1. evento
+2. squadre per evento (nome, numero componenti max, numero componenti max per classe) 
+3. listino per evento
+4. utenti e abilitazione funzioni
+
+====================================================================================================
