@@ -1,0 +1,80 @@
+              MODIFICHE AL PROGRAMMA REALIZZATE A PARTIRE DAL 24 AGOSTO 2010
+                  
+              
+                                ************************
+                                   SEZIONE ANAGRAFICA 
+                                ************************
+
+->  Per evitare perdite di dati durante l'inserimento di un nuovo iscritto in archi-
+    vio, dovute alla mancanza di un ID, sono stati disabilitati i  tab della rubrica
+    del telefono  e  della gestione parentela.  Viene richiesto tramite messaggio di 
+    salvare i dati anagrafici, creare l'ID e potervi così accedere.
+    
+->  Inserito pulsante per cancellare la scheda di un iscritto. Il pulsante è sogget-
+    to a privilegi basati secondo una scala da 1 a 5 raffigurata in questa tabella:
+    
+            1   >   Aiutanti di segreteria, ragazzi
+            2   >   Non definito
+            3   >   Segretari/e di fiducia
+            4   >   Direttivo dell'Oratorio
+            5   >   Amministratori del programma
+    
+    L'iscritto non  viene però cancellato definitivamente dalle tabelle di MySql, ma
+    spostato in un cestino virtuale attraverso un flag da spegnere/accendere.
+    
+->  Risolto problema delle stringhe con l'apostrofo nei suggest ajax.
+
+->  Migliorato controllo inserimento Cognome: maiuscola  dopo l'apostrofo, caratteri
+    maiuscoli/minuscoli se inseriti tutti maiuscoli.
+    
+->  Migliorato suggest ajax per la parrocchia  di  provenienza: riconoscimento della 
+    parrocchia attraverso stringhe contenute nel nome stesso della parrocchia.
+    
+->  Migliorato inserimento della città/comune. Non sei obbligato a scegliere il sug-
+    gest ajax. Quando lasci il  campo se il comune inserito esiste nel database ven-
+    gono compilati anche i campi Cap e Provincia.
+    
+->  Corretto salvataggio numeri di telefono in rubrica: non vengono tolti il segno + 
+    davanti al prefisso internazionale e gli zeri davanti al prefisso nazionale e al
+    numero.
+
+->  Corrette le notifiche di errore/salvataggio con "chiudi scheda iscritto" su data
+    di tesseramento.
+
+->  Aggiunto link (con privilegi) alla pagina xcestino.php.
+
+                                ************************
+                                     SEZIONE CESTINO 
+                                ************************
+
+->  Aggiunto sezione cestino (pagina xcestino.php).
+  
+*****************************************************************
+DA FARE
+* suggest ajax per ricerca con nomi in anagrafica
+* dà errore nel cestino quando si recupera l'ultimo elemento di una pagina > 1
+* inserire in stampa_privacy_totale una fotografia con sfondo bianco per
+  fissare le dimensioni della rubrica che adesso cambiano in base alla lunghezza
+  dell'indirizzo...
+
+*****************************************************************
+->  File modificati:
+            - xanagrafica.php
+            - f_anagrafica.js
+            - styleanagrafica_ff.cs
+            - funzioni_anagrafica.inc
+            - rpc.php
+            - rpparrocchie.php
+            - rpcomuni.php
+            - accesso_db.inc
+
+->  File da copiare ex novo:
+            - xcestino.php
+            - f_cestino.js
+            - struttura_pagina_ff.css
+            
+            
+->  Tabelle Mysql modificate:
+            - catechismi > aggiunto campo booleano 'cancellato'
+                         > aggiunto campo data/time 'DataCancellazione'
+                         > aggiunto campo testo 'OperatoreCancellazione'

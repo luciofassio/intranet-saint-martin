@@ -1,0 +1,5 @@
+History Gestione Oratorio
+
+- PAGINA DELL'ANAGRAFICA
+    -> versione 1.3 (20/07/09) routine per il salvataggio dei dati dell'iscritto nel database
+        * Ora non chiude più i dati a ogni salvataggio della scheda ma, salvandoli, li lascia a disposizione. 
