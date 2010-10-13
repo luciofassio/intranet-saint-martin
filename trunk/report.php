@@ -34,7 +34,8 @@ ConnettiDB();
 	<script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
 	<script type="text/javascript" src="./js/jsDate.js"></script>
 	<script type="text/javascript" src="./js/date.format.js"></script>
-	<?php SelectCSS(""); ?>   
+	
+  <?php SelectCSS(""); ?>   
 </head>
 
 <body>

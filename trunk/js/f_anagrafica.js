@@ -1,6 +1,6 @@
 /* JavaScript Document
  * Oggetto:   Funzioni per pagina web Anagrafica 
- * Creazione: marzo 2008-novembre 2009
+ * Creazione: Marzo 2008-novembre 2009-agosto/settembre 2010
  * Autore:    Marco Fogliadini 
 */
 
@@ -28,7 +28,7 @@ function CaricamentoTab() {
       } else { 
           document.getElementById("campi_ricerca").style.visibility="hidden";
           document.getElementById("tabella_funzioni").style.visibility="visible"; // è la tabella per le funzioni dell'anagrafica (dati anagrafici, rubrica, ecc.)
-          document.getElementById("div_dati_funzioni").style.visibility="visible";
+          document.getElementById("div_dati_funzioni").style.visibility="visible"; // sono le info dell'iscritto a dx dello schermo
           var tabattivo=document.getElementsByName("tab_attivo"); //legge il valore del tab che è stato attivato
           CambiaTab(tabattivo[1].value);
       }
@@ -831,10 +831,14 @@ function FiltroStringa(stringa) {
     for (indice=0; indice < stringa.length; indice++) {
         carattere = stringa.charAt(indice);
         if (carattere.charCodeAt(0) != 32 || vecchiocarattere.charCodeAt(0) != 32) {
-            if (indice == 0 || vecchiocarattere.charCodeAt(0) == 32) {
+            if (indice == 0 
+                              || vecchiocarattere.charCodeAt(0) == 32 // spazio
+                              || vecchiocarattere.charCodeAt(0)==39   // apostrofo
+                              || vecchiocarattere.charCodeAt(0)==45)  // trattino -
+            {
                 nuovastringa += carattere.toUpperCase();
             } else {
-                nuovastringa += carattere;
+                nuovastringa += carattere.toLowerCase();
             }
             vecchiocarattere = carattere;
         }
@@ -1063,7 +1067,7 @@ function fill(thisValue) { // per i cognomi della sezione ricerca
 //***************************************************************************************
 function fill_parentela(thisValue) { // per i cognomi della sezione parentela
       if (thisValue != null) {
-        valori = thisValue.split('|');
+        var valori = thisValue.split('|');
         document.getElementById("hdnIDParente").value=valori[0];
 				document.getElementById("CognomeParente").value=valori[1]+" "+valori[2];
 				setTimeout("$('#suggestions_parentela').hide();", 200);
@@ -1094,13 +1098,55 @@ function lookup_comuni(inputString) {
 //***************************************************************************************
 //sugget ajax per i comuni
 function fill_comuni(thisValue) {
+        var valore=new String();
+        var mio = new String();
+        
+        // Visualizza i valori trovati in base ai caratteri inseriti nel campo città/comune dall'utente
+        // thisValue ha il valore del click sulla lista visualizzata
         if (thisValue != null) {
             var valori = thisValue.split('|');
             $('#hdnIdcomune').val(valori[0]);
-				    $('#miocomune').val(valori[1]);
+            $('#miocomune').val(valori[1]);
 				    $('#cap').val(valori[2]);
 				    $('#prov').val(valori[3]);
 				    setTimeout("$('#suggestions_comuni').hide();", 200);
+				    
+				    $('#myemail').focus(); // setta il fuoco sul campo email
+
+        } else {
+           
+           /*
+           // questa parte serve per interrogare il database in caso non venga cliccato da parte dell'utente il suggerimento
+           // dato dal programma
+           if (document.getElementById("miocomune") != null) { // controlla che non il campo città/comune non sia nullo
+              inputString=document.getElementById("miocomune").value; // formula la richiesta da mandare al server/database
+              $.post("rpcomuni.php", {queryString: ""+inputString+""}, function(data) // manda la richiesta al server/database
+                  {
+                      if(data.length >0 && data.length != 24) { // se il server/database restituisce dei valori...
+                         // questa parte serve per recuperare l'id del comune scelto
+                          var pattern=new RegExp("[0-9]");
+                          var valori =data.split('|');
+                          for (i=0;i<valori[0].length;i++) {
+                              if (pattern.test(valori[0].charAt(i))) {
+                                  valore+= valori[0].charAt(i);
+                              } 
+                          }
+                          $('#hdnIdcomune').val(valore);
+                          
+                          // assegna i valori trovati
+                            $('#miocomune').val(valori[1]);
+                          
+                          $('#cap').val(valori[2]);
+				                  $('#prov').val(valori[3].slice(0,2));
+				                  
+				                  $('#myemail').focus();
+					            } else { */
+                          $('#hdnIdcomune').val("");
+				                  $('#cap').val("");
+				                  $('#prov').val("");
+                      /*}
+				          }); 
+            }*/
         }
       
         ControlloCitta();
@@ -1130,11 +1176,9 @@ function lookup_parrocchie(inputString) {
 // suggest ajax per le parrocchie
 function fill_parrocchie(thisValue) {
     if (thisValue != null) {
-        valori = thisValue.split('|');
+        var valori = thisValue.split('|');
         $('#hdnIdParrocchia').val(valori[0]);
 				$('#miaparrocchia').val(valori[1]);
-				//$('#cap').val(valori[2]);
-				//$('#prov').val(valori[3]);
 				setTimeout("$('#suggestions_parrocchie').hide();", 200);
       } 
       ControlloParrocchia();
@@ -1255,7 +1299,7 @@ function fncSalvaRubrica() {
     for (i=0;i<=(ValoriRubrica.length-1);i++) {
         // controlla che il campo del prefisso internazionale non sia vuoto quando è associato a un numero di telefono
         //Nel caso sia nullo inserisce di default l'indicativo internazionale dell'Italia
-        if (PrefissoInt[i].value=="" && PrefissoNaz[i].value!="" &&NumeroTelefono[i].value!="") {
+        if (PrefissoInt[i].value=="" && PrefissoNaz[i].value!="" && NumeroTelefono[i].value!="") {
             PrefissoInt[i].value="+39";
         }
        
@@ -1368,7 +1412,7 @@ function fncCancellaNumeroTelefono() {
       } 
       
       if (OkSalva.value=='false') {
-          alert("Attenzione! Impossibile proseguire nel salvataggio: errore di validazione dei dati. Uno dei campi obbligatori (Cognome, Nome, Sesso) non è stato compilato in maniera adeguata.")
+          alert("Attenzione! Impossibile proseguire nel salvataggio: errore di validazione dei dati. Uno dei campi obbligatori (Cognome, Nome, Sesso) non e' stato compilato in maniera adeguata.")
           return;      
       }
       
@@ -1403,8 +1447,7 @@ function btnCercaIscritti() {
 function stampa_privacy (id) {
 // lancia la stampa della privacy se gli viene passato un id
     if (id!='') {
-        //location.href="stampa_privacy.php?id="+id;
-        hnd = window.open('stampa_privacy.php?id='+id,'_blank','menubar=yes;toolbar=no;scrollbars=1');
+        location.href="stampa_privacy.php?id="+id;
         return true;
     }
 }  
@@ -1480,3 +1523,38 @@ function ChiudiMessaggio(){
   return;
 }
 //***************************************************************************************
+
+//***************************************************************************************
+function GestioneErrori(){
+        alert ("Per accedere a questa sezione devi prima salvare i dati dell'iscritto");
+        return;
+}
+//***************************************************************************************
+
+//***************************************************************************************
+function fncCancellaScheda(){
+    var deletescheda = document.getElementById("SalvaSchedaIscritto"); // nome del form contenente i dati dell'iscritto da salvare
+    var OkDelete=document.getElementById("save_scheda"); // flag per dare il via libera a php di cancellare i dati della scheda
+
+    if (confirm("Attenzione! Sei proprio sicuro di voler cancellare la scheda dell'iscritto?")) {
+        OkDelete.value="delete_scheda"; // azione da compiere per PHP
+        deletescheda.submit(); // manda a PHP l'ordine di cancellare i dati dell'iscritto
+    }
+    return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

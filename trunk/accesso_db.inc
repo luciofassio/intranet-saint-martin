@@ -183,7 +183,7 @@ function GetPersona($ID) {
 
 // persona con per disclaimer privacy
 function GetPersonaPrivacy($ID) {
-	$sql = "SELECT Cognome, Nome, Tipo_via, Via, numero_civico, CAP, Citt, Provincia,email,Sesso,Data_di_nascita,Luogo_di_nascita,tblClassi.Classe,tblSezioni.Sezione,Parrocchia_del_Battesimo,Prefisso,Numero,TelSMS FROM ((Catechismi LEFT OUTER JOIN tblTelefoni ON (Catechismi.ID = tblTelefoni.ID)) LEFT OUTER JOIN tblClassi ON (Catechismi.Classe = tblClassi.IDClasse)) LEFT OUTER JOIN tblSezioni ON (Catechismi.Sezione = tblSezioni.IDSezione) WHERE (tblTelefoni.IDTipoTelefono IN (1,2,3,4,5,6,7,null) OR tblTelefoni.IDTipoTelefono is null) AND Catechismi.ID = %1\$s ORDER BY tblTelefoni.IDTipoTelefono";
+	$sql = "SELECT Cognome, Nome, Tipo_via, Via, numero_civico, CAP, Citt, Provincia,email,Sesso,Data_di_nascita,Luogo_di_nascita,tblClassi.Classe,tblSezioni.Sezione,Parrocchia_Provenienza,Prefisso,Numero,TelSMS FROM ((Catechismi LEFT OUTER JOIN tblTelefoni ON (Catechismi.ID = tblTelefoni.ID)) LEFT OUTER JOIN tblClassi ON (Catechismi.Classe = tblClassi.IDClasse)) LEFT OUTER JOIN tblSezioni ON (Catechismi.Sezione = tblSezioni.IDSezione) WHERE (tblTelefoni.IDTipoTelefono IN (1,2,3,4,5,6,7,null) OR tblTelefoni.IDTipoTelefono is null) AND Catechismi.ID = %1\$s ORDER BY tblTelefoni.IDTipoTelefono";
 	$sql = sprintf($sql, $ID);
 	$result = mysql_query($sql);
 	if (mysql_errno() <> 0) {
@@ -193,10 +193,26 @@ function GetPersonaPrivacy($ID) {
     return $result;
 }
 
+// parrocchia di provenienza per disclaimer privacy
+function GetParrocchiaProvenienza($parrocchia_provenienza) {
+	if ($parrocchia_provenienza=="" || $parrocchia_provenienza==null) {$parrocchia_provenienza=0;}
+  $sql = "SELECT IdParrocchia,Parrocchia FROM tblparrocchie WHERE IdParrocchia=%1\$s ORDER BY Parrocchia";
+	$sql = sprintf($sql, $parrocchia_provenienza);
+	$result = mysql_query($sql);
+	
+  if (mysql_errno() <> 0) {
+		throw new Exception("GetParrocchiaProvenienza: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+		exit();
+	}  
+    $row=mysql_fetch_object($result);
+	  $parrocchia_provenienza=htmlentities($row->Parrocchia);
+    return $parrocchia_provenienza;
+}
+
 // numero di cellulare personale di una persona
-function GetCellularePersonaleID($ID) {
-	$sql = "SELECT Prefisso, Numero FROM tblTelefoni t WHERE IDTipoTelefono = 3 AND ID = %1\$s";
-	$sql = sprintf($sql, $ID);
+function GetCellularePersonaleID($ID,$idTipoTelefono) {
+	$sql = "SELECT Prefisso, Numero FROM tblTelefoni t WHERE IDTipoTelefono = %1\$s AND ID = %2\$s";
+	$sql = sprintf($sql, $idTipoTelefono, $ID);
 	$result = mysql_query($sql);
 	if (mysql_errno() <> 0) {
 		throw new Exception("GetCellularePersonaleID: ".mysql_errno().":".mysql_error()."\n\r".$sql);

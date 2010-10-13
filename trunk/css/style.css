@@ -1,6 +1,7 @@
 /* CSS per sito gestione Oratorio
    creato da Marco Fogliadini
    versione 1 - marzo 2008
+   Versione per Internet Explorer
 */
 
 body {
@@ -134,9 +135,16 @@ h3 {
 #TestoNote {
   position: absolute;
   top: -5px;
-  left: 460px;
-  color: black;
+  left: 490px;
+  color: red;
+  font-weight: bold;
 }
+#salvasquadra {
+  position: absolute;
+  top: 75px;  
+  left: 0px;
+}
+
 #conteggi {
   position: absolute;
   top: 140px;

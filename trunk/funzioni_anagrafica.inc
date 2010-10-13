@@ -16,10 +16,13 @@
         case "chiudi_iscritto":
             // serve per controllare se i dati sono stati variati rispetto al db. In caso affermativo li salva
             if (ControllaScheda($variazione)) { 
+                $errore=0;
                 SalvaScheda();
-                $messaggio="Le modifiche a $variazione sono state salvate con successo";
-                $errore=1;
-                $icona=1;
+                if ($errore == 0) {
+                    $messaggio="Le modifiche a $variazione sono state salvate con successo";
+                    $errore=1;
+                    $icona=1;
+                }
             }
             unset($_POST["hdnID"]);
             unset($_POST["hdnIDParente"]);
@@ -28,6 +31,19 @@
         
         case "delete_parente":
             CancellaDatiParentela();
+        break;
+        
+        case "delete_rubrica":
+            DeleteDatiRubrica(); 
+        break;
+        
+        case "delete_scheda":
+            DeleteDatiScheda();
+            
+            unset($_POST["azione_salvataggio"]);
+            unset($_POST["hdnID"]);
+            unset($_POST["hdnIDParente"]);
+            unset($_POST["txtCognome"]);
         break;
         
         case "parentela":
@@ -55,11 +71,7 @@
         case "salva_rubrica":
             SalvaDatiRubrica(); 
         break;
-     
-        case "delete_rubrica":
-            DeleteDatiRubrica(); 
-        break;
-        
+
         default:
             $errore=0;
         break;
@@ -110,7 +122,8 @@ function GetData($Data) {
 * TABELLA 'CATECHISMI'                             
 * versione 1.3 - 20/07/09: risolto problema di chiusura scheda nel salvataggio dati
 * versione 1.4 - 15/09/09: trasformata routine in una function  
-* versione 1.5 - 11/10/09: modificata procedura e controllo delle date di tesseramento                       
+* versione 1.5 - 11/10/09: modificata procedura e controllo delle date di tesseramento
+* versione 1.6 - 30/08/10: aggiunto comandi per evitare l'sql injection (addslashes)                       
 **********************************************************************************/
  function SalvaScheda() {
        // variabili di servizio
@@ -118,19 +131,19 @@ function GetData($Data) {
        
        // imposta le variabili con i valori dei campi 
         $scheda_id=$_POST["hdnID"];
-        $scheda_cognome=$_POST["cognome"];
-        $scheda_nome=$_POST["nome"];
+        $scheda_cognome=addslashes($_POST["cognome"]);
+        $scheda_nome=addslashes($_POST["nome"]);
         $scheda_sesso=$_POST["sesso"];
         $scheda_dataN=$_POST["data_nascita"];
-        $scheda_luogoN=$_POST["natoa"];
+        $scheda_luogoN=addslashes($_POST["natoa"]);
         $scheda_tipo_via=$_POST["stradario"];
-        $scheda_via=$_POST["indirizzo"];
-        $scheda_numero_civico=$_POST["numero"];
-        $scheda_comune=$_POST["comune"];
+        $scheda_via=addslashes($_POST["indirizzo"]);
+        $scheda_numero_civico=addslashes($_POST["numero"]);
+        $scheda_comune=addslashes($_POST["comune"]);
         $scheda_cap=$_POST["cap"];
-        $scheda_provincia=$_POST["prov"];
-        $scheda_email=$_POST["myemail"];
-        $scheda_parrocchia=$_POST["hdnIdParrocchia"];
+        $scheda_provincia=addslashes($_POST["prov"]);
+        $scheda_email=addslashes($_POST["myemail"]);
+        $scheda_parrocchia=addslashes($_POST["hdnIdParrocchia"]);
         $scheda_spedizione=$_POST["chkspedizione"];
         $scheda_tipo_quota=$_POST["myquota"];
         $scheda_myaltraquota=$_POST["myaltraquota"];
@@ -158,16 +171,16 @@ function GetData($Data) {
         if ($scheda_dataN != "" || $scheda_dataN != null) { 
             $scheda_dataN=substr($scheda_dataN,6,4)."-".substr($scheda_dataN,3,2)."-".substr($scheda_dataN,0,2);
         }
-         
         
         //Controlla e calcola la DATA DI TESSERAMENTO e la DATA DI SCADENZA della tessera
         $timestamp_primo_settembre=mktime(0,0,0,8,31,date('Y')); 
-        
+       
         if ($scheda_dataT != "" || $scheda_dataT != null) {
             if ($scheda_dataT=="Oggi") {
                 $scheda_dataT=date('Y-m-d');
                 $timestamp_data_tesseramento=mktime(0,0,0,date('m'),date('d'),date('Y'));
             } else {
+                
                 if ((int)substr($scheda_dataT,6,4) != (int)date('Y')) { //blocca il tentativo di tesserare fuori dall'anno corrente 
                     $errore=1;
                     $messaggio="Attenzione! Controlla la data di tesseramento: l'anno che hai inserito potrebbe non essere valido";
@@ -178,17 +191,17 @@ function GetData($Data) {
                     $scheda_dataT=substr($scheda_dataT,6,4)."-".substr($scheda_dataT,3,2)."-".substr($scheda_dataT,0,2);
             }
             
-            //contolla che il tesseramento non sia stato fatto dopo il primo settembre (la tessera scadrebbe a dicembre dell'anno successivo)
+            //controlla che il tesseramento non sia stato fatto dopo il primo settembre (la tessera scadrebbe a dicembre dell'anno successivo)
             if ($timestamp_data_tesseramento > $timestamp_primo_settembre) { //siamo dopo il primo settembre aumenta di 1 anno
                 $scheda_dataST=(date('Y')+1)."-12-31";
             } else { // siamo prima del primo settembre
                   $scheda_dataST=date('Y')."-12-31";  
             }
         }
-         
+        
         // controlla se i dati sono di un nuovo iscritto o da aggiornare e costruisce le query
         if ($scheda_id != 0 || $scheda_id !=null){
-            $query = "UPDATE Catechismi SET Cognome='".$scheda_cognome."', Nome='".$scheda_nome."', Sesso='".$scheda_sesso."'";
+            $query = "UPDATE catechismi SET Cognome='".$scheda_cognome."', Nome='".$scheda_nome."', Sesso='".$scheda_sesso."'";
                  
                 if ($scheda_dataN != "" || $scheda_dataN != null) { 
                     $query.=", Data_di_nascita ='".$scheda_dataN."'";
@@ -299,7 +312,7 @@ function GetData($Data) {
                $query.=" WHERE id=".$scheda_id;
         } else {
             // prima di salvare controlla se c'è una omonimia sui campi cognome, nome, sesso e data di nascita
-            $query="SELECT Cognome,Nome,Sesso,Data_di_nascita FROM Catechismi WHERE Cognome='".$scheda_cognome."' and Nome='".$scheda_nome."' and Sesso='".$scheda_sesso."'";
+            $query="SELECT Cognome,Nome,Sesso,Data_di_nascita FROM catechismi WHERE Cognome='".$scheda_cognome."' and Nome='".$scheda_nome."' and Sesso='".$scheda_sesso."'";
             $result=mysql_query($query);
             if (mysql_num_rows($result)>0) { // se trova un'omonimia la confronta con le date di nascita
                 while ($row=mysql_fetch_array($result))
@@ -326,7 +339,7 @@ function GetData($Data) {
             
             if (!$omonimia) {
                // costruisce la query in base alla presenza dei dati
-               $query="INSERT INTO Catechismi (Cognome,Nome,Sesso";
+               $query="INSERT INTO catechismi (Cognome,Nome,Sesso";
                $value="VALUES ('$scheda_cognome','$scheda_nome','$scheda_sesso'";
             
                 if ($scheda_dataN !="") {
@@ -460,7 +473,27 @@ function GetData($Data) {
   unset($_POST["azione_salvataggio"]);
   return;
 }  
+/**********************************************************************************
+ * CANCELLA DATI SCHEDA
+ * (pone allo stato di cancellato i dati dell'iscritto
+ * e segna il giorno di cancellazione e chi ha cancellato) */
+
+function DeleteDatiScheda() {
+    global $errore,$messaggio,$icona;
     
+    $operatore=$_POST["login"]; // legge l'user id dell'operatore
+
+    $data_cancellazione=date('Y-m-d'); // setta la data di cancellazione
+    
+    $query="UPDATE catechismi SET cancellato='True',DataCancellazione='$data_cancellazione',OperatoreCancellazione='$operatore' WHERE ID=".$_POST["hdnID"];
+    $result=mysql_query($query);
+
+    $errore=1;
+    $messaggio="I dati di ".$_POST["cognome"]." ". $_POST["nome"]." sono stati cestinati!";
+    $icona=1;  
+    return;
+}
+
 //**********************************************************************************
 // RICERCA DEGLI ISCRITTI NELL'ANAGRAFICA DELL'ORATORIO        
 // TABELLA 'CATECHISMI'                             
@@ -482,11 +515,11 @@ function RicercaIscritti() {
             unset ($_POST["hdnID"]);
             return;
         } else {
-            $query.="WHERE ID=".$_POST["hdnID"];
+            $query.="WHERE ID=".$_POST["hdnID"]." AND cancellato='False'";
             $parola_chiave=$_POST["hdnID"];
         }
     } elseif ($_POST["txtCognome"]!=""){
-        $query.="WHERE cognome LIKE'".$_POST["txtCognome"]."%' and nome LIKE'".$_POST["txtNome"]."%'";
+        $query.="WHERE cognome LIKE'".$_POST["txtCognome"]."%' AND nome LIKE'".$_POST["txtNome"]."%' AND cancellato='False'";
         $parola_chiave=$_POST["txtNome"]." ".$_POST["txtCognome"];
     } else {
         PulisciCampi();
@@ -495,9 +528,7 @@ function RicercaIscritti() {
     
     // invia la query a MySql
     $rstRicerca=mysql_query($query);
-	 //ob_clean();  
-    //echo $query;
-    //die;
+  
     // verifica quante corrispondenze ha trovato
     if (mysql_num_rows($rstRicerca)<1) { // nessuna corrispondenza trovata
         $errore=1;
@@ -628,8 +659,7 @@ function GetQuoteOratorio() {
             echo("<tr>");
             
             // serve per tenere selezionato l'opzione di versamento 'gratuito' e 'non pagata'
-            //if (($quote->IdQuota==3 && $tipo_quota==3) || ($quote->IdQuota==5 && $tipo_quota==5)){
-            if ($quote->IdQuota==$tipo_quota){
+            if (($quote->IdQuota==3 && $tipo_quota==3) || ($quote->IdQuota==5 && $tipo_quota==5)){
                 $checked="checked";
             } else {
                   $checked=null;
@@ -650,7 +680,7 @@ function GetQuoteOratorio() {
                     
                     $classe="myaltraquota_x";
                     
-                    echo("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value='0.00' $disabled /><strong>&nbsp;&euro;</strong></th>");
+                    print("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value='0.00' $disabled /><strong>&nbsp;&euro;</strong></th>");
                 break;
                 
                 case -2: // non pagata
@@ -725,7 +755,6 @@ function SalvaDatiRubrica() {
                 } else {
                     $valore[$campi[$i]]=$valori;
                 }
-                
                 $i++;
             }
         }
@@ -739,18 +768,18 @@ function SalvaDatiRubrica() {
         
         // prepara la query per la ricerca del telefono da salvare
         // controlla se il numero è nuovo e quindi da salvare o è semplicemente da aggiornare
-        $query="SELECT IDTipoTelefono,ID FROM tblTelefoni WHERE IDTipoTElefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
+        $query="SELECT IDTipoTelefono,ID FROM tbltelefoni WHERE IDTipoTElefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
         $result=mysql_query($query);
         
         if (mysql_num_rows($result)>0) {
-            $query="UPDATE tblTelefoni SET Prefisso='".$valore["Prefisso"]."', Numero='".$valore["Numero"]."', TelSMS=".$valore["TelSMS"].", PrefissoInt='".$valore["PrefissoInt"]."' ";
+            $query="UPDATE tbltelefoni SET Prefisso='".$valore["Prefisso"]."', Numero='".$valore["Numero"]."', TelSMS=".$valore["TelSMS"].", PrefissoInt='".$valore["PrefissoInt"]."' ";
             $query.="WHERE IDTipoTelefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
         } else {
-            $query="INSERT INTO tblTelefoni (ID,Prefisso,Numero,IDTipoTelefono,TelSMS,PrefissoInt) VALUES(".$_POST['hdnID'].",".$valore['Prefisso'].",".$valore['Numero'].",".$valore['IDTipoTelefono'].",".$valore['TelSMS'].",".$valore['PrefissoInt'].")"; 
+            $query="INSERT INTO tblTelefoni (ID,Prefisso,Numero,IDTipoTelefono,TelSMS,PrefissoInt) VALUES(".$_POST['hdnID'].",'".$valore['Prefisso']."','".$valore['Numero']."',".$valore['IDTipoTelefono'].",".$valore['TelSMS'].",'".$valore['PrefissoInt']."')"; 
         } 
       
-        // invia la query al db 
-        $rstAggiornamento=mysql_query($query) or die ($query);
+        // invia la query al db
+        $rstAggiornamento=mysql_query($query) || die ($query);
         if (mysql_affected_rows()>0) {
                
         }
@@ -764,7 +793,7 @@ function SalvaDatiRubrica() {
     $TipoTelefono=explode("|",$_POST["DatiRubrica"]);
     
     foreach ($TipoTelefono as $valore) {
-        $query="DELETE FROM tblTelefoni WHERE IDTipoTelefono=".$valore." AND ID=".$_POST["hdnID"];  
+        $query="DELETE FROM tbltelefoni WHERE IDTipoTelefono=".$valore." AND ID=".$_POST["hdnID"];  
         mysql_query($query);
     }
 
@@ -885,7 +914,7 @@ function GetRubricaTelefonica($errore) {
     } 
     
     // legge i telefoni associati all'iscritto
-    $query_telefono="SELECT idtelefono,idtipotelefono,id,prefisso,numero,telsms,PrefissoInt FROM tblTelefoni WHERE id='".$_POST['hdnID']."' ORDER BY idtipotelefono ASC";
+    $query_telefono="SELECT idtelefono,idtipotelefono,id,prefisso,numero,telsms,PrefissoInt FROM tbltelefoni WHERE id='".$_POST['hdnID']."' ORDER BY idtipotelefono ASC";
     $rstTelefono=mysql_query($query_telefono);
   
     $telefono = mysql_fetch_object($rstTelefono); 
@@ -992,7 +1021,7 @@ function GetParentelaInfo() {
 
     $result=mysql_query($query);
     
-    if ($result) {
+    if (mysql_num_rows($result) <1) {
         echo "n. d.";
     } else {
           $famiglia=mysql_fetch_object($result);
@@ -1000,7 +1029,7 @@ function GetParentelaInfo() {
           // estrae i famigliari dell'iscritto
           $query="SELECT IdFamigliare,IdGradoParentela FROM tblparentela WHERE IdFamiglia=".($famiglia->IdFamiglia)." AND NOT IdFamigliare=".$_POST["hdnID"]." ORDER BY IdGradoParentela";
           $result=mysql_query($query);
-            
+          if (mysql_num_rows($result) >0) {
           //inserisce le iconcine dei famigliari
           while ($famigliari=mysql_fetch_object($result)) {
                   //inserisce le faccine in base al grado di parentela
@@ -1022,7 +1051,10 @@ function GetParentelaInfo() {
                       break;
                   }
               } 
+          } else {
+              echo "n. d.";
           }
+      }
     return; 
 }
 
@@ -1078,9 +1110,9 @@ function CreaTabellaFamigliari()
       if ($_POST["hdnID"]!=($dati->IdFamigliare)) { // evita di visualizzare l'iscritto nella tabella    
 
         //utilizzo dei valori estratti per ricostruire i dati dei parenti dell'iscritto
-        $query="SELECT Catechismi.ID,Catechismi.Cognome,Catechismi.Nome,Catechismi.Sesso,Catechismi.Classe,Catechismi.DataScadenzaTessera,tblClassi.IdClasse,tblClassi.Classe 
-                FROM Catechismi INNER JOIN tblClassi ON Catechismi.Classe=tblClassi.IdClasse 
-                WHERE Catechismi.ID=".($dati->IdFamigliare);
+        $query="SELECT catechismi.ID,catechismi.Cognome,catechismi.Nome,catechismi.Sesso,catechismi.Classe,catechismi.DataScadenzaTessera,tblclassi.IdClasse,tblclassi.Classe 
+                FROM catechismi INNER JOIN tblclassi ON catechismi.Classe=tblclassi.IdClasse 
+                WHERE catechismi.ID=".($dati->IdFamigliare);
         
         $result_parente=mysql_query($query);
         if (mysql_num_rows($result) == 0) {
@@ -1172,7 +1204,7 @@ function SalvaDatiParentela($errore){
     //(potrebbero sorgere imbarazzanti gradi di parentela fra... gay o lesbiche oppure incestuose!!!)
     
     // Sesso e data di nascita dell'iscritto
-    $query="SELECT Sesso,Data_di_nascita FROM Catechismi WHERE ID=".$_POST["hdnID"];
+    $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID=".$_POST["hdnID"];
     $result=mysql_query($query);
     $sesso=mysql_fetch_object($result);
     
@@ -1180,7 +1212,7 @@ function SalvaDatiParentela($errore){
     $data_iscritto=substr(($sesso->Data_di_nascita),0,4);
     
     // Sesso e data di nascita del parente selezionato
-    $query="SELECT Sesso,Data_di_nascita FROM Catechismi WHERE ID=".$_POST["hdnIDParente"];
+    $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID=".$_POST["hdnIDParente"];
     $result=mysql_query($query);
     $sesso=mysql_fetch_object($result);
     
@@ -1340,9 +1372,9 @@ function SalvaDatiParentela($errore){
                 // l'inserimento di figli coetanei o più vecchi dei genitori o comunque con un ridotto margine di età
                 // controllo esteso a tutti i componenti della famiglia già inseriti nel database
                 $query="SELECT tblparentela.IdFamiglia,tblparentela.IdGradoParentela,tblparentela.IdFamigliare, 
-                        Catechismi.ID, Catechismi.Data_di_nascita 
-                        FROM tblparentela INNER JOIN Catechismi 
-                        ON tblparentela.IdFamigliare=Catechismi.ID 
+                        catechismi.ID, catechismi.Data_di_nascita 
+                        FROM tblparentela INNER JOIN catechismi 
+                        ON tblparentela.IdFamigliare=catechismi.ID 
                         WHERE tblparentela.IdFamiglia=".intval($_POST["id_famiglia"]);
                 
                 $result=mysql_query($query);
@@ -1447,7 +1479,7 @@ function ControllaScheda($variazione) {
     $DatiVariati=0;
     global $variazione;
     // recupera i dati dal db
-    $query ="SELECT * FROM Catechismi WHERE ID=".$_POST["hdnID"];
+    $query ="SELECT * FROM catechismi WHERE ID=".$_POST["hdnID"];
     
     // invia la richiesta dati al db
     $result=mysql_query($query);
@@ -1564,8 +1596,7 @@ function ControllaScheda($variazione) {
                 $scheda_dataT=substr($_POST["mydataT"],6,4)."-".substr($_POST["mydataT"],3,2)."-".substr($_POST["mydataT"],0,2);
             break;
         }
-        
-        if ($scheda_dataT != substr(htmlentities($record["DataTesseramento"]),0,10)) {
+        if ((string)$scheda_dataT != (string)substr(htmlentities($record["DataTesseramento"]),0,10)) {
             $DatiVariati++;
             $variazione.="| data tesseramento | ";
         }    
@@ -1633,4 +1664,19 @@ function StampaMessaggio($messaggio,$errore,$icona) {
     }
     return;
 }
+// ****************** > FUNZIONE RECUPERA RUOLO DELL'ISCRITTO < *************************
+function GetInfoRuolo() {
+
+    $query ="SELECT * FROM tblruolioratorio WHERE IdRuoloOratorio=".$_POST['myruolo'];
+    
+    $result= mysql_query($query);
+    
+    $row=mysql_fetch_object($result);
+    
+    echo (htmlentities($row->RuoloOratorio));
+    
+    return;
+
+}
+
 ?>
