@@ -120,7 +120,7 @@ ConnettiDB();
     <!-- DIV CHE APRE FINESTRA CON REALEASE E CREDITI DEL PROGRAMMA -->
     <div id="release_credits">
         <div id="image_crediti">
-            <img src="./Immagini/ruolo.png" width="100" heigth="90" alt="">
+            <img src="./immagini/ruolo.png" width="100" heigth="90" alt="">
         </div>
         
         <div id="crediti_scritta">

@@ -1,9 +1,18 @@
-// JavaScript Document
-// Creato da Marco Fogliadini
-// per Oratorio Saint-Martin
-// Aosta
-// data inizio: 09/05/08    
-// versione routine: 1.2
+/** JavaScript Document
+ * ROUTINE PER CONTARE I SOLDI 
+ * Creato da Marco Fogliadini
+ * per progetto di Gestione Oratorio 
+ * Oratorio Saint-Martin - Aosta
+ * data inizio sviluppo: 09/05/08  
+ * **********************************************   
+ *  versione 1.3 (ottobre-novembre 2009)
+ *  Migliorie apportate:
+ *  - modificata grafica
+ *  - interagisce con Php per la messaggistica di calcolo e degli errori
+ *  - migliorato controllo inserimento dei dati nei campi: accetta soltanto numeri e... positivi!  
+ *  - migliorata lettura cifre calcolate (inserisce i punti delle migliaia)
+ *  ********************************************* 
+*/
 
 //crea l'array per contenere tutti i tagli dell'euro
 var Tagli = new Array();
@@ -16,6 +25,7 @@ var Tagli = new Array();
 	Tagli[11]=10; // euro
 	Tagli[13]=5; // euro
 	Tagli[15]="";
+	Tagli[17]="Altri importi";
 	
 	// * monete ***
 	Tagli[2]=2; // euro
@@ -26,6 +36,7 @@ var Tagli = new Array();
 	Tagli[12]=5; // centesimi
 	Tagli[14]=2; // centesimi
 	Tagli[16]=1; // centesimi
+	Tagli[18]="Altri importi";
 
 var contarighe;
 var indicesx=1; // indice banconote
@@ -40,6 +51,7 @@ document.write("<th colspan=\"3\">MONETE</TH>");
 document.write("</tr>");
 
 document.write("<tr>");
+
 for (indice=0;indice<2;indice++) {
   document.write("<td class=\"intestazione\">taglio</td>");
   document.write("<td class=\"intestazione\">unit&agrave;</td>");
@@ -82,21 +94,23 @@ document.write("</table>");
 var valori=document.getElementsByName("valore");
 valori[0].focus();
 
-
-// funzione per calcolare la somma dei soldi
+/*******************************************************************************************************************/
+/* FUNZIONE PER CALCOLARE LA SOMMA DEI SOLDI */ 
 function Calcola() {
 	var sommabanconote=0;
 	var sommamonete=0;
-  var messaggio;
+  var pattern = /^[0-9]+$/;
+  var messaggio="";
+  var errore=0;
   
-	// controlla se nei campo sono stati digitati dei caratteri non  numerici
+	// controlla se nei campi sono stati digitati dei caratteri non  numerici
   for (indice=0; indice < valori.length; indice++) {
-      	if (isNaN(valori[indice].value)) {
-      	    if (((indice+1) % 2)==0 && indice > 6) {
-               messaggio = "Attenzione! Nel campo da "+Tagli[indice+1] + " cent e' stato digitato un valore non numerico";
+      	if (!pattern.test(valori[indice].value) && valori[indice].value !="") {
+            if (((indice+1) % 2)==0 && (indice+1) >= 6) {
+               messaggio = "Attenzione! Nel campo '"+Tagli[indice+1] + " cent' e' stato digitato un valore non valido";
             }  else {
-                  messaggio = "Attenzione! Nel campo da "+Tagli[indice+1] + " euro e' stato digitato un valore non numerico";
-               }
+                  messaggio = "Attenzione! Nel campo '"+Tagli[indice+1] + " euro' e' stato digitato un valore non valido";
+            }
 
             alert(messaggio);    	    
             valori[indice].focus();
@@ -119,34 +133,34 @@ function Calcola() {
 	if (valori[16].value!=""){
 		sommabanconote+=parseInt(valori[16].value);
 	}
-  
+ 
   if (valori[17].value!=""){
 		sommamonete+=parseInt(valori[17].value);
 	}
 	
   if (sommamonete==0 && sommabanconote==0) {
-  	alert("Nessuna somma e' disponibile");
-  	valori[0].focus();
-  	return;
+  	errore=2;
+  	messaggio="Nessuna somma &egrave; disponibile per il calcolo!"
   } else {
-  		messaggio ="Hai a disposizione la somma di ";
-    }
-  	
+  		errore=1;
+      messaggio ="Hai a disposizione la somma di ";
+  }
+  
   if (sommamonete >= 100) {                                
-  	if ((sommamonete-(parseInt(sommamonete/100)*100))==0) {			// se sommamonete >= 100 centesimi si entra nell'unità di misura 
-		sommabanconote+=parseInt(sommamonete/100);					       // dell'euro. Questi if convertono i centesimi in euro interi.
-		sommamonete=0;												                    // La rimanenza rimane in centesimi.                  
-	} else {
-		sommabanconote+=parseInt(sommamonete/100);
-		sommamonete=(sommamonete-(parseInt(sommamonete/100)*100));
-  	  }
+  	if ((sommamonete-(parseInt(sommamonete/100)*100))==0) {	       // se sommamonete >= 100 centesimi si entra nell'unità di misura 
+		    sommabanconote+=parseInt(sommamonete/100);					      // dell'euro. Questi if convertono i centesimi in euro interi.
+		    sommamonete=0;												                   // La rimanenza rimane in centesimi.                  
+	  } else {
+		    sommabanconote+=parseInt(sommamonete/100);
+		    sommamonete=(sommamonete-(parseInt(sommamonete/100)*100));
+    }
   }
 	
   if (sommabanconote >=1 && sommamonete==0) {
-        messaggio +=parseInt(sommabanconote)+" euro!";
+        messaggio += FormattaValuta(sommabanconote)+" euro!";
   } else {
   		if (sommabanconote!=0) {
-  			messaggio +=parseInt(sommabanconote)+" euro e ";
+  			messaggio +=FormattaValuta(sommabanconote)+" euro e ";
     	}
     }
   
@@ -160,13 +174,42 @@ function Calcola() {
 	     valori[indice].value=0;
     }
   }
-  
+
 // stampa il messaggio con il valore dei soldi contati  
-  alert(messaggio);
+     
+  document.getElementById("errore").value=errore;
+  document.getElementById("messaggio").value=messaggio;
+  document.getElementById("soldicontati").submit();
   
 	return;
 }
 
+/*******************************************************************************************************************/
+// per una migliore lettura del numero formatta il valore delle banconote con il punto delle migliaia
+function FormattaValuta(sommabanconote) {
+    // variabili di servizio
+    var somma_da_formattare= new String(sommabanconote); // crea una nuova stringa con il valore di sommabanconote
+    var somma_formattata=""; // inizializza la variabile come stringa
+    
+    // stabilisce quanti punti bisogna inserire nella somma da formattare
+    if (somma_da_formattare.length % 3) { // controlla se il risultato della divisione tra la lunghezza della stringa e 3 (tripletta) dà resto 
+        var punti=parseInt(somma_da_formattare.length/3); // l'intero della divisione tra la lunghezza della stringa e 3 dà il numero dei punti da inserire
+    } else {
+        var punti=((parseInt(somma_da_formattare.length/3))-1); // se la divisione non dà resto toglie un punto. Siamo nel caso di multipli di 3
+    }
+    
+    // costruisce la nuova stringa in base ai punti calcolati
+    for (indice = 1;indice <= punti;indice++){
+        somma_formattata="."+somma_da_formattare.substr(somma_da_formattare.length-(3*indice),3)+somma_formattata;
+    }    
+    
+    // completa la somma formattata con le eventuali cifre rimaste fuori dalle triplette
+    somma_formattata=somma_da_formattare.substr(0,(somma_da_formattare.length-(somma_formattata.length-punti)))+somma_formattata;
+    
+return somma_formattata; // ritorna il valore formattato
+}
+
+/*******************************************************************************************************************/
 // funzione per pulire tutte le cellette della tabella
 function Pulisci() {
 	for (indice=0; indice < valori.length; indice++) {
@@ -176,9 +219,9 @@ function Pulisci() {
 	return;
 }
 
- // funzione per aprire la pagina dell'homepage
-    function ApriHomePage () {
-        window.location.replace("homepage.html");
-        return;
-    }
-
+//***************************************************************************************
+function ChiudiMessaggio(){
+  document.getElementById("stampamessaggio").style.visibility="hidden";
+  Pulisci();
+  return;
+}

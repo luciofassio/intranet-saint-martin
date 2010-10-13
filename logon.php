@@ -40,8 +40,150 @@ if ($postback == true) {
 <head>
 	<title>Oratorio Saint-Martin / Log On</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<?php SelectCSS(""); ?>   
+	<?php //SelectCSS(""); ?>   
 	<script type="text/javascript" src="./js/funzioni.js"></script>
+
+
+<style>
+ /****************** REGOLE PER IMPAGINAZIONE LOGON E HOME PAGE GESTIONE ORATORIO*/  
+body.logon {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 800px;
+  height: 560px;
+  margin-left: 15%;/*190px;*/
+}
+ 
+#barratop{
+  width: 800px;
+  height: 20px;
+  position: absolute;
+  background: green;
+  top: 20px;
+  -moz-border-radius: 7px;
+}
+
+#barrabottom{
+  width: 800px;
+  height: 5px;
+  position: absolute;
+  background: green;
+  top: 500px;
+  -moz-border-radius: 7px;
+}
+
+#intestazione {
+  position: relative;
+  left:30px;
+  padding: 2px;
+  z-index:10;
+  
+}
+
+#scritta_barra{
+  position: absolute;
+  top: 21px;
+  left: 280px;
+  color: white;
+  font-weight: bold;
+}
+
+#scritta_location{ /* location=dove ci si trova con le pagine web all'interno del programma */
+  position: absolute;
+  top: 45px;
+  left: 280px;
+  color: green;
+}
+
+#mymenuhome {
+  position: absolute;
+  top: 80px;
+  left: 260px;
+  width: 700px;
+  text-align: left;
+}
+
+#scritta_saluto{
+  position: absolute;
+  top: 100px;
+  left: 360px;
+  color: black;
+}
+
+#mydata {
+  position: absolute;
+  top: 45px;
+  left: 732px;
+  width: 250px;
+  color: grey;
+  text-align: right;
+  
+}
+
+#datilogin {
+  position: absolute;
+  top: 150px;
+  left: 340px;
+  width: 500px;
+  height:220px;
+  text-align: left;
+}
+
+#datiloginfs{
+	position:absolute;
+  width:100%;
+  height:100%;
+  border: 1px dotted  #FF8C00; /*#FF8C00*/
+  -moz-border-radius: 7px
+}
+
+#myoperatore{
+  position: absolute;
+  width: 400px;
+  top: 510px;
+  left: 588px;
+  text-align: right;
+  color: grey;
+}
+
+#nomeutente {
+	position: relative;
+	top: 50px;
+	left: 20px;
+}
+
+#password {
+	position: absolute;
+	top: 150px;
+	left: 20px;
+}
+
+#bottonentra  {
+  position: absolute;
+  top: 150px;
+  left: 400px;
+}
+
+form.verificautente label.posizione {
+  display: block;
+  width: 90px;
+  float: left;
+}
+
+#errore_login {
+  position: absolute;
+  top:390px;
+  left:370px;
+  color: red;
+  font-weight:bold;
+  text-align: center;
+}
+  </style>
+
+
+
+
 </head>
 <body onload="CaricamentoLogin()" class="logon">
  

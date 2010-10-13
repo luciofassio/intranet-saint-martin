@@ -1,9 +1,9 @@
 <?php 
-session_start();
-
 require('accesso_db.inc');   
 require("funzioni_generali.inc");
 require ("funzioni_anagrafica.inc");
+
+session_start();
 
 $host  = $_SERVER['HTTP_HOST'];
 
@@ -15,15 +15,15 @@ if (!isset($_SESSION['authenticated_user'])) {
 }
 
 $idoperatore = $_SESSION['authenticated_user_id'];
-
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
    <html xmlns="http://www.w3.org/1999/xhtml">
       
 <head>
    <title>Gestione Oratorio / Anagrafica</title>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+   <!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <script type="text/javascript" src="./js/f_anagrafica.js"></script>
   <script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
@@ -59,19 +59,27 @@ $idoperatore = $_SESSION['authenticated_user_id'];
 <!-- FINE SEZIONE INTESTAZIONE -->
     
 <!-- SEZIONE BARRA DI NAVIGAZIONE -->
-    <div id="mybarranavigazione">
-        | <a href="homepage.php">home page</a> | <a href="inserisci_prenotazioni.php">iscrizioni &amp; prenotazioni Er</a> | <a href="logout.php">esci</a> |
-    </div> 
-
+    <?php
+        $barra_di_navigazione="| <a href='homepage.php'>home page</a> | <a href='inserisci_prenotazioni.php'>iscrizioni &amp; prenotazioni Er</a> |";
+        
+        if ($_SESSION['access_level'] >2) {
+            $barra_di_navigazione.=" <a href='xcestino.php'>visualizza cestino</a> |";
+        }
+        
+        echo "<div id='mybarranavigazione'> \n";
+        echo "$barra_di_navigazione"."\n";
+        echo "</div> \n"; 
+     ?>
 <!-- FINE SEZIONE BARRA DI NAVIGAZIONE -->
 
 <!-- SEZIONE OPERATORE CONNESSO -->
-     <?php
-        $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-        $row = mysql_fetch_object($result);
-     ?>
-    <div id="myoperatore">
-          | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 
+      <div id="myoperatore">
+        <?php
+            $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
+            $row = mysql_fetch_object($result);
+            $_POST["login"]= htmlentities($row->login);
+        ?>
+        | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 
     </div> 
     
 <!-- FINE SEZIONE OPERATORE CONNESSO -->
@@ -124,30 +132,48 @@ $idoperatore = $_SESSION['authenticated_user_id'];
         <table id="funzioni_tabella">
             <tr>
                 <td class="TabSelected">
-                    <a class="cellaselezionata" href="javascript:CambiaTab(0);">Dati Anagrafici</a>
+                    <?php 
+                        print ("<a class='cellaselezionata' href='javascript:CambiaTab(0);'>Dati Anagrafici</a>");
+                    ?>   
                 </td>
                 
                 <td class="NoTabSelected">
-                    <a class="cellaselezionata" href="javascript:CambiaTab(1);">Rubrica Telefonica</a>
+                    <?php 
+                      if (isset($_POST["hdnID"])) { 
+                        print ("<a class='cellaselezionata' href='javascript:CambiaTab(1);'>Rubrica Telefonica</a>");
+                      } else {
+                          print ("<a class='cellaselezionata' href='javascript:GestioneErrori();'>Rubrica Telefonica</a>");
+                      }
+                    ?> 
                 </td>
                 
                 <td class="NoTabSelected">
-                    <a class="cellaselezionata" href="javascript:CambiaTab(2);">Gestione Parentela</a>
+                    <?php 
+                      if (isset($_POST["hdnID"])) { 
+                        print ("<a class='cellaselezionata' href='javascript:CambiaTab(2);'>Gestione Parentela</a>");
+                      } else {
+                          print ("<a class='cellaselezionata' href='javascript:GestioneErrori();'>Gestione Parentela</a>");
+                      }
+                    ?> 
                 </td>
                 
                 <td class="NoTabSelected">
-                    <a class="cellaselezionata" href="javascript:CambiaTab(3);">Tesseramento</a>
+                    <?php 
+                        print ("<a class='cellaselezionata' href='javascript:CambiaTab(3);'>Tesseramento</a>");
+                    ?> 
                 </td>
                 
                 <td class="NoTabSelected">
-                    <a class="cellaselezionata" href="javascript:CambiaTab(4);">Classi&amp;Catechismo</a>
+                    <?php 
+                        print ("<a class='cellaselezionata' href='javascript:CambiaTab(4);'>Classi&amp;Catechismo</a>");
+                    ?> 
                 </td>
                 <?php
                     // questa funzione è regolamentata da un ulteriore livello di privilegi: segretari e amministratori possono accedervi 
-                    if ($_SESSION['access_level'] >3) {
-                        print ("<td class=\"NoTabSelected\">");
-                        print ("<a class=\"cellaselezionata\" href=\"javascript:CambiaTab(5);\">Ruolo</a>");
-                        print ("</td>");
+                    if ($_SESSION['access_level'] >2) {
+                            print ("<td class=\"NoTabSelected\">");
+                            print ("<a class=\"cellaselezionata\" href=\"javascript:CambiaTab(5);\">Ruolo</a>");
+                            print ("</td>");
                     }
                 ?>
             </tr>
@@ -250,6 +276,18 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                         ?>
                     </th>
                 </tr>
+                
+                <tr>
+                    <th class="info_sx">
+                      Ruolo:
+                    </th>
+                    
+                    <th class="info_dx">
+                        <?php 
+                            GetInfoRuolo();
+                        ?>
+                    </th>
+                </tr>
             </table>        
         </div>
     
@@ -261,8 +299,9 @@ $idoperatore = $_SESSION['authenticated_user_id'];
     <form id="SalvaSchedaIscritto" name="SalvaSchedaIscritto" method="post" action="xanagrafica.php">
             <input type="hidden" name="hdnID" id="hdnIDx" value="<?php echo($_POST['hdnID']); ?>" />
             <input type="hidden" name="azione_salvataggio" id="save_scheda" value="" />
-            <input type="hidden" name="tab_attivo" id="dati_anagrafici" value="<?php echo($_POST['tab_attivo']); ?>">
-
+            <input type="hidden" name="tab_attivo" id="dati_anagrafici" value="<?php echo($_POST['tab_attivo']); ?>" />
+            <input type="hidden" name="login" value="<?php echo ($_POST["login"]); ?>" />
+            
             <div id="myDatiAnagrafici">
 
                 <div id="imgnomecognome">
@@ -374,15 +413,34 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                     
 <!-- ********************** SEZIONE PULSANTIERE ******************** -->
     <div id="pulsantiera">
-        <input type="button" name="privacy" id="myprivacy" value="privacy" onclick="stampa_privacy('<?php echo($_POST["hdnID"]); ?>')" />
-        <input type="button" name="salvadati" id="btnsalvadati" value="salva i dati" onClick="fncSalvaScheda();" />
-                
+        <input type="button" name="privacy" id="myprivacy" value="Privacy" onclick="stampa_privacy('<?php echo($_POST["hdnID"]); ?>')" />
+        <input type="button" name="salvadati" id="btnsalvadati" value="Salva i Dati" onClick="fncSalvaScheda();" />
+
+        <?php
+            if (isset($_POST["hdnID"])) {
+                if ($_SESSION['access_level'] >2) {
+                    echo "<div id='salva_privacy'> \n";
+                    echo "<input type='button' name='cancella_scheda' id='mycancella_scheda' value ='Cancella Scheda' onClick='fncCancellaScheda();' /> \n";
+                    echo "</div> \n";       
+                } else {
+                    echo "<style> \n";
+                    echo "#pulsantiera { top: 430px; } \n";
+                    echo "#div_btnchiudischeda { top: 5px; } \n";
+                    echo "</style> \n";
+                }
+            } else {
+                    echo "<style> \n";
+                    echo "#pulsantiera { top: 430px; } \n";
+                    echo "#div_btnchiudischeda { top: 5px; } \n";
+                    echo "</style> \n";
+            }
+        ?>
             <div id="div_btnchiudischeda">
                 <?php 
                     if (isset($_POST["hdnID"])) {
-                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda' value='chiudi scheda iscritto' onclick='ChiudiIscritto(0);' />";
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda' value='Chiudi Scheda Iscritto' onclick='ChiudiIscritto(0);' />";
                     } else {
-                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda' value='annulla iscrizione' onclick='ChiudiIscritto(1);' />";
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda' value='Annulla Iscrizione' onclick='ChiudiIscritto(1);' />";
                     }                      
                 ?>
             </div>
@@ -411,9 +469,9 @@ $idoperatore = $_SESSION['authenticated_user_id'];
           <div id="div_btnchiudischeda1">
                 <?php 
                     if (isset($_POST["hdnID"])) {
-                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda1' value='chiudi scheda iscritto' onclick='ChiudiIscritto(0);' />";
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda1' value='Chiudi Scheda Iscritto' onclick='ChiudiIscritto(0);' />";
                     } else {
-                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda1' value='annulla iscrizione' onclick='ChiudiIscritto(1);' />";
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda1' value='Annulla Iscrizione' onclick='ChiudiIscritto(1);' />";
                     }                      
                 ?>
             </div>
@@ -441,9 +499,9 @@ $idoperatore = $_SESSION['authenticated_user_id'];
           <div id="div_btnchiudischeda2">
                 <?php 
                     if (isset($_POST["hdnID"])) {
-                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda2' value='chiudi scheda iscritto' onclick='ChiudiIscritto(0);' />";
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda2' value='Chiudi Scheda Iscritto' onclick='ChiudiIscritto(0);' />";
                     } else {
-                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda2' value='annulla iscrizione' onclick='ChiudiIscritto(1);' />";
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda2' value='Annulla Iscrizione' onclick='ChiudiIscritto(1);' />";
                     }                      
                 ?>
             </div>
@@ -617,27 +675,27 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                 <div id="tabella_phone">
                     <table id="TabellaPhone" class="layout_tabella_rubrica">
                         <tr>
-                            <th class="CellaPhone">
+                            <th>
                                 SEL
                             </th>
                             
-                            <th class="CellaPhone">
+                            <th>
                                 Tipo
                             </th>
                             
-                            <th class="CellaPhone">
+                            <th>
                                 Pref. Int.
                             </th>
                             
-                            <th class="CellaPhone">
+                            <th>
                                 Pref. Naz.
                             </th>
                             
-                            <th class="CellaPhone">
+                            <th>
                                 Numero
                             </th>
                             
-                            <th class="CellaPhone">
+                            <th>
                                 SMS
                             </th>
                         </tr>

@@ -7,14 +7,15 @@ ConnettiDB();
 if(isset($_POST['queryString'])) {
 	// contro sql injection
   $queryString = mysql_real_escape_string($_POST['queryString']);
-	if(strlen($queryString) >0) {
-     $query =mysql_query("select idcomuni, comune, codicepostale, provincia from tblcomuni where comune like '".$queryString."%' ORDER BY comune  LIMIT 11");
+
+  if(strlen($queryString) >0) {
+     $query =mysql_query("select idcomuni, comune, codicepostale, provincia from tblcomuni where comune like '".$queryString."%' ORDER BY comune  LIMIT 8");
 		if($query) {
-      while ($row = mysql_fetch_object($query)) {
-              echo '<li id ="mytown" onClick="fill_comuni(\''.htmlentities($row->idcomuni).'|'.htmlentities($row->comune).'|'.htmlentities($row->codicepostale).'|'.htmlentities($row->provincia).'\');">'.htmlentities($row->comune).'</li>';
-      }
+        while ($row = mysql_fetch_object($query)) {
+              echo '<li id ="mytown" onClick="fill_comuni(\''.htmlentities($row->idcomuni).'|'.addslashes(htmlentities($row->comune)).'|'.htmlentities($row->codicepostale).'|'.htmlentities($row->provincia).'\');">'.stripslashes(htmlentities($row->comune)).'</li>';
+        }
 		} else {
-      echo ("ERRORE: la ricerca nel database non ha dato risultati.");
+        echo ("ERRORE: la ricerca nel database non ha dato risultati.");
 		}
 	} // There is a queryString.
  } else {

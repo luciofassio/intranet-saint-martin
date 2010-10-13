@@ -1,8 +1,13 @@
 /* CSS per sito gestione Oratorio
-   creato da Marco Fogliadini
-   marzo 2008-ottobre 2009
-   CSS per pagina Anagrafica
-   Versione per Mozilla Firefox
+* creato da Marco Fogliadini: marzo 2008
+* 
+* modificato:
+*     ottobre 2009
+*     agosto  2010
+*     
+* CSS per pagina Anagrafica
+* 
+* Versione per Mozilla Firefox
 */
 
 body {
@@ -451,13 +456,21 @@ form.parentela label.fixedwidth {
   visibility: hidden;
   position: absolute;
   height: 60px;
-  top: 430px;
+  top: 401px;
   left: 730px;
 }
+#salva_privacy {
+  position: relative;
+  top: 5px;
+}
+
+#mycancella_scheda {
+  width: 250px;
+} 
 
 #div_btnchiudischeda {
   position: relative;
-  top: 5px;
+  top: 10px;
 }
 
 #div_btnchiudischeda1 {

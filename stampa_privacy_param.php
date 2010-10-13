@@ -29,7 +29,7 @@ ConnettiDB();
    <html xmlns="http://www.w3.org/1999/xhtml">
       
 <head>
-	<title>Estate Ragazzi / Eventi</title>
+	<title>Gestione Oratorio / Stampa Privacy</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
 	<script type="text/javascript" src="./js/jsDate.js"></script>
