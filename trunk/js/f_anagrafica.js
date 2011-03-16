@@ -91,6 +91,7 @@ function CambiaTab (cellanumero)
         document.getElementById("dati_anagrafici").value=cellanumero;
         document.getElementById("rubrica_telefonica").value=cellanumero;
         document.getElementById("mygestioneparentela").value=cellanumero;
+        document.getElementById("mygestioneruoli").value=cellanumero;
           
         // in base al numero di celle e della scelta dell'utente visualizza/nasconde i div
         for (i=0; i < nrcelle.length; i++) { 
@@ -109,6 +110,11 @@ function CambiaTab (cellanumero)
                         document.getElementById("CognomeParente").focus();
                     break;
                   
+                    case 5: //pulsantiera x gestione ruoli
+                        document.getElementById("pulsantiera3").style.visibility="visible";
+                        document.getElementById("myruolo").focus();
+                    break;
+                    
                     default: //pulsantiera x dati anagrafici, tesseramento, classi&catechismo e ruolo
                         document.getElementById("pulsantiera").style.visibility="visible";
                         switch (i) { // setta il fuoco dei campi dei vari tab
@@ -125,6 +131,7 @@ function CambiaTab (cellanumero)
                 }
             } else {          
                   nrcelle[i].style.background= "#FF8C00";
+                  
                   document.getElementById(tabname[i]).style.visibility="hidden";
                 
                   switch (i) { // serve per chiudere la giusta pulsantiera all'interno dei vari tab
@@ -138,6 +145,10 @@ function CambiaTab (cellanumero)
                     
                       case 2: //pulsantiera gestione parentela
                           document.getElementById("pulsantiera2").style.visibility="hidden";
+                      break;
+                      
+                      case 5: //pulsantiera gestione ruoli
+                          document.getElementById("pulsantiera3").style.visibility="hidden";
                       break;
                   }
             }
@@ -412,6 +423,26 @@ function FuocoSezioneCatechismo() {
 //funzione fuoco campo sezione ruoli(cambia aspetto quando il campo ha il fuoco)
 function FuocoSezioneRuoli() {
     var campo=document.getElementById("myruolo");
+    campo.style.color ="black";
+    campo.style.background ="#FAF176";
+    campo.style.border="1px dotted grey";
+    return;
+}
+
+//***************************************************************************************
+//funzione fuoco campo sezione ruoli(cambia aspetto quando il campo ha il fuoco)
+function FuocoSezioneRuoliClasse() {
+    var campo=document.getElementById("myruoloclasse");
+    campo.style.color ="black";
+    campo.style.background ="#FAF176";
+    campo.style.border="1px dotted grey";
+    return;
+}
+
+//***************************************************************************************
+//funzione fuoco campo sezione ruoli(cambia aspetto quando il campo ha il fuoco)
+function FuocoSezioneRuoliGruppo() {
+    var campo=document.getElementById("myruologruppo");
     campo.style.color ="black";
     campo.style.background ="#FAF176";
     campo.style.border="1px dotted grey";
@@ -820,6 +851,25 @@ function ControlloSezioneRuoli() {
     return;
 }
 
+//***************************************************************************************  
+// funzione per il controllo della sezione del catechismo (non sezione cerca iscriti)
+function ControlloSezioneRuoliClasse() {
+    var campo=document.getElementById("myruoloclasse");
+    campo.style.color ="#000088";
+    campo.style.background="white";
+    campo.style.border="1px dotted grey";
+    return;
+}
+
+//***************************************************************************************  
+// funzione per il controllo della sezione del catechismo (non sezione cerca iscriti)
+function ControlloSezioneRuoliGruppo() {
+    var campo=document.getElementById("myruologruppo");
+    campo.style.color ="#000088";
+    campo.style.background="white";
+    campo.style.border="1px dotted grey";
+    return;
+}
 //***************************************************************************************
 // funzione per filtrare i dati inseriti dall'utente (cognome, nome, indirizzo, ecc.)
 function FiltroStringa(stringa) {
@@ -996,6 +1046,10 @@ function RilevaTab(obj) {
           $('#suggestions_comuni').hide();
           $('#suggestions_parrocchie').hide();
       }
+      
+     if (document.getElementById("CognomeParente").value=="" || document.getElementById("CognomeParente").value==null) {
+        $('#tabella_parentela_nucleo_A').hide();
+     }
       return;
 }
 
@@ -1021,6 +1075,28 @@ function lookup(inputString) {
 			}
 } // lookup
 
+//***************************************************************************************    
+// autocomplete in ajax - suggest per i nomi degli iscritti
+function lookup_names(inputString) {
+      var bottone = document.getElementById("caricaPersona");
+      if(inputString.length == 0) {
+				// disabilita il pulsante cerca iscritti
+				bottone.disabled=true;
+        // Hide the suggestion box.
+				$('#suggestions_names').hide();
+			} else {
+				bottone.disabled=false;
+        $.post("rpc_names.php", {queryString: ""+inputString+""}, function(data){
+          if(data.length >0) {
+            $('#suggestions_names').show();
+						$('#autoSuggestionsListNames').html(data);
+					} else {
+            $('#suggestions_names').hide();
+          }
+				});
+			}
+} // lookup
+
 //***************************************************************************************
 // autocomplete in ajax-suggest per i cognomi degli iscritti-parenti
 function lookup_parentela(inputString) {
@@ -1028,6 +1104,7 @@ function lookup_parentela(inputString) {
         // Hide the suggestion box.
 				$('#hdnIDParente').val("");
         $('#suggestions_parentela').hide();
+        $('#tabella_parentela_nucleo_A').hide();
 			} else {
         $.post("rpc_parentela.php", {queryString: ""+inputString+""}, function(data){
           if(data.length >0) {
@@ -1035,6 +1112,7 @@ function lookup_parentela(inputString) {
 						$('#autoSuggestionsListParentela').html(data);
 					} else {
             $('#suggestions_parentela').hide();
+            $('#tabella_parentela_nucleo_A').hide();
           }
 				});
 			}
@@ -1064,6 +1142,30 @@ function fill(thisValue) { // per i cognomi della sezione ricerca
       ControlloInputCodiceBarre();
 }
 
+//***************************************************************************************		
+function fill_names(thisValue) { // per i nomi della sezione ricerca
+      if (thisValue != null) {
+        modulo = document.getElementById("CercaIscritti");
+        valori = thisValue.split('|');	
+				$('#hdnID').val(valori[0]);
+				$('#txtNome').val(valori[1]);
+        $('#txtCognome').val(valori[2]);
+				
+				// costruisce il codice a barre a 13 cifre e lo stampa
+				var barcode="0000000000000";
+				barcode=barcode.slice(0,-valori[0].length)+valori[0];
+        $('#txtBarCode').val(barcode);
+        // $('#txtBarCode').val(valori[3]); dismesso perché utilizza il codice a barre del vecchio programma Access
+
+				setTimeout("$('#suggestions').hide();", 200);
+        modulo.submit();
+      } 
+      
+      ControlloInputCognome();
+      ControlloInputNome();
+      ControlloInputCodiceBarre();
+}
+
 //***************************************************************************************
 function fill_parentela(thisValue) { // per i cognomi della sezione parentela
       if (thisValue != null) {
@@ -1071,6 +1173,10 @@ function fill_parentela(thisValue) { // per i cognomi della sezione parentela
         document.getElementById("hdnIDParente").value=valori[0];
 				document.getElementById("CognomeParente").value=valori[1]+" "+valori[2];
 				setTimeout("$('#suggestions_parentela').hide();", 200);
+				
+				// manda a php i valori per cercare i famigliari del nucleo A 
+        document.getElementById("id_famiglia_nucleo_A").value=valori[3];
+        document.getElementById("GestioneParentela").submit();
       } 
       return;
 }
@@ -1458,12 +1564,13 @@ function fncAggiungiParente(){
     var idfamiglia=document.getElementsByName("selparente");
     var DatiNonValidati=0;
     var MexErrore="Attenzione! Errore di validazione dei dati. Controlla i campi obbligatori 'Cognome e Nome parente' e 'Grado Parentela'. Per il campo 'Cognome e Nome parente' usa il suggerimento che ti viene dato.";
+    var indice_selezione = false;
     
     if (document.getElementById("hdnIDParente").value < 1 || document.getElementById("hdnIDParente").value == document.getElementById("hdnID").value) {
         DatiNonValidati++;
     }
    
-     if (document.getElementById("GradoParentela").options[document.getElementById("GradoParentela").selectedIndex].value <=1) {
+     if (document.getElementById("GradoParentela").options[document.getElementById("GradoParentela").selectedIndex].value <1) {
         DatiNonValidati++;
     } 
     
@@ -1493,7 +1600,7 @@ function fncCancellaParente() {
     var indice=0;
     var righeselezionate=0;
     var id_parenti="";
-
+    
     //controlla le righe che sono state selezionate e prepara la stringa da inviare a php
     for (indice;indice<rigaselezionata.length;indice++) {
         if (rigaselezionata[indice].checked){    
@@ -1509,7 +1616,8 @@ function fncCancellaParente() {
     
     if (confirm("Attenzione! Vuoi cancellare i familiari selezionati?")) {
         document.getElementById("save_family").value="delete_parente";
-        document.getElementById("id_famiglia").value=id_parenti;
+        document.getElementById("id_famiglia").value=id_parenti+rigaselezionata[0].value+"|"+rigaselezionata.length;
+       
         document.getElementById("GestioneParentela").submit();
     }
 
@@ -1543,12 +1651,125 @@ function fncCancellaScheda(){
     return;
 }
 
+//***************************************************************************************
+// funzione per visualizzare/nascondere la legenda dei ruoli oratorio
+function LegendaRuoli(azione){
+    
+    switch (azione) {
+        case 0:
+            document.getElementById("legendaruoli").style.visibility="visible";
+        break;
+        
+        case 1:
+            document.getElementById("legendaruoli").style.visibility="hidden";
+        break;
+    }
+    
+    return;
+}
 
+//***************************************************************************************
+// funzione per aggiungere/cancellare i ruoli oratorio
+function fncAggiungiCancellaRuolo(azione){
+    var ModificaRuolo = document.getElementById("ModificaRuolo");
+    var Azione_PHP=document.getElementById("modifica_ruolo");
+    
+    switch (azione) {
+        case 0: // aggiungi ruolo
+            var ruolo = document.getElementById("myruolo");
+            var classe = document.getElementById("myruoloclasse");
+            var gruppo = document.getElementById("myruologruppo");
+           
+            switch (ruolo.value) {
+                case "1": // nessun ruolo non va a salvare i dati
+                    return;
+                break;
+                
+                case "5": // coordinatore: ammessi soltanto nessuna classe, giovani e adulti
+                    if (classe.value < 15) {
+                        alert("Attenzione! La classe scelta non è associabile a questo ruolo");
+                          return;
+                    }
+                break;
+            
+                case "6": // segreteria: non ha classe e gruppo
+                    classe.value=17;
+                    gruppo.value=1;
+                break;
+                
+                case "7": //securitas: non ha classe, può avere il gruppo
+                    classe.value=17;
+                break;            
+                
+                case "9": //direttivo: non ha classe e gruppo
+                    classe.value=17;
+                    gruppo.value=1;
+                break;
+                
+                default: //catechisti, educatori, animatori, cuochi
+                      if (ruolo.value==2 && classe.value >14) {
+                          alert("Attenzione! La classe scelta non è associabile a questo ruolo");
+                          return;
+                      }
+                break;
+            }
+            
+            Azione_PHP.value="aggiungi_ruolo";
+            
+        break;
+        
+        case 1: //cancella ruolo
+            if (!confirm ("Attenzione! Sei proprio sicuro di cancellare i ruoli selezionati?")) {
+                return;
+            }
+            
+            //recupera in un array i valori selezionati da cancellare
+            var RuoloSelezionato=document.getElementsByName("SelRuolo"); // check ruolo
+            
+            // definisce la stringa da inviare a PHP
+            var DatiToPhp="";
+            
+            // costruisce la stringa da inviare a PHP per l'elaborazione
+            for (i=0;i<=(RuoloSelezionato.length-1);i++) {
+                if (RuoloSelezionato[i].checked) {
+                    DatiToPhp+=RuoloSelezionato[i].value+"|";
+                }
+            }
+            
+            if (DatiToPhp==""){
+                alert("Attenzione! Non è stato scelto nessun ruolo.");
+                return;
+            }
+            
+            document.getElementById("dati_check_ruoli").value=DatiToPhp;
+           
+            Azione_PHP.value="cancella_ruolo";
+        break;
+    }
+    
+    ModificaRuolo.submit();
+    return;
+}
 
+//Cambia la pagina alla tabella ruoli
+function ChangePageTabellaRuoli(nrpagina,nrpagine) {
+  var ModificaRuolo = document.getElementById("ModificaRuolo");
+  var Azione_PHP=document.getElementById("modifica_ruolo")
+  
+  /* controlla che l'operatore non vada fuori dall'intervallo
+   * di pagine che sono risultate dalla ricerca dei cancellati */
+  if ((nrpagina < 1) || (nrpagina > nrpagine)) { 
+      return;
+  }
+  
+  // assegna il nuovo nr di pagina corrente
+  document.getElementById("nrpagina_tabella_ruoli").value = nrpagina;
 
+  // invia i dati a PHP
+  ModificaRuolo.submit();
 
-
-
+  return;
+}
 
 
 

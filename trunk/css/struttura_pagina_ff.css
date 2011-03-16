@@ -1,0 +1,99 @@
+/* CSS Document 
+ * Oggetto:   Regole impaginazione struttura pagina web
+ *            (escluso logon e homepage) 
+ * Creazione: Settembre 2010
+ * Autore:    Marco Fogliadini 
+*/
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: small; 
+  line-height: 125%;
+  width: 980px;
+  height: 520px;
+}
+
+/************************* REGOLE IMPAGINAZIONE STRUTTURA PAGINA ***********************/
+#barratop{
+  width: 980px;
+  height: 20px;
+  position: absolute;
+  background: green;
+  top: 20px;
+  -moz-border-radius: 7px;
+}
+
+#barrabottom{
+  width: 980px;
+  height: 5px;
+  position: absolute;
+  background: green;
+  top: 500px;
+  -moz-border-radius: 7px;
+}
+
+#intestazione {
+  position: relative;
+  left:30px;
+  padding: 2px;
+  z-index:10;
+  
+}
+
+#scritta_barra{
+  position: absolute;
+  top: 21px;
+  left: 100px;
+  color: white;
+  font-weight: bold;
+}
+
+#scritta_location{
+  position: absolute;
+  top: 510px;
+  left: 50px;
+  color: grey;
+}
+
+#mydata {
+  position: absolute;
+  top: 45px;
+  left: 732px;
+  width: 250px;
+  color: grey;
+  text-align: right;
+}
+
+/*****************************************************************************************/
+
+/************************* REGOLE IMPAGINAZIONE BARRA DI NAVIGAZIONE ***********************/
+#mybarranavigazione{
+  position: absolute;
+  top: 45px;
+  left: 100px;
+}
+/* *************************************************************************************** */
+
+/************************* REGOLE OPERATORE CONNESSO ***********************/
+#myoperatore{
+  position: absolute;
+  width: 400px;
+  top: 510px;
+  left: 588px;
+  text-align: right;
+  color: grey;
+}
+/* *************************************************************************************** */
+
+/************************* REGOLE PER PASSAGGIO MOUSE SUI LINK **********/
+
+A          { text-decoration:none; }
+A          { font-weight:bold; color: green; }
+A:hover    { text-decoration: underline; color: #FF8C00; }
+
+/******** LINK TABELLA FUNZIONI *********/
+A.cellaselezionata          { text-decoration:none; }
+A.cellaselezionata          { font-weight:bold; color: white; }
+A.cellaselezionata:hover    { text-decoration: underline; color: white;}
+
+/* *************************************************************************************** */
