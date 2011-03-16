@@ -4,7 +4,7 @@
 * modificato:
 *     ottobre 2009
 *     agosto  2010
-*     
+*     gennaio 2011
 * CSS per pagina Anagrafica
 * 
 * Versione per Mozilla Firefox
@@ -102,6 +102,13 @@ fieldset.cornice {
   height: 25px;
  }
  
+ #barcode {
+  position: relative;
+  top: -47px;
+  left: 450px;
+  height: 25px;
+ }
+ 
  #nuovoiscritto{
   position: relative;
   top: 10px;
@@ -160,6 +167,10 @@ td.NoTabSelected {
 
 td.TabSelected {
   background: green;
+}
+
+td.TabDeactivated {
+  background: grey;
 }
 
 #div_dati_funzioni{
@@ -349,17 +360,52 @@ th {
 
 th.iscritto {
   text-transform: uppercase;
+  background: #CCCC99;
+   -moz-border-radius: 7px;
 }
 
 th.info_sx {
   text-align: left;
+  background: #CCFF99;
+  -moz-border-radius: 7px;
+  padding-left: 6px;
+  padding-right: 6px; 
 }
 
 th.info_dx {
+  border:0px;
   text-align: right;
   font-weight: normal;
+  float: right;
 }
 
+table.famigliari_iscritto th.celle_famigliari_iscritto_mamma {
+  border: 0px;
+  background: red;
+  padding: 2px;
+  -moz-border-radius: 7px;
+}
+
+table.famigliari_iscritto th.celle_famigliari_iscritto_padre {
+  border: 0px;
+  background: mediumblue;
+  padding: 2px;
+  -moz-border-radius: 7px;
+}
+
+table.famigliari_iscritto th.celle_famigliari_iscritto_fratello {
+  border: 0px;
+  background: dodgerblue;
+  padding: 2px;
+  -moz-border-radius: 7px;
+}
+
+table.famigliari_iscritto th.celle_famigliari_iscritto_sorella {
+  border: 0px;
+  background: magenta;
+  padding: 2px;
+  -moz-border-radius: 7px;
+}
 /* *************************************************************************************** */
 
 /************************** REGOLE IMPAGINAZIONE GESTIONE PARENTELA *********************** */
@@ -396,16 +442,55 @@ th.info_dx {
 }
 
 #grado_parentela{
-    position: relative;
-    top: 30px;
-    left: 110px;
-    width: 540px;
+  position: relative;
+  top: 30px;
+  left: 110px;
+  width: 540px;
 }
 
 #GradoParentela {
   width: 270px;
   font-weight: bold;
- 
+}
+
+#parentela_nucleo_A {
+  position: relative;
+  top: 50px;
+  left: 110px;
+  width: 540px;
+}
+
+#tabella_parentela_nucleo_A {
+  position: relative;
+  /*width: 100px;*/
+}
+
+th.cella_parentela_nucleo_A_mamma {
+  background: red;
+  padding-right: 6px;
+  padding-left: 6px;
+   -moz-border-radius: 7px;
+}
+
+th.cella_parentela_nucleo_A_padre {
+  background: mediumblue;
+  padding-right: 6px;
+  padding-left: 6px;
+   -moz-border-radius: 7px;
+}
+
+th.cella_parentela_nucleo_A_fratello {
+  background: dodgerblue;
+  padding-right: 6px;
+  padding-left: 6px;
+   -moz-border-radius: 7px;
+}
+
+th.cella_parentela_nucleo_A_sorella {
+  background: magenta;
+  padding-right: 6px;
+  padding-left: 6px;
+   -moz-border-radius: 7px;
 }
 
 #ruolo_parentela{
@@ -421,8 +506,8 @@ th.info_dx {
 }
 
 #tabella_parentela{
-  position: relative;
-  top:110px;
+  position: absolute;
+  top:140px;
   left: 10px;
 }
 
@@ -483,6 +568,11 @@ form.parentela label.fixedwidth {
   top: 5px;
 } 
 
+#div_btnchiudischeda3 {
+  position: relative;
+  top: 5px;
+} 
+
 #btnsalvadati {
   width: 175px;
 }
@@ -498,6 +588,11 @@ form.parentela label.fixedwidth {
 #btnchiudischeda2 {
   width: 250px;
 } 
+
+#btnchiudischeda3 {
+  width: 250px;
+} 
+
 #pulsantiera1 { /* rubrica telefonica */
   visibility: hidden;
   position: absolute;
@@ -514,11 +609,27 @@ form.parentela label.fixedwidth {
   left: 730px;
 }
 
+#pulsantiera3 { /* gestione ruoli */
+  visibility: hidden;
+  position: absolute;
+  height: 60px;
+  top: 430px;
+  left: 730px;
+}
+
 #aggiungi_parente{
   width:115px;
 }
 
 #cancella_parente{
+  width:115px;
+}
+
+#aggiungi_ruolo{
+  width:115px;
+}
+
+#cancella_ruolo{
   width:115px;
 }
 /* *************************************************************************************** */
@@ -776,10 +887,92 @@ table.quote th.quota {
 #sezioneruoli {
   position: relative;
   top: 25px;
-  left: 200px;
+  left: 150px;
   width: 350px;
-}  
+  text-align: right;
+}
 
+#Tabella_Ruoli {
+  border: 1px dotted grey;
+  width: 640px;
+}
+
+#tabellaruoli {
+  position: relative;
+  top: 40px;
+  left: 10px;
+  width: 350px;
+}
+
+table.layout_tabella_ruoli th.cella_ruoli_dispari {
+  text-align: center;
+  font-weight: normal;
+  background: #CCFF99;/*#CCFF99;*/
+}
+ 
+table.layout_tabella_ruoli th.cella_ruoli_pari {
+  text-align: center;
+  font-weight: normal;
+  background: #CCCC99;
+}
+
+#imgRuoli {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 120px; 
+  border-right: 1px dotted grey;
+  border-bottom: 1px dotted grey;
+}
+
+#legendaruoli {
+  visibility: hidden;
+  position: relative;
+  top: 90px;
+  left: 400px;
+  width: 260px;
+  height: 300px;
+  border: 2px solid #FF8C00;
+  background: white /*#CCFFCC*/;
+  -moz-border-radius: 7px;
+  text-align: center;
+}
+
+#tabellalegendaruoli {
+  border: 1px dotted grey;
+  position: relative;
+  top:10px;
+  left:15px;  
+}
+
+table.layout_tabella_legenda_ruoli th.cella_ruoli_dispari {
+  text-align: left;
+  font-weight: normal;
+  background: #CCFF99;/*#CCFF99;*/
+  padding:2px;
+}
+ 
+table.layout_tabella_legenda_ruoli th.cella_ruoli_pari {
+  text-align: left;
+  font-weight: normal;
+  background: #CCCC99;
+  padding:2px;
+}
+
+#div_nrpagine {
+  position: relative;
+  top: 0px;
+  /*top: 90px;*/
+  /*left: 55px;*/
+  left: 0px;
+  /*font-weight: bold;*/
+  color: purple;
+}
+
+img {
+  vertical-align: middle;
+}
 /* *************************************************************************************** */
 
 .campoestratto {

@@ -47,31 +47,93 @@
         break;
         
         case "parentela":
-            $errore =SalvaDatiParentela($errore);
+            $errore = SalvaDatiParentelaNuovo();
             
             switch ($errore) {
                 case 1:
-                    $messaggio="Il familiare selezionato &egrave; gi&agrave; associato";
+                    $messaggio="Salvataggio annullato!<br />Il familiare selezionato &egrave; gi&agrave; associato.";
                     $icona=2; 
                 break;
                 
                 case 2:
-                    $messaggio="Salvataggio annullato! Incongruenza dati trasmessi al server";
+                    $messaggio="Salvataggio annullato!<br />Errata scelta del grado di parentela.";
                     $icona=2; 
                 break;
                 
                 case 3:
-                    $messaggio="Salvataggio annullato! Problemi con la query inviata al server";
+                    $messaggio="Salvataggio annullato!<br />Papà gi&agrave; presente in questa famiglia.";
+                    $icona=2; 
+                break;
+                
+                case 3.1:
+                    $messaggio="Salvataggio annullato!<br />Mamma gi&agrave; presente in questa famiglia.";
+                    $icona=2; 
+                break;
+                
+                case 4:
+                    $messaggio="Salvataggio annullato! <br />Stai cercando di inserire genitori pi&ugrave; giovani dei figli...!";
+                    $icona=2; 
+                break;
+                
+                case 5:
+                    $messaggio="Salvataggio annullato!<br />I nonni non sono ammessi nei nuclei famigliari.";
+                    $icona=2; 
+                break;
+                
+                case 6:
+                    $messaggio="Salvataggio annullato!<br />Gli zii non sono ammessi nei nuclei famigliari.";
+                    $icona=2; 
+                break;
+                
+                case 7:
+                    $messaggio="Salvataggio annullato!<br />Imbarazzante scelta del grado di parentela...";
+                    $icona=2; 
+                break;
+                
+                case 8:
+                    $messaggio="Salvataggio annullato!<br />Genitore coetaneo del figlio!";
+                    $icona=2; 
+                break;
+                
+                case 9:
+                    $messaggio="Salvataggio annullato!<br /> Problemi con la query inviata al server.";
+                    $icona=2; 
+                break;
+                
+                case 10:
+                    $messaggio="Salvataggio annullato!<br /> Marito/Moglie gi&agrave; presente.";
                     $icona=2; 
                 break;
             }
-
+             unset ($_POST["CognomeParente"]);
+             unset ($_POST["id_famiglia_nucleo_A"]);
         break;
         
         case "salva_rubrica":
             SalvaDatiRubrica(); 
         break;
 
+        case "aggiungi_ruolo":
+            $errore=AggiungiRuolo();
+            
+            switch ($errore) {
+                case 1:
+                    $messaggio="E' stato raggiunto il numero massimo (7) di ruoli consentiti!";
+                    $icona=2;
+                break;
+                
+                case 2:
+                    $messaggio="Questo ruolo &egrave; gi&agrave; stato associato";
+                    $icona=2; 
+                break;
+            }
+            
+        break;
+        
+        case "cancella_ruolo":
+            CancellaRuolo();
+        break;
+        
         default:
             $errore=0;
         break;
@@ -123,7 +185,8 @@ function GetData($Data) {
 * versione 1.3 - 20/07/09: risolto problema di chiusura scheda nel salvataggio dati
 * versione 1.4 - 15/09/09: trasformata routine in una function  
 * versione 1.5 - 11/10/09: modificata procedura e controllo delle date di tesseramento
-* versione 1.6 - 30/08/10: aggiunto comandi per evitare l'sql injection (addslashes)                       
+* versione 1.6 - 30/08/10: aggiunto comandi per evitare l'sql injection (addslashes)
+* versione 1.7 - 14/01/11: migliorato controllo data tesseramento                       
 **********************************************************************************/
  function SalvaScheda() {
        // variabili di servizio
@@ -153,7 +216,7 @@ function GetData($Data) {
         $scheda_sezione=$_POST["mysezione"];
         $scheda_partecipazione=$_POST["optPartecipa"];
         $scheda_coro=$_POST["chkCoro"];
-        $scheda_ruolo=$_POST["myruolo"];
+        //$scheda_ruolo=$_POST["myruolo"];
         
         // controlla i dati provenienti dai checkbox
        if ($scheda_coro) {
@@ -173,25 +236,28 @@ function GetData($Data) {
         }
         
         //Controlla e calcola la DATA DI TESSERAMENTO e la DATA DI SCADENZA della tessera
-        $timestamp_primo_settembre=mktime(0,0,0,8,31,date('Y')); 
+        $timestamp_primo_settembre=mktime(0,0,0,8,31,date('Y')); // timestamp del primo settembre dell'anno corrente 
        
         if ($scheda_dataT != "" || $scheda_dataT != null) {
             if ($scheda_dataT=="Oggi") {
                 $scheda_dataT=date('Y-m-d');
                 $timestamp_data_tesseramento=mktime(0,0,0,date('m'),date('d'),date('Y'));
             } else {
-                
-                if ((int)substr($scheda_dataT,6,4) != (int)date('Y')) { //blocca il tentativo di tesserare fuori dall'anno corrente 
+                $timestamp_data_tesseramento=mktime(0,0,0,(int)substr($scheda_dataT,3,2),(int)substr($scheda_dataT,0,2),(int)substr($scheda_dataT,6,4));
+                $timestamp_primo_settembre_anno_passato=mktime(0,0,0,8,31,(date('Y')-1)); // timestamp del primo settembre dell'anno passato
+                // blocca il tentativo di inserire tesseramenti fuori dall'intervallo:
+                // 1 settembre dell'anno prima - 31 agosto anno corrente
+                if (($timestamp_data_tesseramento > $timestamp_primo_settembre_anno_passato) && ($timestamp_data_tesseramento <= $timestamp_primo_settembre)) {
+                    $scheda_dataT=substr($scheda_dataT,6,4)."-".substr($scheda_dataT,3,2)."-".substr($scheda_dataT,0,2);
+                }
+                else {
                     $errore=1;
                     $messaggio="Attenzione! Controlla la data di tesseramento: l'anno che hai inserito potrebbe non essere valido";
                     $icona=2;
                     return;
                 }
-                    $timestamp_data_tesseramento=mktime(0,0,0,(int)substr($scheda_dataT,3,2),(int)substr($scheda_dataT,0,2),(int)substr($scheda_dataT,6,4));
-                    $scheda_dataT=substr($scheda_dataT,6,4)."-".substr($scheda_dataT,3,2)."-".substr($scheda_dataT,0,2);
             }
-            
-            //controlla che il tesseramento non sia stato fatto dopo il primo settembre (la tessera scadrebbe a dicembre dell'anno successivo)
+            //calcola la data di scadenza della tessera
             if ($timestamp_data_tesseramento > $timestamp_primo_settembre) { //siamo dopo il primo settembre aumenta di 1 anno
                 $scheda_dataST=(date('Y')+1)."-12-31";
             } else { // siamo prima del primo settembre
@@ -308,7 +374,7 @@ function GetData($Data) {
                     $query.=", DataScadenzaTessera=null";
                 }
  
-               $query.=", Classe=".$scheda_classe.", Sezione=".$scheda_sezione.", Presenza=".$scheda_partecipazione.", Coro='".$scheda_coro."'".", IdRuolo=".$scheda_ruolo;
+               $query.=", Classe=".$scheda_classe.", Sezione=".$scheda_sezione.", Presenza=".$scheda_partecipazione.", Coro='".$scheda_coro."'";//.", IdRuolo=".$scheda_ruolo;
                $query.=" WHERE id=".$scheda_id;
         } else {
             // prima di salvare controlla se c'è una omonimia sui campi cognome, nome, sesso e data di nascita
@@ -434,8 +500,8 @@ function GetData($Data) {
                 }  
                 
                 if ($scheda_ruolo > 0) {
-                  $insert.=",IdRuolo";
-                  $value.=", $scheda_ruolo";
+                  //$insert.=",IdRuolo";
+                  //$value.=", $scheda_ruolo";
                 }
                 
                 $query.=$insert.") ".$value.")";
@@ -502,7 +568,7 @@ function RicercaIscritti() {
     global $errore,$messaggio,$icona;
     
     // costruisce il primo pezzo di query da inviare a MySql
-    $query ="SELECT ID,cognome,nome,Data_di_nascita,luogo_di_nascita,sesso,tipo_via,via,numero_civico,citt as citta, cap,provincia,citt,email,datatesseramento,quotaoratorio,TipoQuota,classe,sezione,presenza,coro,parrocchia_provenienza,DataScadenzaTessera,IdRuolo FROM Catechismi ";
+    $query ="SELECT ID,cognome,nome,Data_di_nascita,luogo_di_nascita,sesso,tipo_via,via,numero_civico,citt as citta, cap,provincia,citt,email,datatesseramento,quotaoratorio,TipoQuota,classe,sezione,presenza,coro,parrocchia_provenienza,DataScadenzaTessera FROM Catechismi ";
 
     // controlla il tipo di ricerca scelto dall'utente: se con ajax o barcode (quindi con ID)
     // oppure con il classico nome e cognome in modo da completare la query
@@ -565,7 +631,6 @@ function RicercaIscritti() {
           $_POST["optPartecipa"]=($record->presenza);
           $_POST["chkCoro"]=($record->coro);
           $_POST['hdnIdParrocchia']=($record->parrocchia_provenienza);
-          $_POST['myruolo']=($record->IdRuolo);
     }
 
     return;
@@ -602,7 +667,7 @@ return;
 }    
 
 // *************** > FUNZIONE RECUPERA IL LIVELLO DI PRIVILEGI PER UN DATO OPERATORE < ***********
-function GetRuoliOratorio($ruolo) {
+function GetRuoliOratorio() {
   // setta la stringa $query e estrae i dati
   $query="SELECT IdRuoloOratorio,RuoloOratorio FROM tblruolioratorio";
   $rstRuoli=mysql_query($query);
@@ -658,11 +723,52 @@ function GetQuoteOratorio() {
         while ($quote=mysql_fetch_object($result)) {
             echo("<tr>");
             
-            // serve per tenere selezionato l'opzione di versamento 'gratuito' e 'non pagata'
-            if (($quote->IdQuota==3 && $tipo_quota==3) || ($quote->IdQuota==5 && $tipo_quota==5)){
-                $checked="checked";
-            } else {
-                  $checked=null;
+            //tiene selezionato l'opzione relativa al tipo di quota pagata
+            switch ($tipo_quota) {
+                case 1:
+                    if (($quote->IdQuota==1)) {
+                        $checked="checked";
+                    }
+                    else {
+                        $checked=null;
+                    }
+                break;
+            
+                case 2:
+                    if (($quote->IdQuota==2)) {
+                        $checked="checked";
+                    }
+                    else {
+                        $checked=null;
+                    }
+                break;
+                
+                case 3:
+                    if (($quote->IdQuota==3)) {
+                        $checked="checked";
+                    }
+                    else {
+                        $checked=null;
+                    }
+                break;
+                
+                case 4:
+                    if (($quote->IdQuota==4)) {
+                        $checked="checked";
+                    }
+                    else {
+                        $checked=null;
+                    }
+                break;
+                
+                case 5:
+                    if (($quote->IdQuota==5)) {
+                        $checked="checked";
+                    }
+                    else {
+                        $checked=null;
+                    }
+                break;
             }
             
             // stampa il pulsante radio            
@@ -988,7 +1094,7 @@ function GetGradoParentela()
     
     while($result=mysql_fetch_object($query))
     {
-      echo "<option value='".htmlentities($result->IdGradoParentela)."'>".htmlentities($result->GradoParentela)."</option>\n";
+      echo "<option value='".((int)$result->IdGradoParentela-1)."'>".htmlentities($result->GradoParentela)."</option>\n";
     }
     
     return;
@@ -1017,7 +1123,7 @@ function GetParentelaInfo() {
     }
 
     // cerca l'id della famiglia dell'iscritto
-    $query="SELECT IdFamigliare,IdFamiglia FROM tblparentela WHERE IdFamigliare=".$_POST["hdnID"];
+    $query="SELECT IdFamiglia,IdGradoParentela FROM tblparentela WHERE IdFamigliare=".$_POST["hdnID"];
 
     $result=mysql_query($query);
     
@@ -1025,32 +1131,71 @@ function GetParentelaInfo() {
         echo "n. d.";
     } else {
           $famiglia=mysql_fetch_object($result);
+          $grado_parentela=$famiglia->IdGradoParentela;
           
           // estrae i famigliari dell'iscritto
-          $query="SELECT IdFamigliare,IdGradoParentela FROM tblparentela WHERE IdFamiglia=".($famiglia->IdFamiglia)." AND NOT IdFamigliare=".$_POST["hdnID"]." ORDER BY IdGradoParentela";
+          $query="SELECT tblparentela.IdFamigliare,tblparentela.IdGradoParentela, catechismi.Cognome,catechismi.Nome
+                  FROM tblparentela INNER JOIN catechismi
+                  ON tblparentela.IdFamigliare = catechismi.ID
+                  WHERE IdFamiglia=".($famiglia->IdFamiglia)." 
+                  AND NOT IdFamigliare=".$_POST["hdnID"]." 
+                  ORDER BY IdGradoParentela";
+          
           $result=mysql_query($query);
           if (mysql_num_rows($result) >0) {
+          
           //inserisce le iconcine dei famigliari
+          echo "<table cellpadding=\2\" class=\"famigliari_iscritto\"><tr>";
           while ($famigliari=mysql_fetch_object($result)) {
+                  $i++;
+                  if($i > 6) {
+                      echo "</tr><tr>";
+                      $i=1;
+                  }
+                  
+                  $title=htmlentities($famigliari->Cognome)." ".htmlentities($famigliari->Nome);
+                  
                   //inserisce le faccine in base al grado di parentela
                   switch ($famigliari->IdGradoParentela) {
+                      case 1:
+                          if ($grado_parentela < 3 && $famigliari->IdGradoParentela < 3) {
+                              $title.=" (moglie)";
+                          } else {
+                              $title.=" (mamma)";
+                          }
+                          echo "<th class=\"celle_famigliari_iscritto_mamma\"><img src='./Immagini/omino.png' title=\"$title\" width='15' height='20' /></th>";
+                          
+                      break;
+                  
                       case 2:
-                          echo "<img src='./Immagini/mother.png' alt='Mamma' width='30' height='25' />";
+                          if ($grado_parentela < 3 && $famigliari->IdGradoParentela < 3) {
+                              $title.=" (marito)";
+                          } else {
+                              $title.=" (pap&agrave;)";
+                          }
+                          echo "<th class=\"celle_famigliari_iscritto_padre \"><img src='./Immagini/omino.png' title=\"$title\" width='15' height='20' /></th>";
                       break;
                   
                       case 3:
-                          echo "<img src='./Immagini/father.png' alt='Papà' width='30' height='25' />";
+                          if ($grado_parentela < 3 && $famigliari->IdGradoParentela > 2) {
+                              $title.=" (figlio)";
+                          } else {
+                              $title.=" (fratello)";
+                          }
+                          echo "<th class=\"celle_famigliari_iscritto_fratello \"><img src='./Immagini/omino.png' title=\"$title\" width='15' height='20' /></th>";
                       break;
                   
                       case 4:
-                          echo "<img src='./Immagini/boy.png' alt='Fratello' width='30' height='25' />";
-                      break;
-                  
-                      case 5:
-                          echo "<img src='./Immagini/sister.png' alt='Sorella' width='35' height='25' />";
+                          if ($grado_parentela < 3 && $famigliari->IdGradoParentela > 2) {
+                              $title.=" (figlia)";
+                          } else {
+                              $title.=" (sorella)";
+                          }
+                          echo "<th class=\"celle_famigliari_iscritto_sorella \"><img src='./Immagini/omino.png' title=\"$title\" width='15' height='20' /></th>";
                       break;
                   }
               } 
+          echo "</tr></table>";
           } else {
               echo "n. d.";
           }
@@ -1093,8 +1238,8 @@ function CreaTabellaFamigliari()
     
     // ricerca, estrazione e controllo dei dati dei famigliari dell'iscritto
     $query="SELECT tblparentela.IdFamigliare,tblparentela.IdGradoParentela,tblparentela.IdFamiglia,
-            tblgradiparentela.IdGradoParentela,tblgradiparentela.GradoParentela 
-            FROM (tblparentela INNER JOIN tblgradiparentela ON tblparentela.IdGradoParentela=tblgradiparentela.IdGradoParentela) 
+            tblgradiparentela.GradoParentela 
+            FROM (tblparentela INNER JOIN tblgradiparentela ON tblparentela.IdGradoParentela=tblgradiparentela.IdGradoParentela-1) 
             WHERE tblparentela.IdFamiglia=".$id_famiglia." ORDER BY tblparentela.IdGradoParentela";
     
     $result_famigliari=mysql_query($query); 
@@ -1147,15 +1292,15 @@ function CreaTabellaFamigliari()
 
             echo "<th class=\"$classe\">\n";
             
-            if ($id_grado_parentela_iscritto==2 || $id_grado_parentela_iscritto==3) {
+            if ($id_grado_parentela_iscritto == 1 || $id_grado_parentela_iscritto == 2) {
                 if ($dati_parente->Sesso == "F") {
-                    if ($dati->IdGradoParentela ==2) {
+                    if ($dati->IdGradoParentela ==1) {
                         echo ("Moglie");
                     } else {
                         echo ("Figlia");
                     }
                 } else {
-                    if ($dati->IdGradoParentela ==3) {
+                    if ($dati->IdGradoParentela ==2) {
                         echo ("Marito");
                     } else {
                         echo ("Figlio");
@@ -1190,262 +1335,6 @@ function CreaTabellaFamigliari()
     return;
 }
 
-// ****************** > FUNZIONE SALVA DATI PARENTELA < *****************************
-function SalvaDatiParentela($errore){
-    // errori:
-    // 0 = ok dati salvati
-    // 1 = il parente è già stato associato
-    // 2 = salvataggio annullato: è stata riscontrata un'incongruenza dei dati inviati al server
-    // 3 = salvataggio annullato: problemi con la query inviata al server
-    
-    $errore=0;
-    
-    //OTTIENE IL SESSO DELL'ISCRITTO E DEL PARENTE SELEZONATO
-    //(potrebbero sorgere imbarazzanti gradi di parentela fra... gay o lesbiche oppure incestuose!!!)
-    
-    // Sesso e data di nascita dell'iscritto
-    $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID=".$_POST["hdnID"];
-    $result=mysql_query($query);
-    $sesso=mysql_fetch_object($result);
-    
-    $sesso_iscritto=($sesso->Sesso);
-    $data_iscritto=substr(($sesso->Data_di_nascita),0,4);
-    
-    // Sesso e data di nascita del parente selezionato
-    $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID=".$_POST["hdnIDParente"];
-    $result=mysql_query($query);
-    $sesso=mysql_fetch_object($result);
-    
-    $sesso_parente=($sesso->Sesso);
-    $data_parente=substr(($sesso->Data_di_nascita),0,4);
-
-    // controllo sesso parente con grado di parentela scelto
-    if ($sesso_parente=="M") {
-        switch ($_POST["GradoParentela"]) {
-            case 2: // mamma
-                $errore=2;
-                return $errore;
-            break;
-        
-            case 5: // sorella
-                $errore=2;
-                 return $errore;
-            break;
-            
-            case 6: // moglie
-                $errore=2;
-                 return $errore;
-            break;
-            
-            case 9: // figlia
-                $errore=2;
-                 return $errore;
-            break;
-        }
-    } elseif ($sesso_parente=="F"){
-          switch ($_POST["GradoParentela"]) {
-              case 3: // papà
-                  $errore=2;
-                   return $errore;
-              break;
-        
-              case 4: // fratello
-                  $errore=2;
-                   return $errore;
-              break;
-            
-              case 7: // marito
-                  $errore=2;
-                   return $errore;
-              break;
-            
-              case 8: // figlio
-                  $errore=2;
-                   return $errore; 
-              break;
-          }
-    }
-    
-    // controlla che il parente nei gradi parentela di mamma e papà non sia più giovane dell'iscritto
-    if ((intval($data_parente) > intval($data_iscritto)) || (intval($data_parente) == intval($data_iscritto))) {
-        if ($_POST["GradoParentela"]==2 || $_POST["GradoParentela"]==3){
-            $errore=2;
-            return $errore;
-        }
-    } else {
-        if ($_POST["GradoParentela"]==8 || $_POST["GradoParentela"]==9){
-            $errore=2;
-            return $errore;
-        }
-    }
-    
-    // controlla che le coppie che vengono formate non siano dello stesso sesso... nel caso di marito e moglie (6 moglie, 7 marito)
-    if (($sesso_iscritto==$sesso_parente && $_POST["GradoParentela"]==6) || ($sesso_iscritto==$sesso_parente && $_POST["GradoParentela"]==7)) {
-        $errore=2;
-        return $errore;
-    } else {
-        // salva il valore originale della scelta dell'utente
-        $grado_parentela=$_POST["GradoParentela"];
-
-        // i gradi di parentela registrati nel db sono mamma, papà, fratello e sorella
-        switch ($_POST["GradoParentela"]) {
-            case 6: // moglie
-                $_POST["GradoParentela"]=2; // mamma
-                $grado_iscritto=3; // papà || marito
-            break;
-            
-            case 7: // marito
-                $_POST["GradoParentela"]=3; // papà
-                $grado_iscritto=2; // mamma || moglie
-            break;
-            
-            case 8: // figlio
-                $_POST["GradoParentela"]=4; // fratello
-                if ($sesso_iscritto=="F") {
-                    $grado_iscritto=2;
-                } else {
-                    $grado_iscritto=3;
-                }
-            break;
-            
-            case 9: // figlia
-                $_POST["GradoParentela"]=5; //sorella
-                if ($sesso_iscritto=="F") {
-                    $grado_iscritto=2;
-                } else {
-                    $grado_iscritto=3;
-                }
-            break;
-            
-            default:
-               if ($sesso_iscritto=="F") {
-                    $grado_iscritto=5;
-                } else {
-                    $grado_iscritto=4;
-                }
-            break;
-        } 
-        
-        // imposta l'id della famiglia: se non c'è lo va a creare
-            if ($_POST["id_famiglia"]==-1) {
-               $_POST["id_famiglia"]=(GetIdFamiglia($idfamiglia));
-            }
-            
-        // CONTROLLA I DATI DELL'ISCRITTO
-       // controlla che l'iscritto selezionato non sia già stato associato a una famiglia
-        
-        mysql_query("START TRANSACTION");
-        
-        $query="SELECT IdFamiglia,IdGradoParentela FROM tblparentela WHERE IdFamigliare=".$_POST["hdnID"];
-        $result=mysql_query($query);
-    
-        if (mysql_num_rows($result)>0) { // ha trovato l'iscritto già associato in una famiglia
-            $dati=mysql_fetch_object($result);
-            if ($dati->IdGradoParentela <4 && $grado_parentela<6) { // impedisce che vengano associati ai genitori fratelli, sorelle, papà e mamme
-                $errore=2;
-            } elseif ($dati->IdGradoParentela >3 && $grado_parentela>5) { //impedisce che vengano associati ai figli mogli e mariti
-                  $errore=2;
-            } 
-          } else { // non ha trovato l'iscritto
-              $query_inserimento_dati_iscritto="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES ('".$_POST["hdnID"]."','".$grado_iscritto."','".$_POST["id_famiglia"]."')";
-              $result=mysql_query($query_inserimento_dati_iscritto);
-          }
-        
-        // CONTROLLA I DATI DEL PARENTE
-        //controlla che il famigliare selezionato non sia già presente in archivio
-        $query="SELECT IdFamigliare,IdFamiglia,IdGradoParentela FROM tblparentela WHERE IdFamigliare=".$_POST["hdnIDParente"];
-        
-        $result=mysql_query($query);
-        
-        // recupera l'id famiglia e il grado di parentela del famigliare selezionato
-        $dati=mysql_fetch_object($result);
-        $idfamiglia_parente=($dati->IdFamiglia);
-        $gradoparentela_parente=($dati->IdGradoParentela);
-        
-        // se non trova nessuna omonimia costruisce la query per l'inserimento dei dati del famigliare
-        if (mysql_num_rows($result)<1) {
-            //controlla che non si inseriscano più di una mamma (moglie) o papà (marito)
-            if (ControlloGenitoriFamiglia()) {
-                $errore=2;
-            } else {
-                // prima di salvare i dati del parente analizza i componenti della famiglia per impedire
-                // l'inserimento di figli coetanei o più vecchi dei genitori o comunque con un ridotto margine di età
-                // controllo esteso a tutti i componenti della famiglia già inseriti nel database
-                $query="SELECT tblparentela.IdFamiglia,tblparentela.IdGradoParentela,tblparentela.IdFamigliare, 
-                        catechismi.ID, catechismi.Data_di_nascita 
-                        FROM tblparentela INNER JOIN catechismi 
-                        ON tblparentela.IdFamigliare=catechismi.ID 
-                        WHERE tblparentela.IdFamiglia=".intval($_POST["id_famiglia"]);
-                
-                $result=mysql_query($query);
-                
-                while ($mydati=mysql_fetch_object($result)) {
-                    $data_famigliare=intval(substr(($mydati->Data_di_nascita),0,4));
-                    if (intval($data_parente) <= $data_famigliare) {
-                        if ($_POST["GradoParentela"]<4 && $mydati->IdGradoParentela<4) {
-                            $errore=2;
-                        }
-                    } /*elseif ((intval($data_parente)-$data_famigliare <18 && $mydati->IdGradoParentela <4)) {
-                        $errore=2;
-                    }*/
-                }
-                
-                $query_inserimento_dati_parente="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES ('".$_POST["hdnIDParente"]."','".$_POST["GradoParentela"]."','".$_POST["id_famiglia"]."')";
-                $result=mysql_query($query_inserimento_dati_parente);
-            }
-        } else { // ha trovato un'omonimia
-            if ($idfamiglia_parente==$_POST["id_famiglia"]) { //il famigliare è già associato alla famiglia
-                $errore=1;
-            } else { // il famigliare è associato a un'altra famiglia
-                  // sposta tutti i parenti del famigliare dell'iscritto: crea così un'unica famiglia
-                  $query="UPDATE tblparentela SET IdFamiglia=".$_POST["id_famiglia"]." WHERE IdFamiglia=".$idfamiglia_parente;
-                  $result=mysql_query($query);
-                  
-                  // cancella la vecchia famiglia del famigliare dell'iscritto
-                  $query="DELETE FROM tblfamiglie WHERE IdFamiglia=".$idfamiglia_parente;
-                  $result=mysql_query($query);
-            }
-        } 
-        
-        // SE TUTTO E' A POSTO RISOLVE LA TRANSAZIONE (FINALMENTE...!!!)
-        if ($errore>0) {
-            mysql_query("ROLLBACK");
-        } else {
-            mysql_query("COMMIT");
-        }
-    }
-
-    return $errore;
-}
-
-// ****************** > FUNZIONE CREA ID FAMIGLIA < *****************************
-function GetIdFamiglia($idfamiglia) {
-    // controlla se l'iscritto ha già un id di famiglia
-    $query="SELECT IdFamigliare,IdFamiglia FROM tblparentela WHERE IdFamigliare=".$_POST["hdnID"];
-        
-    $result=mysql_query($query);
-    if (mysql_num_rows($result)<1) {
-        // recupera l'ultimo id inserito
-        $query="SELECT Max(IdFamiglia) as UltimoId FROM tblfamiglie";
-        $result=mysql_query($query);
-        $dati=mysql_fetch_object($result);
-        
-        // setta l'id della famiglia
-        $idfamiglia=(($dati->UltimoId)+1);
-
-        // lo va a salvare
-        $query="INSERT INTO tblfamiglie (IdFamiglia) VALUES('$idfamiglia')";
-        $result=mysql_query($query);
-        
-    } else {
-        $dati=mysql_fetch_object($result);
-        $idfamiglia=($dati->IdFamiglia);
-    }
-    
-    
-    return $idfamiglia;
-}
-
 // ********* > FUNZIONE CONTROLLA SE IN UN DATA FAMIGLIA CI SONO GIA' MAMMA E PAPA' (MOGLIE E MARITO) < *******
 function ControlloGenitoriFamiglia() {
     // controlla se il grado di parentela scelto per il parente esiste già per quella famiglia
@@ -1460,17 +1349,33 @@ function ControlloGenitoriFamiglia() {
     }
     
     return false;
-}
+} 
 
 // ****************** > FUNZIONE CANCELLA DATI PARENTELA < *****************************
 function CancellaDatiParentela() {
     $IdFamigliare=explode("|",$_POST["id_famiglia"]);
-      
-    foreach ($IdFamigliare as $valore) {
-        $query="DELETE FROM tblparentela WHERE IdFamigliare=".$valore;  
-        mysql_query($query);
+    
+    // ottiene il numero dei componenti della famiglia
+    $IdElementiFamiglia=(($IdFamigliare[count($IdFamigliare)-1])+1);  
+    
+    // ottiene l'id della famiglia
+    $IdFamiglia=$IdFamigliare[count($IdFamigliare)-2];
+    
+    // toglie gli ultimi due elementi dell'array poiché sono riferiti a idfamiglia e nr componenti famiglia
+    unset ($IdFamigliare[count($IdFamigliare)-1]);
+    unset ($IdFamigliare[count($IdFamigliare)-1]);
+    
+    // cancella i dati dall'archivio
+    if ($IdElementiFamiglia < 3) {
+        $query="DELETE FROM tblparentela WHERE IdFamiglia=".$IdFamiglia;
+        mysql_query($query); 
+    } else {
+          foreach ($IdFamigliare as $valore) {
+              $query="DELETE FROM tblparentela WHERE IdFamigliare=".$valore;  
+              mysql_query($query);
+          }
     }
-
+    
     return;
 }
 
@@ -1629,8 +1534,8 @@ function ControllaScheda($variazione) {
     }       
     
     if ($_POST["myruolo"]!=htmlentities($record["IdRuolo"])) {
-        $DatiVariati++;
-        $variazione.="| ruolo | ";
+        //$DatiVariati++;
+        //$variazione.="| ruolo | ";
     }
    
     // valuta l'esito dei controlli
@@ -1664,19 +1569,898 @@ function StampaMessaggio($messaggio,$errore,$icona) {
     }
     return;
 }
-// ****************** > FUNZIONE RECUPERA RUOLO DELL'ISCRITTO < *************************
+// ****************** > FUNZIONE PER RECUPERARE I RUOLI DELL'ISCRITTO < *************************
 function GetInfoRuolo() {
 
-    $query ="SELECT * FROM tblruolioratorio WHERE IdRuoloOratorio=".$_POST['myruolo'];
+    if (isset($_POST["hdnID"])) {
+        $query ="SELECT tblanimatori.ID,tblanimatori.IDRuolo, tblruolioratorio.Sigla
+                 FROM tblanimatori
+                 INNER JOIN tblruolioratorio
+                 ON tblanimatori.IDRuolo = tblruolioratorio.IdRuoloOratorio
+                 WHERE tblanimatori.ID =".$_POST['hdnID']."
+                 ORDER BY tblanimatori.IdRuolo";
     
-    $result= mysql_query($query);
-    
-    $row=mysql_fetch_object($result);
-    
-    echo (htmlentities($row->RuoloOratorio));
+        $result= mysql_query($query);
+        // costruisce i ruoli dell'iscritto
+        while ($row=mysql_fetch_object($result)) {
+            if ($ruoli==null) {
+                $ruoli.=$row->Sigla."/";
+            } else {
+                $posizione=strstr($ruoli,$row->Sigla); //evita di ripetere la stessa sigla del ruolo
+                if ($posizione==false || $posizione==null) {
+                      $i++;
+                      if ($i>3) {
+                        $ruoli=substr($ruoli,0,strlen($ruoli)-1)."<br />".$row->Sigla."/";
+                        $i=0;
+                      } else {
+                            $ruoli.=$row->Sigla."/";
+                      }
+                }
+            }
+        }
+        
+        if ($ruoli!=null || $ruoli!="") {
+          echo "<a href=\"javascript:LegendaRuoli(0);\">".substr($ruoli,0,strlen($ruoli)-1)."</a>";
+        } else {
+            echo "**********";
+        }
+    } else {
+        echo ("n. d.");
+    }
     
     return;
 
 }
 
+// ****************** > FUNZIONE GET INFO PARENTELA PER TABELLA< *****************************
+function CreaTabellaRuoli()
+{
+    // variabile di servizio per costruire i colori della tabella
+    $i=0; 
+    // variabile per controllare la costruzione della tabella
+    $indice=0;
+    // variabile di servizio che indicati quanti elementi al massimo può contenere la tabella ruoli
+    $nrelementi_tabella = 7; 
+    
+    // serve quando si fa una nuova iscrizione per non dare errore nella costruzione della tabella
+    if (!isset($_POST["hdnID"]) || $_POST["hdnID"]==null) {
+        return;
+    }   
+    
+    $query= "SELECT tblanimatori.IDAnimatore,tblruolioratorio.RuoloOratorio,tblclassi.Classe,tblsezioni.Sezione
+            FROM tblanimatori INNER JOIN tblruolioratorio
+            ON tblanimatori.IDRuolo = tblruolioratorio.IdRuoloOratorio
+            INNER JOIN tblclassi
+            ON tblanimatori.IDClasse = tblclassi.IDClasse
+            INNER JOIN tblsezioni
+            ON tblanimatori.IDSezione = tblsezioni.IDSezione
+            WHERE tblanimatori.ID =".$_POST["hdnID"]."
+            ORDER BY tblruolioratorio.IDRuoloOratorio ASC, tblclassi.IDClasse, tblsezioni.IDSezione ASC";
+    
+    $result =mysql_query($query);
+    
+    //CALCOLA QUANTE "PAGINE" DI TABELLA SERVONO IN BASE AL NUMERO MAX DI ELEMENTI E AL NUMERO DI RUOLI ASSEGNATI
+    $nr_ruoli=mysql_num_rows($result); //trova il numero di ruoli assegnati all'iscritto
+    
+    // trova il numero "grezzo" delle pagine che servono
+    $valore=($nr_ruoli/$nrelementi_tabella);
+     
+    if ($valore-(int)$valore >0) {  
+        $nrpagine=(int)$valore+1;
+    } else {
+        $nrpagine=(int)$valore;
+    }
+    
+    // se il numero di pagine da pubblicare è minore di 1... 
+    if ($nrpagine < 1) { 
+        $nrpagine = 1;
+    }    
+    
+    // setta la pagina corrente 
+    if (isset($_POST["nrpagina_tabella_ruoli"]) && $_POST["nrpagina_tabella_ruoli"] >0) { 
+        if ($_POST["nrpagina_tabella_ruoli"]>$nrpagine) {
+            $_POST["nrpagina_tabella_ruoli"]=$nrpagine;
+        }
+           
+        $nrpagina_corrente=$_POST["nrpagina_tabella_ruoli"];
+    } else {
+         $nrpagina_corrente=1;
+    }
+    
+     //visualizza il navigatore di pagine
+    echo "\n";
+    echo "<div id=\"div_nrpagine\">\n";
+    echo "|<img src=\"./Immagini/indietro.png\" alt=\"icona back\" width=\"25\" height=\"25\" onClick=\"ChangePageTabellaRuoli($nrpagina_corrente-1,$nrpagine);\" />"; 
+    echo "&nbsp;&nbsp;pagina $nrpagina_corrente/$nrpagine&nbsp;&nbsp;";
+    echo "<img src=\"./Immagini/avanti.png\" alt=\"icona back\" width=\"25\" height=\"25\" onClick=\"ChangePageTabellaRuoli($nrpagina_corrente+1,$nrpagine);\" />"; 
+    echo "|"; //elementi cestinati: $nr_ruoli |\n";
+    echo "</div>\n";
+    
+    /* trova la posizione, all'interno dei records trovati, dalla quale partire
+         * per visualizzare gli elementi cancellati nel caso ci siano più pagine */ 
+        if ($_POST["nrpagina_tabella_ruoli"]>1) {
+
+            $posizione=($_POST["nrpagina_tabella_ruoli"]-1)*$nrelementi_tabella;
+            
+            mysql_data_seek($result,$posizione);
+        }
+    
+    //COSTRUISCE LA TABELLA
+    while ($row=mysql_fetch_object($result))
+    {
+        // controlla che nella costruzione della tabella non venga superato il numero degli elementi consentiti
+        $indice++;
+        if ($indice > $nrelementi_tabella) {
+            break;
+        }
+            
+        $i++; //indice per stabilire i colori delle righe della tabella
+        if ($i % 2) {
+            $classe="cella_ruoli_dispari";  
+        } else {
+            $classe ="cella_ruoli_pari";
+        }
+        
+        print "<tr> \n";
+        print "<th class=$classe><input type=\"checkbox\" name=\"SelRuolo\" value=\"".$row->IDAnimatore."\" /> </th>\n";
+        print "<th class=$classe>".htmlentities($row->RuoloOratorio)."</th> \n";
+        print "<th class=$classe>".htmlentities($row->Classe)."</th> \n";
+        print "<th class=$classe>".htmlentities($row->Sezione)."</th> \n";
+        print "</tr> \n";
+    }    
+    
+    return;
+}
+
+// ****************** > FUNZIONE GET LEGENDA RUOLI< *****************************
+function GetLegendaRuoli()
+{
+    $i=0; // variabile di servizio per costruire i colori della tabella
+    
+    $query="SELECT * FROM tblruolioratorio ORDER BY IdRuoloOratorio ASC";
+    
+    $result=mysql_query($query);
+    
+    echo "<table id=\"tabellalegendaruoli\" class=\"layout_tabella_legenda_ruoli\">";
+    echo "<tr>";
+    echo "<th>SIGLA</th>";
+    echo "<th>RUOLO</th>";
+    echo "</tr>";
+    
+    while ($row=mysql_fetch_object($result)) {
+        $i++;
+        if ($i!=1) { 
+            if ($i % 2) {
+                $classe="cella_ruoli_dispari";
+            } else {
+                $classe ="cella_ruoli_pari";
+            }
+
+            echo "<tr>";
+            echo "<th class=$classe>".$row->Sigla."</th>";
+            echo "<th class=$classe>".$row->RuoloOratorio."</th>";
+            echo "</tr>";
+        }
+    }
+    
+    echo "</table>";
+    return;
+}
+
+// ****************** > FUNZIONE AGGIUNGI RUOLI ALL'ISCRITTO< *****************************
+function AggiungiRuolo()
+{
+  // errore 1 = superato il numero consentito di ruoli in oratorio
+  // errore 2 = ruolo già associato
+    
+  $errore=0;
+  
+  $query = "SELECT * FROM tblanimatori WHERE ID=".$_POST["hdnID"];
+
+  
+  $result=mysql_query($query);
+  
+  /*if (mysql_num_rows($result)+1>7) {
+    $errore=1;
+    return $errore;
+  }
+  */
+  while($row=mysql_fetch_object($result)) {
+      if ($row->IDRuolo == $_POST['myruolo'] && $row->IDClasse==$_POST['myruoloclasse'] && $row->IDSezione==$_POST['myruologruppo']) {
+          $errore=2;
+          return $errore;
+      }
+  }
+  
+  mysql_query("START TRANSACTION");
+  
+  $query="INSERT INTO tblanimatori (ID,IDRuolo,IDClasse,IDSezione)
+          VALUES ('".$_POST['hdnID']."','".$_POST['myruolo']."','".$_POST['myruoloclasse']."','".$_POST['myruologruppo']."')";
+  
+  $result=mysql_query($query);
+  
+  mysql_query("COMMIT");
+  
+  return $errore;
+}
+
+// ****************** > FUNZIONE AGGIUNGI RUOLI ALL'ISCRITTO< *****************************
+function CancellaRuolo()
+{
+    $errore=0;
+    
+    //scompone i dati arrivati dal form
+    $DatiDaCancellare=explode("|",$_POST["dati_check_ruoli"]);
+    
+    foreach ($DatiDaCancellare as $valore) {
+        $query="DELETE FROM tblanimatori WHERE IDAnimatore=".$valore;  
+        mysql_query($query);
+    }
+    return;
+}
+
+// ****************** > FUNZIONE SALVA DATI PARENTELA < *****************************
+function SalvaDatiParentelaNuovo()
+{
+    // variabili
+    $errore=0; // indica il tipo di errore nella gestione dell'inserimento del famigliare da aggiungere
+    $id_nucleo_A=(int)$_POST["hdnIDParente"];// identificativo del famigliare da aggiungere
+    
+    // analizza il grado di parentela arrivato dal form (i valori permessi sono 1,2,3,4)
+    if ((int)$_POST["GradoParentela"] >4) {
+        $grado_nucleo_A=(int)$_POST["GradoParentela"]-4;
+    } else {
+        $grado_nucleo_A=(int)$_POST["GradoParentela"];
+    }
+    
+    // memorizza la scelta fatta in origine dall'operatore
+    // serve per stabilire se necessario il grado di parentela del componente
+    // del nucleo B
+    $scelta_selezionata=(int)$_POST["GradoParentela"];
+    
+    // identificativo dell'iscritto della scheda aggiunta
+    $id_nucleo_B=(int)$_POST["hdnID"];
+    
+    //****** CONTROLLI SUL COMPONENTE DA AGGIUNGERE (NUCLEO A) ******
+    //recupera il sesso e la data di nascita
+    $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID =".$id_nucleo_A;
+            
+    $nucleoA=mysql_query($query);
+    
+    $rowA=mysql_fetch_object($nucleoA);
+    
+    $sesso_nucleo_A=$rowA->Sesso;
+    $data_nucleo_A=(int)substr($rowA->Data_di_nascita,0,4);
+    
+    // controlla che sia stato scelto correttamente
+    //il grado di parentela in relazione al sesso
+    switch ($sesso_nucleo_A) {
+        case "F":
+            if ($grado_nucleo_A==2 || $grado_nucleo_A==3) {
+                $errore=2;
+                return $errore;
+            }
+        break;
+        
+        case "M":
+            if ($grado_nucleo_A==1 || $grado_nucleo_A==4) {
+                $errore=2;
+                return $errore;
+            }
+        break;
+    }
+    
+    // controlla se il famigliare da aggiungere è già associato a una famiglia
+    // in caso affermativo ne estrae i componenti con le necessarie info
+    $query= "SELECT tblparentela.IdFamigliare,catechismi.Cognome,catechismi.Nome,catechismi.Data_di_nascita,
+                    catechismi.Sesso,tblparentela.IdFamiglia,tblparentela.IdGradoParentela
+             FROM tblparentela
+             INNER JOIN catechismi
+             ON tblparentela.IdFamigliare = catechismi.ID
+             WHERE tblparentela.IdFamiglia=(SELECT IdFamiglia FROM tblparentela WHERE IdFamigliare=".$id_nucleo_A.")";
+
+    $nucleoA=mysql_query($query);
+    
+    
+    //CONTROLLA SE ESISTE GIÀ UN ID DI FAMIGLIA IN RELAZIONE CON L'ISCRITTO DELLA SCHEDA APERTA, SE NO LO CREA
+    if ($_POST["id_famiglia"]==-1) {
+        $query="SELECT Max(IdFamiglia) as UltimoId FROM tblparentela";
+        $result_id_famiglia=mysql_query($query);
+        $dati=mysql_fetch_object($result_id_famiglia);
+        
+        // setta l'id della famiglia
+        $id_famiglia_B =(($dati->UltimoId)+1);
+    } else {
+          $id_famiglia_B = $_POST["id_famiglia"];
+    }
+
+    // ****** CONTROLLI SUL COMPONENTE DELLA SCHEDA APERTA (NUCLEO B) ******
+    //recupera le info sui componenti della famiglia dell'iscritto della scheda aperta
+    $query="SELECT tblparentela.IdFamigliare,tblparentela.IdFamiglia,tblparentela.IdGradoParentela, 
+                   catechismi.Data_di_nascita,catechismi.Sesso
+            FROM tblparentela
+            INNER JOIN catechismi
+            ON tblparentela.IdFamigliare = catechismi.ID
+            WHERE tblparentela.IdFamiglia =".$id_famiglia_B;
+            
+    $nucleoB=mysql_query($query);
+    
+    // se non esiste nessun elemento del nucleo B bisogna trovare i dati necessari per i controlli
+    if (mysql_num_rows($nucleoB) < 1) {
+        $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID =".$id_nucleo_B;
+            
+        $nucleoB1=mysql_query($query);
+        
+        $rowB1=mysql_fetch_object($nucleoB1);
+    
+        $data_nucleo_B=(int)substr($rowB1->Data_di_nascita,0,4);    
+        $sesso_nucleo_B=$rowB1->Sesso;
+        
+        // stabilisce il grado di parentela in base alla scelta fatta
+        // dall'operatore per il componente del nucleo A
+        if ($scelta_selezionata < 5 ) {
+            switch ($sesso_nucleo_B) {
+                case "F":
+                    $grado_nucleo_B=4; //figlia/sorella
+                break;
+                
+                case "M":
+                    $grado_nucleo_B=3; //figlio/fratello
+                break;             
+            }
+        } else {
+            switch ($sesso_nucleo_B) {
+                case "F":
+                    $grado_nucleo_B=1; //mamma/moglie
+                break;
+                
+                case "M":
+                    $grado_nucleo_B=2; //papà/marito
+                break;             
+            }
+        }
+    }
+   
+    // ******* CONTROLLO INCROCIATO DEI COMPONENTI DEI DUE NUCLEI**********    
+    if (mysql_num_rows($nucleoA)>0) { // esiste un nucleo A
+        while ($rowA=mysql_fetch_object($nucleoA)) { //nucleo A
+            $id_nucleo_A=$rowA->IdFamigliare;
+            $id_famiglia_A=$rowA->IdFamiglia;
+            //preserva la scelta fatta dall'operatore per il grado di parentela
+            if ($id_nucleo_A!=$_POST["hdnIDParente"]) {
+                $grado_nucleo_A=$rowA->IdGradoParentela;
+            } else {
+                if ($scelta_selezionata > 4) {
+                    $grado_nucleo_A=($scelta_selezionata-4);
+                } else {
+                    $grado_nucleo_A=$scelta_selezionata;
+                }
+            }
+            
+            // serve per controllare che non vengano inseriti fratelli o genitori dei genitori
+            // gradi di parentela non ammessi
+            $grado_nucleo_A_Zii=$rowA->IdGradoParentela; 
+            
+            // ottiene il sesso del componente del nucleo A
+            $sesso_nucleo_A=$rowA->Sesso;
+            
+            // ottiene l'anno di nascita del componente del nucleo A
+            $data_nucleo_A=(int)substr($rowA->Data_di_nascita,0,4);
+                    
+            if (mysql_num_rows($nucleoB)>0) { // il nucleo B ha già elementi
+                while ($rowB=mysql_fetch_object($nucleoB)) { // nucleo B
+                    // ottiene i dati da confrontare con il nucleo A
+                    $id_nucleo_B=$rowB->IdFamigliare;
+                    $grado_nucleo_B =$rowB->IdGradoParentela;
+                    $data_nucleo_B=(int)substr($rowB->Data_di_nascita,0,4);
+                    $sesso_nucleo_B=$rowB->Sesso;
+                    
+                    //controlla che il componente del nucleo A non sia già stato associato al nucleo B
+                    if ($id_nucleo_A==$id_nucleo_B) {
+                        $errore=1;
+                        return $errore;
+                    }
+            
+                    // controlla compatibilità della scelta dell'operatore con i gradi di parentela
+                    // già presenti con i due nuclei famigliari
+                    if ($scelta_selezionata == 1 || $scelta_selezionata == 2) { // mamma & papà
+                        // controlla che non vengano inseriti parenti non ammessi                                
+                        if ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) { // tutti genitori
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=5;
+                                return $errore;
+                            } elseif (($grado_nucleo_A_Zii == $grado_nucleo_B) && ($grado_nucleo_A_Zii < 3 || $grado_nucleo_B < 3)) { // genitori già presenti  
+                                  if ($grado_nucleo_A_Zii == 1 || $grado_nucleo_B == 1) {
+                                      $errore=3.1;
+                                      return $errore;
+                                  } elseif($grado_nucleo_A_Zii == 2 || $grado_nucleo_B == 2){
+                                        $errore=3;
+                                        return $errore;
+                                  }
+                            }
+                        } elseif (($grado_nucleo_A_Zii > 2 && $grado_nucleo_B < 3)) { //figli/genitori
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=2;
+                                return $errore;
+                            }
+                        } elseif ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B > 2) { // figli
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=2;
+                                return $errore;
+                            }
+                        }
+                        
+                        // controlla che i genitori non siano più giovani o coetanei dei figli
+                            if ($data_nucleo_A > $data_nucleo_B) { //con i componenti del nucleo A più giovani del nucleo B
+                                if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2) {
+                                    $errore=4;
+                                    return $errore;
+                                }
+                            } elseif ($data_nucleo_A < $data_nucleo_B) { // con i componenti del nucleo A più vecchi del nucleo B
+                                  if ($grado_nucleo_A >2 && $grado_nucleo_B < 3) { 
+                                      $errore=4;
+                                      return $errore;
+                                  }
+                            } else { // coetanei  
+                                  if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2){ 
+                                      if ($scelta_selezionata == 5 || $scelta_selezionata == 6) {
+                                          $errore =7;
+                                          return $errore;
+                                      } else {
+                                            $errore=8;
+                                            return $errore;
+                                      }
+                                    } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B < 3) {
+                                          $errore=8; 
+                                          return $errore; 
+                                    }
+                            }
+                    } elseif ($scelta_selezionata == 3 || $scelta_selezionata == 4) { // fratello & sorella
+                          // controlla che non vengano inseriti zii  
+                          if ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B > 2) { //genitori/figli
+                              if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                  $errore=2;
+                                  return $errore;
+                              }
+                          } elseif ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B < 3) { //figli/genitori
+                                if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){ 
+                                    $errore=2;
+                                    return $errore;
+                                }    
+                          } elseif ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) { //genitori/genitori
+                                if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){  
+                                    $errore=6;
+                                    return $errore;
+                                } elseif (($grado_nucleo_A_Zii == $grado_nucleo_B) && ($grado_nucleo_A_Zii < 3 || $grado_nucleo_B < 3)) { // genitori già presenti  
+                                      if ($grado_nucleo_A_Zii == 1 || $grado_nucleo_B == 1) {
+                                          $errore=3.1;
+                                          return $errore;
+                                      } elseif($grado_nucleo_A_Zii == 2 || $grado_nucleo_B == 2){
+                                        $errore=3;
+                                        return $errore;
+                                      }
+                                }
+                          } 
+                    } elseif ($scelta_selezionata == 5 || $scelta_selezionata == 6) { // moglie & marito
+                          //controlla che non vengano inseriti due mogli/mariti
+                          if ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) { //tutti e due genitori
+                              if ($sesso_nucleo_A == $sesso_nucleo_B) {
+                                  $errore=10;
+                                  return $errore;
+                              }
+                          } elseif ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B > 2) { //tutti e due figli
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore=2;
+                                    return $errore;
+                                }
+                          } else { //genitori/figli
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore=2;
+                                    return $errore;
+                                }
+                          }
+                    } elseif ($scelta_selezionata == 7 || $scelta_selezionata == 8) { // figlio & figlia
+                          if ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B > 2) {
+                              if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                  $errore = 2;
+                                  return $errore;
+                              }
+                          } elseif (($grado_nucleo_A_Zii < 3 && $grado_nucleo_B > 2)) {
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore = 2;
+                                    return $errore;
+                                }
+                          } elseif ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) {
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore = 5;
+                                    return $errore;
+                                }
+                          }
+                    }
+                }
+                
+                //bisogna tornare all'inizio del recordset B
+                mysql_data_seek($nucleoB,0);
+                    
+            } else { // NON C'È NESSUN COMPONENTE NEL NUCLEO B
+                  // controlla l'inserimento dei genitori
+                    if ($scelta_selezionata == 1 || $scelta_selezionata == 2) { // mamma & papà
+                        // controlla che non vengano inseriti parenti non ammessi                                
+                        if ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) { // tutti genitori
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=5;
+                                return $errore;
+                            } elseif (($grado_nucleo_A_Zii == $grado_nucleo_B) && ($grado_nucleo_A_Zii < 3 || $grado_nucleo_B < 3)) { // genitori già presenti  
+                                  if ($grado_nucleo_A_Zii == 1 || $grado_nucleo_B == 1) {
+                                      $errore=3.1;
+                                      return $errore;
+                                  } elseif($grado_nucleo_A_Zii == 2 || $grado_nucleo_B == 2){
+                                        $errore=3;
+                                        return $errore;
+                                  }
+                            }
+                        } elseif (($grado_nucleo_A_Zii > 2 && $grado_nucleo_B < 3)) { //figli/genitori
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=2;
+                                return $errore;
+                            }
+                        } elseif ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B > 2) { // figli
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=2;
+                                return $errore;
+                            }
+                        }
+                        
+                        // controlla che i genitori non siano più giovani o coetanei dei figli
+                            if ($data_nucleo_A > $data_nucleo_B) { //con i componenti del nucleo A più giovani del nucleo B
+                                if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2) {
+                                    $errore=4;
+                                    return $errore;
+                                }
+                            } elseif ($data_nucleo_A < $data_nucleo_B) { // con i componenti del nucleo A più vecchi del nucleo B
+                                  if ($grado_nucleo_A >2 && $grado_nucleo_B < 3) { 
+                                      $errore=4;
+                                      return $errore;
+                                  }
+                            } else { // coetanei  
+                                  if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2){ 
+                                      if ($scelta_selezionata == 5 || $scelta_selezionata == 6) {
+                                          $errore =7;
+                                          return $errore;
+                                      } else {
+                                            $errore=8;
+                                            return $errore;
+                                      }
+                                    } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B < 3) {
+                                          $errore=8; 
+                                          return $errore; 
+                                    }
+                            }
+                    }
+                  
+                  // controlla inserimento di parentele non ammesse nel nucleo famigliare
+                  if ($scelta_selezionata == 3 || $scelta_selezionata == 4) { // fratello & sorella
+                          // controlla che non vengano inseriti zii  
+                          if ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B > 2) { //genitori/figli
+                              if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                  $errore=2;
+                                  return $errore;
+                              }
+                          } elseif ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B < 3) { //figli/genitori
+                                if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){ 
+                                    $errore=2;
+                                    return $errore;
+                                }    
+                          } elseif ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) { //genitori/genitori
+                                if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){  
+                                    $errore=6;
+                                    return $errore;
+                                } elseif (($grado_nucleo_A_Zii == $grado_nucleo_B) && ($grado_nucleo_A_Zii < 3 || $grado_nucleo_B < 3)) { // genitori già presenti  
+                                      if ($grado_nucleo_A_Zii == 1 || $grado_nucleo_B == 1) {
+                                          $errore=3.1;
+                                          return $errore;
+                                      } elseif($grado_nucleo_A_Zii == 2 || $grado_nucleo_B == 2){
+                                        $errore=3;
+                                        return $errore;
+                                      }
+                                }
+                          } 
+                    }
+                    
+                    // controlla inserimento di moglie e marito
+                    if ($scelta_selezionata == 5 || $scelta_selezionata == 6) { // moglie & marito
+                          //controlla che non vengano inseriti due mogli/mariti
+                          if ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) { //tutti e due genitori
+                              if ($sesso_nucleo_A == $sesso_nucleo_B) {
+                                  $errore=7;
+                                  return $errore;
+                              }
+                          } elseif ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B > 2) { //tutti e due figli
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore=2;
+                                    return $errore;
+                                }
+                          } else { //genitori/figli
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore=2;
+                                    return $errore;
+                                }
+                          }
+                    }
+                    // controlla l'inserimento di figli
+                    if ($scelta_selezionata == 7 || $scelta_selezionata == 8) { // figlio & figlia
+                          if ($grado_nucleo_A_Zii > 2 && $grado_nucleo_B > 2) {
+                              if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                  $errore = 2;
+                                  return $errore;
+                              }
+                          } elseif (($grado_nucleo_A_Zii < 3 && $grado_nucleo_B > 2)) {
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore = 2;
+                                    return $errore;
+                                }
+                          } elseif ($grado_nucleo_A_Zii < 3 && $grado_nucleo_B < 3) {
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore = 5;
+                                    return $errore;
+                                }
+                          }
+                    }
+            }
+        }
+    } else { // IL NUCLEO A NON HA ELEMENTI
+          if (mysql_num_rows($nucleoB)>0) { // il nucleo B ha già elementi
+                while ($rowB=mysql_fetch_object($nucleoB)) { // nucleo B
+                    // ottiene i dati da confrontare con il nucleo A
+                    $id_nucleo_B=$rowB->IdFamigliare;
+                    $grado_nucleo_B =$rowB->IdGradoParentela;
+                    $data_nucleo_B=(int)substr($rowB->Data_di_nascita,0,4);
+                    $sesso_nucleo_B=$rowB->Sesso;
+
+                    // controlla l'inserimento dei genitori
+                    if ($scelta_selezionata == 1 || $scelta_selezionata == 2) { // mamma & papà
+                        // controlla che non vengano inseriti parenti non ammessi                                
+                        if ($grado_nucleo_A < 3 && $grado_nucleo_B < 3) { // tutti genitori
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=5;
+                                return $errore;
+                            } elseif (($grado_nucleo_A == $grado_nucleo_B) && ($grado_nucleo_A < 3 || $grado_nucleo_B < 3)) { // genitori già presenti  
+                                  if ($grado_nucleo_A == 1 || $grado_nucleo_B == 1) {
+                                      $errore=3.1;
+                                      return $errore;
+                                  } elseif($grado_nucleo_A == 2 || $grado_nucleo_B == 2){
+                                        $errore=3;
+                                        return $errore;
+                                  }
+                            }
+                        } elseif (($grado_nucleo_A > 2 && $grado_nucleo_B < 3)) { //figli/genitori
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=2;
+                                return $errore;
+                            }
+                        } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B > 2) { // figli
+                            if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                $errore=2;
+                                return $errore;
+                            }
+                        }
+                    }
+                  
+                  // controlla inserimento di parentele non ammesse nel nucleo famigliare
+                  if ($scelta_selezionata == 3 || $scelta_selezionata == 4) { // fratello & sorella
+                          // controlla che non vengano inseriti zii  
+                          if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2) { //genitori/figli
+                              if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                  $errore=2;
+                                  return $errore;
+                              }
+                          } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B < 3) { //figli/genitori
+                                if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){ 
+                                    $errore=6;
+                                    return $errore;
+                                }    
+                          } elseif ($grado_nucleo_A < 3 && $grado_nucleo_B < 3) { //genitori/genitori
+                                if ($id_nucleo_A == $_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){  
+                                    $errore=6;
+                                    return $errore;
+                                } elseif (($grado_nucleo_A == $grado_nucleo_B) && ($grado_nucleo_A < 3 || $grado_nucleo_B < 3)) { // genitori già presenti  
+                                      if ($grado_nucleo_A_Zii == 1 || $grado_nucleo_B == 1) {
+                                          $errore=3.1;
+                                          return $errore;
+                                      } elseif($grado_nucleo_A == 2 || $grado_nucleo_B == 2){
+                                        $errore=3;
+                                        return $errore;
+                                      }
+                                }
+                          } 
+                    }
+                    
+                    // controlla inserimento di moglie e marito
+                    if ($scelta_selezionata == 5 || $scelta_selezionata == 6) { // moglie & marito
+                          //controlla che non vengano inseriti due mogli/mariti
+                          if ($grado_nucleo_A < 3 && $grado_nucleo_B < 3) { //tutti e due genitori
+                              if ($sesso_nucleo_A == $sesso_nucleo_B) {
+                                  $errore=7;
+                                  return $errore;
+                              }
+                          } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B > 2) { //tutti e due figli
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore=2;
+                                    return $errore;
+                                }
+                          } else { //genitori/figli
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore=7;
+                                    return $errore;
+                                }
+                          }
+                    }
+                    
+                    // controlla l'inserimento di figli
+                    if ($scelta_selezionata == 7 || $scelta_selezionata == 8) { // figlio & figlia
+                          if ($grado_nucleo_A > 2 && $grado_nucleo_B > 2) {
+                              if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                  $errore = 2;
+                                  return $errore;
+                              }
+                          } elseif (($grado_nucleo_A < 3 && $grado_nucleo_B > 2)) {
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore = 2;
+                                    return $errore;
+                                }
+                          } elseif ($grado_nucleo_A < 3 && $grado_nucleo_B < 3) {
+                                if ($id_nucleo_A==$_POST["hdnIDParente"] && $id_nucleo_B == $_POST["hdnID"]){
+                                    $errore = 5;
+                                    return $errore;
+                                }
+                          }
+                    }
+                    
+                     // controlla che i genitori non siano più giovani o coetanei dei figli
+                            if ($data_nucleo_A > $data_nucleo_B) { //con i componenti del nucleo A più giovani del nucleo B
+                                if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2) {
+                                    $errore=4;
+                                    return $errore;
+                                }
+                            } elseif ($data_nucleo_A < $data_nucleo_B) { // con i componenti del nucleo A più vecchi del nucleo B
+                                  if ($grado_nucleo_A >2 && $grado_nucleo_B < 3) { 
+                                      $errore=4;
+                                      return $errore;
+                                  }
+                            } else { // coetanei  
+                                  if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2){ 
+                                      if ($scelta_selezionata == 5 || $scelta_selezionata == 6) {
+                                          $errore =7;
+                                          return $errore;
+                                      } else {
+                                            $errore=8;
+                                            return $errore;
+                                      }
+                                    } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B < 3) {
+                                          $errore=8; 
+                                          return $errore; 
+                                    }
+                            }
+                  }
+            } else { // NESSUN ELEMENTO COMPONE SIA IL NUCLEO A SIA IL NUCLEO B
+                  
+                  // controlla inserimento di moglie e marito
+                    if ($scelta_selezionata == 5 || $scelta_selezionata == 6) { // moglie & marito
+                        //controlla che non vengano inseriti due mogli/mariti
+                        if ($sesso_nucleo_A == $sesso_nucleo_B) {
+                            $errore=7;
+                            return $errore;
+                        }
+                    }
+                  
+                  // controlla che i genitori non siano più giovani o coetanei dei figli
+                            if ($data_nucleo_A > $data_nucleo_B) { //con i componenti del nucleo A più giovani del nucleo B
+                                if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2) {
+                                    $errore=4;
+                                    return $errore;
+                                }
+                            } elseif ($data_nucleo_A < $data_nucleo_B) { // con i componenti del nucleo A più vecchi del nucleo B
+                                  if ($grado_nucleo_A >2 && $grado_nucleo_B < 3) { 
+                                      $errore=4;
+                                      return $errore;
+                                  }
+                            } else { // coetanei  
+                                  if ($grado_nucleo_A < 3 && $grado_nucleo_B > 2){ 
+                                      if ($scelta_selezionata == 5 || $scelta_selezionata == 6) {
+                                          $errore =7;
+                                          return $errore;
+                                      } else {
+                                            $errore=8;
+                                            return $errore;
+                                      }
+                                    } elseif ($grado_nucleo_A > 2 && $grado_nucleo_B < 3) {
+                                          $errore=8;
+                                          return $errore;
+                                    }
+                            }
+            }
+    }
+    
+    // VA (finalmente...!!) A SALVARE I DATI IN TABELLA
+    if (mysql_num_rows($nucleoA) > 0 && mysql_num_rows($nucleoB) > 0) {
+        // stabilisce quale famiglia deve modificare
+        if ($id_famiglia_A < $id_famiglia_B) {
+            $id_famiglia = $id_famiglia_A;
+            $famiglia_id = $id_famiglia_B;
+        } else {
+            $id_famiglia = $id_famiglia_B;
+            $famiglia_id = $id_famiglia_A;
+        }
+    
+        // manda a mysql i dati
+        $query ="UPDATE tblparentela SET IdFamiglia = '".$id_famiglia."' WHERE IdFamiglia = '".$famiglia_id."'";
+        $salvataggio=mysql_query($query) || die ($query);
+        
+    } elseif (mysql_num_rows($nucleoA) > 0 && mysql_num_rows($nucleoB) == 0){
+          $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_B','$grado_nucleo_B','$id_famiglia_A')";
+          $salvataggio=mysql_query($query) || die ($query);
+    
+    } elseif (mysql_num_rows($nucleoA) == 0 && mysql_num_rows($nucleoB) > 0){
+          $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_A','$grado_nucleo_A','$id_famiglia_B')";
+          $salvataggio=mysql_query($query) || die ($query);
+   
+    } else {
+          $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_B','$grado_nucleo_B','$id_famiglia_B')";
+          $salvataggio=mysql_query($query) || die ($query);
+          
+          $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_A','$grado_nucleo_A','$id_famiglia_B')";
+          $salvataggio=mysql_query($query) || die ($query);
+    }
+    
+   
+    return $errore;    
+}
+
+// ****************** > FUNZIONE RECUPERA FAMIGLIARI DEL NUCLEO A < *****************************
+function GetFamigliariParentelaNucleoA() {
+    
+    if (isset($_POST["id_famiglia_nucleo_A"]) && $_POST["id_famiglia_nucleo_A"] !="") {
+        $query ="SELECT tblparentela.IdGradoParentela,catechismi.Cognome,catechismi.Nome
+                FROM tblparentela INNER JOIN catechismi
+                ON tblparentela.IdFamigliare = catechismi.ID
+                WHERE tblparentela.IdFamiglia =".$_POST["id_famiglia_nucleo_A"]. "
+                ORDER BY tblparentela.IdGradoParentela";
+        
+        $result = mysql_query($query);
+        
+        echo "<table id=\"tabella_parentela_nucleo_A\"><tr>";
+        
+        while ($row=mysql_fetch_object($result)) {
+            switch ($row->IdGradoParentela) {
+                case 1:
+                    $classe="cella_parentela_nucleo_A_mamma";
+                break;
+                
+                case 2:
+                    $classe="cella_parentela_nucleo_A_padre";
+                    $title ="";
+                break;
+                
+                case 3:
+                    $classe="cella_parentela_nucleo_A_fratello";
+                break;
+                
+                case 4:
+                    $classe="cella_parentela_nucleo_A_sorella";
+                break;
+            }
+            
+            echo "<th class=$classe><img src='./Immagini/omino.png' title='".htmlentities($row->Cognome)." ".htmlentities($row->Nome)."' width='16' height='21' /></th>";
+
+        }
+        echo "</tr></table>";
+        
+    } else {
+          echo "&nbsp;";
+    }
+    
+    unset ($_POST["id_famiglia_nucleo_A"]);
+    
+    return;
+}
 ?>

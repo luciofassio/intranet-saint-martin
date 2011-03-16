@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 require('accesso_db.inc');
 ConnettiDB();

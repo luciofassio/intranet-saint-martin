@@ -105,11 +105,21 @@ $idoperatore = $_SESSION['authenticated_user_id'];
 										      &nbsp;
 									     </div>
 								    </div>
-               </div>     
+               </div>    
                 
               <div id ="etichettanome">    
                     <label for="txtNome"><strong>Nome</strong></label>
-                    <input type="text" style="border: 1px dotted grey;" name="txtNome" id="txtNome" onfocus="ResetCampoNome();" onblur="ControlloInputNome();" autocomplete="off" />
+                    <input type="text" style="border: 1px dotted grey;" name="txtNome" id="txtNome" onkeyup="lookup_names(this.value);" onfocus="ResetCampoNome();" onblur="fill_names();" onkeypress="RilevaTab(event);" autocomplete="off" />
+                    
+                    <div class="suggestionsBox" id="suggestions_names" style="display: none;">
+									     <img src="./Immagini/upArrow.png" style="position: relative; top: -12px; left: 50px;" alt="" />
+									     <div class="suggestionList" id="autoSuggestionsListNames">
+										      &nbsp;
+									     </div>
+								    </div>
+              </div>      
+                    
+              <div id ="barcode">      
                     &nbsp;
                     <label for="txtBarCode"><strong>Cod. a barre</strong></label>
                     <input type="text" style="border: 1px dotted grey;" name="txtBarCode" id="txtBarCode" autocomplete="off" onfocus="ResetCampoBarCode();" onblur="ControlloInputCodiceBarre();" onKeyPress="InvioBarCode(event);"/>
@@ -169,19 +179,25 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                     ?> 
                 </td>
                 <?php
-                    // questa funzione è regolamentata da un ulteriore livello di privilegi: segretari e amministratori possono accedervi 
-                    if ($_SESSION['access_level'] >2) {
-                            print ("<td class=\"NoTabSelected\">");
-                            print ("<a class=\"cellaselezionata\" href=\"javascript:CambiaTab(5);\">Ruolo</a>");
-                            print ("</td>");
-                    }
+                        // questa funzione è regolamentata da un ulteriore livello di privilegi: segretari e amministratori possono accedervi 
+                        if ($_SESSION['access_level'] >2) {
+                            if (isset($_POST["hdnID"])) { 
+                                print ("<td class=\"NoTabSelected\">");
+                                print ("<a class=\"cellaselezionata\" href=\"javascript:CambiaTab(5);\">Ruoli</a>");
+                                print ("</td>");
+                            } else {
+                                print ("<td class=\"NoTabSelected\">");
+                                print ("<a class='cellaselezionata' href='javascript:GestioneErrori();'>Ruoli</a>");
+                                print "</td>";
+                            }
+                        }
                 ?>
             </tr>
         </table>
     </div>
 <!-- FINE SEZIONE TABELLA FUNZIONI ANAGRAFICA -->
         
-<!-- SEZIONE DIV INFO E PULSANTIERE -->       
+<!-- SEZIONE DIV INFO -->       
     <div id="div_dati_funzioni">
         <div id="mylettera">
            <img src="./Immagini/info.png" alt="icona info" width="21" height="21" />
@@ -257,7 +273,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                 
                 <tr>
                     <th class="info_sx">
-                    Sezione:
+                    Gruppo:
                     </th>
                     
                     <th class="info_dx">
@@ -279,7 +295,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                 
                 <tr>
                     <th class="info_sx">
-                      Ruolo:
+                      Ruoli:
                     </th>
                     
                     <th class="info_dx">
@@ -293,7 +309,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
     
     </div>
   
-<!-- FINE SEZIONE DIV DATI FUNZIONI E PULSANTIERE -->
+<!-- FINE SEZIONE DIV DATI FUNZIONI -->
  
 <!-- ********************** SEZIONE DATI ANAGRAFICI ******************** -->
     <form id="SalvaSchedaIscritto" name="SalvaSchedaIscritto" method="post" action="xanagrafica.php">
@@ -412,6 +428,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>  
                     
 <!-- ********************** SEZIONE PULSANTIERE ******************** -->
+      <!--  ************ PULSANTIERA DEFAULT (ANAGRAFICA) ************************* -->
     <div id="pulsantiera">
         <input type="button" name="privacy" id="myprivacy" value="Privacy" onclick="stampa_privacy('<?php echo($_POST["hdnID"]); ?>')" />
         <input type="button" name="salvadati" id="btnsalvadati" value="Salva i Dati" onClick="fncSalvaScheda();" />
@@ -446,6 +463,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>
       </div>
       
+        <!--  ************ PULSANTIERA 1 (RUBRICA) ************************* -->
       <div id="pulsantiera1">
           <input type="button" value="Salva Rubrica" onClick="fncSalvaRubrica();" name="salva_numero" id="salva_numero"  
               <?php
@@ -477,6 +495,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>
       </div>
       
+        <!--  ************ PULSANTIERA 2 (PARENTELA) ************************* -->
       <div id="pulsantiera2">
           <input type="button" value="Aggiungi" onclick="fncAggiungiParente();" name="aggiungi_parente" id="aggiungi_parente"  
               <?php
@@ -502,6 +521,38 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                         echo "<input type='button' name='chiudischeda' id='btnchiudischeda2' value='Chiudi Scheda Iscritto' onclick='ChiudiIscritto(0);' />";
                     } else {
                         echo "<input type='button' name='chiudischeda' id='btnchiudischeda2' value='Annulla Iscrizione' onclick='ChiudiIscritto(1);' />";
+                    }                      
+                ?>
+            </div>
+      </div>
+      
+      <!--  ************ PULSANTIERA 3 (RUOLI) ************************* -->
+      <div id="pulsantiera3">
+          <input type="button" value="Aggiungi" onclick="fncAggiungiCancellaRuolo(0);" name="aggiungi_ruolo" id="aggiungi_ruolo"  
+              <?php
+                  if (isset($_POST["hdnID"])) {
+                      echo "enabled";
+                  } else {
+                      echo "disabled";
+                  }
+              ?>
+          /> &nbsp;
+          
+          <input type="button" value="Cancella" onclick="fncAggiungiCancellaRuolo(1);" name="cancella_ruolo" id="cancella_ruolo" 
+              <?php
+                  if (isset($_POST["hdnID"])) {
+                      echo "enabled";
+                  } else {
+                      echo "disabled";
+                  }
+              ?>
+          />
+          <div id="div_btnchiudischeda3">
+                <?php 
+                    if (isset($_POST["hdnID"])) {
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda3' value='Chiudi Scheda Iscritto' onclick='ChiudiIscritto(0);' />";
+                    } else {
+                        echo "<input type='button' name='chiudischeda' id='btnchiudischeda3' value='Annulla Iscrizione' onclick='ChiudiIscritto(1);' />";
                     }                      
                 ?>
             </div>
@@ -579,7 +630,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>
             
             <div id="myclasse">
-                <label for="classecatechismi" id="classecatechismi"><strong>Classe</strong></label>
+                <label for="classecatechismi" id="classecatechismi"><strong>Classe a scuola&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
                 <select class="campoestratto" name="myclassi" id="myclassi" onfocus="FuocoClasseCatechismo()" onblur="ControlloClasseCatechismo()" onclick="ControlloClasseFrequentata()">
                     <option value="0">*******
                       <?php  $classe=$_POST["myclassi"]; PopolaListaClassi($classe); ?>           
@@ -588,7 +639,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>  
             
             <div id="sezionecatechismo">
-                <label for="sezionecatechismi" id="sezionecatechismi"><strong>Sezione</strong></label>
+                <label for="sezionecatechismi" id="sezionecatechismi"><strong>Gruppo in parrocchia</strong></label>
                 <select name="mysezione" id="mysezione" onfocus="FuocoSezioneCatechismo()" onblur="ControlloSezioneCatechismo()" class="campoestratto">
                     <?php  $sezione=$_POST["mysezione"];
                             PopolaListaSezioni($sezione);
@@ -644,23 +695,64 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>
 
         </div>
-    
+    </form>
 <!-- ************************ SEZIONE RUOLO IN ORATORIO *************************-->
+     <form id="ModificaRuolo" method="post" action="xanagrafica.php">
+        <input type="hidden" name="azione_salvataggio" id="modifica_ruolo" value="" />
+        <input type="hidden" name="tab_attivo" id="mygestioneruoli" value="<?php echo($_POST['tab_attivo']); ?>" />
+        <input type="hidden" name="hdnID" value="<?php echo ($_POST['hdnID']);?>"" />
+        <input type="hidden" name="dati_check_ruoli" id="dati_check_ruoli" value="" />
+        <input type="hidden" name="nrpagina_tabella_ruoli" id="nrpagina_tabella_ruoli" value="" />
+        
         <div id="ruolo">
        
-            <div id="imgTesseramenti">
+            <div id="imgRuoli">
                 <img src="./Immagini/ruolo1.png" alt="icona tesseramenti" width="70" height="60" />
             </div>
             
             <div id="sezioneruoli">
-                <label for="sezioneruolo" id="sezioneruolo"><strong>Ruolo</strong></label>
+                <label for="sezioneruolo" id="sezioneruolo"><strong>Ruolo&nbsp;&nbsp;</strong></label>
                 <select name="myruolo" id="myruolo" onfocus="FuocoSezioneRuoli()" onblur="ControlloSezioneRuoli()" class="campoestratto">
-                    <?php  $ruolo=$_POST["myruolo"];
-                            GetRuoliOratorio($ruolo);
+                    <?php    
+                            GetRuoliOratorio();
+                    ?>    
+                </select>
+           
+                <br /><br />
+              
+                <label for="sezioneruoloclasse" id="sezioneruoloclasse"><strong>Classe animata&nbsp;&nbsp;</strong></label>
+                <select name="myruoloclasse" id="myruoloclasse" onfocus="FuocoSezioneRuoliClasse()" onblur="ControlloSezioneRuoliClasse()" class="campoestratto">
+                    <?php  
+                            PopolaListaClassi(17); 
+                    ?>
+                </select>
+              
+               <br /><br />
+              
+                <label for="sezioneruologruppo" id="sezioneruologruppo"><strong>Gruppo del&nbsp;&nbsp;</strong></label>
+                <select name="myruologruppo" id="myruologruppo" onfocus="FuocoSezioneRuoliGruppo()" onblur="ControlloSezioneRuoliGruppo()" class="campoestratto">
+                    <?php  
+                            PopolaListaSezioni();
                     ?>    
                 </select>
             </div> 
+            
+            <div id="tabellaruoli">
+               <table id="Tabella_Ruoli" class="layout_tabella_ruoli">
+                    <tr>
+                        <th>SEL</th>
+                        <th>Ruolo</th>
+                        <th>Classe</th>
+                        <th>Gruppo</th>
+                    </tr>
+                    
+                    <?php
+                        CreaTabellaRuoli();
+                    ?>
+                    
+               </table>
         
+            </div>
         </div>  
     </form>
 
@@ -718,9 +810,10 @@ $idoperatore = $_SESSION['authenticated_user_id'];
         <form id="GestioneParentela" name="GestioneParentela" class="parentela" method="post" action="xanagrafica.php">
             <input type="hidden" name="azione_salvataggio" id="save_family" value="" />
             <input type="hidden" name="hdnID" value="<?php echo ($_POST['hdnID']);?>"" />
-            <input type="hidden" name="hdnIDParente" value="<?php echo ($_POST['hdnIDParente']);?>"" />
+            <input type="hidden" name="hdnIDParente" id="hdnIDParente" value="<?php echo ($_POST['hdnIDParente']);?>" />
             <input type="hidden" name="id_famiglia" id="id_famiglia" value="" />
             <input type="hidden" name="tab_attivo" id="mygestioneparentela" value="<?php echo($_POST['tab_attivo']); ?>" />
+            <input type="hidden" name="id_famiglia_nucleo_A" id="id_famiglia_nucleo_A" value="<?php echo($_POST['id_famiglia_nucleo_A']); ?>" />
             
             <div id="gestione_parentela">
                 <div id="imgFamiglia">
@@ -728,9 +821,8 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                 </div>
 
                 <div id="cognome_parente">
-                    <input type="hidden" name="hdnIDParente" id="hdnIDParente" value="<?php echo ($_POST['hdnIDParente']);?>" />
-                    <label class="fixedwidth"><strong>Cognome e Nome parente</strong></label>
-                    <input type="text" style="border: 1px dotted grey;" name="CognomeParente" id="CognomeParente" onkeyup="lookup_parentela(this.value);" onblur="fill_parentela();" onfocus="ResetCampoCognome()" onkeypress="RilevaTab(event);" autocomplete="off" size="41" />
+                    <label class="fixedwidth"><strong>Cognome e Nome parente:</strong></label>
+                    <input type="text" style="border: 1px dotted grey;" name="CognomeParente" id="CognomeParente" onkeyup="lookup_parentela(this.value);" onblur="fill_parentela();" onfocus="ResetCampoCognome()" onkeypress="RilevaTab(event);" autocomplete="off" size="41" value="<?php echo $_POST["CognomeParente"];?>" />
                     &nbsp;
 								
                     <div class="suggestionsBoxParentela" id="suggestions_parentela" style="display: none;">
@@ -742,14 +834,22 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                 </div>
 
                 <div id="grado_parentela">
-                    <label class="fixedwidth"><strong>Grado di parentela</strong></label>
+                    <label class="fixedwidth"><strong>Grado di parentela:</strong></label>
                     <select style="border: 1px dotted grey;" name="GradoParentela" id="GradoParentela">
                         <?php
                             GetGradoParentela();
                         ?>
                     </select>
                 </div>
-            
+                
+                <div id="parentela_nucleo_A">
+                    <label class="fixedwidth"><strong>Nucleo famigliare: </strong></label>
+                        <?php
+                            GetFamigliariParentelaNucleoA();
+                        ?>
+                    
+                </div>
+                
                 <div id="tabella_parentela">
                     <table id="TabellaParentela" class="layout_tabella_parentela">
                         <tr>
@@ -793,7 +893,13 @@ $idoperatore = $_SESSION['authenticated_user_id'];
     <?php
         StampaMessaggio($messaggio,$errore,$icona);
     ?>
-
+    <div id ="legendaruoli">
+        <?php
+            GetLegendaRuoli();
+        ?>
+        <br /><br />
+        <input type="button" id="btn_legenda_ruoli" name="btn_legenda_ruoli" value="Chiudi" onclick="LegendaRuoli(1);"/>
+    </div>
 </body>
 
 </html>

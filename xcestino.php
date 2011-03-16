@@ -81,7 +81,7 @@ function RecuperaCancellati(){
 /**********************>>>>>>>>>> FUNZIONE PER LEGGERE QUANTI ISCRITTI CI SONO NEL CESTINO <<<<<<<<**********************/ 
 function GetDeleted($abilita_pulsante) {
     $i=1; // variabile per processare i colori delle righe della tabella
-    $nrelementi_pagina=3; // setta il numero massimo di elementi cancellati per pagina
+    $nrelementi_pagina=14; // setta il numero massimo di elementi visualizzati per pagina
     global $abilita_pulsante; // rende globale la variabile $abilita_pulsante
     $abilita_pulsante ="disabled"; // abilita/disabilita i pulsanti recupera e svuota cestino
     $nrcestinati=0; // inizializza la variabile che conta il numero dei cestinati in arvhivio
@@ -91,7 +91,46 @@ function GetDeleted($abilita_pulsante) {
 
     $result =mysql_query($query); // estrae gli iscritti cancellati dal database
     
-    // visualizza la tabella con i risultati ottenuti
+    $nrcestinati =mysql_num_rows($result); // trova il numero degli iscritti cestinati
+    
+    
+    // CALCOLA E VISUALIZZA IL NUMERO DELLE PAGINE IN BASE AL NUMERO DEGLI ISCRITTI CANCELLATI TROVATI
+    $valore=($nrcestinati/$nrelementi_pagina); // trova il numero "grezzo" di pagine da visualizzare 
+        
+    // calcola il numero di pagine da pubblicare    
+    if ($valore-(int)$valore >0) {  
+        $nrpagine=(int)$valore+1;
+    } else {
+        $nrpagine=(int)$valore;
+    }    
+    
+    // se il numero di pagine da pubblicare è minore di 1... 
+    if ($nrpagine < 1) { 
+        $nrpagine = 1;
+    }
+    
+    if (isset($_POST["nrpagina"]) && $_POST["nrpagina"] >0) { // setta la pagina corrente 
+        
+        if ($_POST["nrpagina"]>$nrpagine) {
+            $_POST["nrpagina"]=$nrpagine;
+        }
+           
+        $nrpagina_corrente=$_POST["nrpagina"];
+    } else {
+         $nrpagina_corrente=1;
+    }
+    
+    //visualizza il navigatore di pagine
+    echo "\n";
+    echo "<div id=\"div_nrpagine\">\n";
+    echo "|<img src=\"./Immagini/indietro.png\" alt=\"icona back\" width=\"25\" height=\"25\" onClick=\"ChangePage($nrpagina_corrente-1,$nrpagine);\" />"; 
+    echo "&nbsp;&nbsp;pagina $nrpagina_corrente/$nrpagine&nbsp;&nbsp;";
+    echo "<img src=\"./Immagini/avanti.png\" alt=\"icona back\" width=\"25\" height=\"25\" onClick=\"ChangePage($nrpagina_corrente+1,$nrpagine);\" />"; 
+    echo "| elementi cestinati: $nrcestinati |\n";
+    echo "</div>\n";
+    
+    
+    // VISUALIZZA LA TABELLA CON I RISULTATI OTTENUTI
     echo "\n";
     echo "<div id=\"div_dati_funzioni\">\n";
     echo "<div id=\"imgCestino\">\n";
@@ -99,9 +138,7 @@ function GetDeleted($abilita_pulsante) {
     echo "</div>\n";
     echo "<div id=\"tabella_cestinati\">\n";
     echo "<table id=\"TableDeleted\" class=\"layout_tabella_cestino\">\n";
-   
-    $nrcestinati =mysql_num_rows($result); // trova il numero degli iscritti cestinati
-   
+      
     if ($nrcestinati >0) {
         $abilita_pulsante="enabled";
         
@@ -118,7 +155,7 @@ function GetDeleted($abilita_pulsante) {
         /* trova la posizione, all'interno dei records trovati, dalla quale partire
          * per visualizzare gli elementi cancellati nel caso ci siano più pagine */ 
         if ($_POST["nrpagina"]>1) {
-            
+
             $posizione=($_POST["nrpagina"]-1)*$nrelementi_pagina;
             
             mysql_data_seek($result,$posizione);
@@ -159,36 +196,6 @@ function GetDeleted($abilita_pulsante) {
     }
 
     echo "</table>\n</div>\n</div>\n";
-    
-    // calcola e visualizza il numero delle pagine in base al numero degli iscritti cancellati trovati
-    $valore=($nrcestinati/$nrelementi_pagina); // trova il numero "grezzo" di pagine da visualizzare 
-    
-    if (isset($_POST["nrpagina"]) && $_POST["nrpagina"] >0) { // setta la pagina corrente 
-        $nrpagina_corrente=$_POST["nrpagina"];
-    } else {
-         $nrpagina_corrente=1;
-    }
-    
-    // calcola il numero di pagine da pubblicare    
-    if ($valore-(int)$valore >0) {  
-        $nrpagine=(int)$valore+1;
-    } else {
-        $nrpagine=(int)$valore;
-    }    
-    
-    // se il numero di pagine da pubblicare è minore di 1... 
-    if ($nrpagine < 1) { 
-        $nrpagine = 1;
-    }
-    
-    //visualizza il navigatore di pagine
-    echo "\n";
-    echo "<div id=\"div_nrpagine\">\n";
-    echo "|<img src=\"./Immagini/indietro.png\" alt=\"icona back\" width=\"25\" height=\"25\" onClick=\"ChangePage($nrpagina_corrente-1,$nrpagine);\" />"; 
-    echo "&nbsp;&nbsp;pagina $nrpagina_corrente/$nrpagine&nbsp;&nbsp;";
-    echo "<img src=\"./Immagini/avanti.png\" alt=\"icona back\" width=\"25\" height=\"25\" onClick=\"ChangePage($nrpagina_corrente+1,$nrpagine);\" />"; 
-    echo "| elementi cestinati: $nrcestinati |\n";
-    echo "</div>\n";
     
     return;
 }
@@ -265,9 +272,11 @@ table.layout_tabella_cestino th.cella_cestino_pari {
 
 #div_nrpagine {
   position: absolute;
-  top: 90px;
-  left: 55px;
-  font-weight: bold;
+  top: 42px;
+  /*top: 90px;*/
+  /*left: 55px;*/
+  left: 320px;
+  /*font-weight: bold;*/
   color: purple;
 }
 
