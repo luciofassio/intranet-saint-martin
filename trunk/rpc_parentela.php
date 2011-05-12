@@ -16,6 +16,10 @@ if(isset($_POST['queryString'])) {
                 ORDER BY catechismi.Cognome,catechismi.Nome,tblparentela.IdGradoParentela 
                 LIMIT 12");
         
+		if (mysql_errno() <> 0) {
+			echo("rpc_parentela: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+			exit();
+		}  
         if ($query) {  
             while ($row = mysql_fetch_object($query)) {
                 switch($row->IdGradoParentela) {

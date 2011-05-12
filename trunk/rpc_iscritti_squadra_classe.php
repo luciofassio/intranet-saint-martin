@@ -14,7 +14,12 @@ if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento']) && isset($_POST['IDCl
 	//$IDEvento = "19";
 	//$IDClasse = "8";
 	if(strlen($IDSquadra) > 0 && strlen($IDEvento) > 0 && strlen($IDClasse) > 0) {
-		$query = GetNumIscrittiSquadra($IDEvento, $IDSquadra, $IDClasse);
+			try {
+				$query = GetNumIscrittiSquadra($IDEvento, $IDSquadra, $IDClasse);
+			}
+			catch (Exception $e) {
+				echo($e->getMessage());				exit();
+			}
 		while ($row = mysql_fetch_object($query)) {
  			echo $row->iscritti;
 		}

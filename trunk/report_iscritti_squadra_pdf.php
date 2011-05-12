@@ -18,25 +18,25 @@ $attr=array('titleFontSize'=>20,'titleText'=>"Iscritti per squadra dell'evento "
 // Reports are run over 'SELECT' querires generally
 
 $report_sql = "SELECT 0 AS 'Num.',
-       catechismi.Cognome,
-       catechismi.Nome,
-       tblsquadre.NomeSquadra as 'Squadra',
-       tbliscrizioni.Note,
-       tbliscrizioni.AbbonamentoCena AS AC,
-       tbliscrizioni.CenaFinale AS CF,
-       tbliscrizioni.CostoComplessivo AS 'Da pagare_',
-       tbliscrizioni.Pagamento AS 'Pagato____'
- FROM    (   saint_martin_db.tbliscrizioni tbliscrizioni
+       Catechismi.Cognome,
+       Catechismi.Nome,
+       tblSquadre.NomeSquadra as 'Squadra',
+       tblIscrizioni.Note,
+       tblIscrizioni.AbbonamentoCena AS AC,
+       tblIscrizioni.CenaFinale AS CF,
+       tblIscrizioni.CostoComplessivo AS 'Da pagare_',
+       tblIscrizioni.Pagamento AS 'Pagato____'
+ FROM    (   saint_martin_db.tblIscrizioni tblIscrizioni
            INNER JOIN
-              saint_martin_db.tblsquadre tblsquadre
-           ON (tbliscrizioni.IDSquadra = tblsquadre.IDSquadra))
+              saint_martin_db.tblSquadre tblSquadre
+           ON (tblIscrizioni.IDSquadra = tblSquadre.IDSquadra))
        INNER JOIN
-          saint_martin_db.catechismi catechismi
-       ON (catechismi.ID = tbliscrizioni.ID)
- WHERE (tbliscrizioni.IDEvento = ".$_GET['idevento'].")
- ORDER BY tblsquadre.NomeSquadra ASC,
-          catechismi.Cognome ASC,
-          catechismi.Nome ASC";
+          saint_martin_db.Catechismi Catechismi
+       ON (Catechismi.ID = tblIscrizioni.ID)
+ WHERE (tblIscrizioni.IDEvento = ".$_GET['idevento'].")
+ ORDER BY tblSquadre.NomeSquadra ASC,
+          Catechismi.Cognome ASC,
+          Catechismi.Nome ASC";
 $totalize = "0,0,0,0,0,0,0,1,1";
 $groupby =  "0,0,0,1,0,0,0,0,0";
 $pdf->mysql_report($report_sql,false,$attr, $totalize, $groupby); 

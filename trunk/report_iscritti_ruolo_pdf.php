@@ -18,22 +18,22 @@ $attr=array('tMargin'=>50,'titleFontSize'=>18,'titleText'=>"Iscritti per ruolo d
 // Reports are run over 'SELECT' querires generally
 
 $report_sql = "SELECT 0 AS 'Num.',
-	   catechismi.Nome,
-       catechismi.Cognome,
-       tblruolier.Ruolo,
-       tbliscrizioni.AbbonamentoPranzo,
-       tbliscrizioni.AbbonamentoCena,
-       tbliscrizioni.Pagamento,
-       tbliscrizioni.Note
-  FROM    (   tbliscrizioni tbliscrizioni
+	   Catechismi.Nome,
+       Catechismi.Cognome,
+       tblRuoliER.Ruolo,
+       tblIscrizioni.AbbonamentoPranzo AS 'AP',
+       tblIscrizioni.AbbonamentoCena AS 'AC',
+       tblIscrizioni.Pagamento,
+       tblIscrizioni.Note
+  FROM    (   tblIscrizioni tblIscrizioni
            INNER JOIN
-              tblruolier tblruolier
-           ON (tbliscrizioni.IDRuolo = tblruolier.IDRuolo))
+              tblRuoliER tblRuoliER
+           ON (tblIscrizioni.IDRuolo = tblRuoliER.IDRuolo))
        INNER JOIN
-          catechismi catechismi
-       ON (tbliscrizioni.ID = catechismi.ID)
- WHERE (tbliscrizioni.IDEvento = ".$_GET['idevento'].")
-ORDER BY tblruolier.Ruolo ASC, catechismi.Cognome ASC, catechismi.Nome ASC";
+          Catechismi Catechismi
+       ON (tblIscrizioni.ID = Catechismi.ID)
+ WHERE (tblIscrizioni.IDEvento = ".$_GET['idevento'].")
+ORDER BY tblRuoliER.Ruolo ASC, Catechismi.Cognome ASC, Catechismi.Nome ASC";
 //echo $report_sql;
 //die();
 $totalize = "0,0,0,0,0,0,1,0";

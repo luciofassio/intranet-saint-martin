@@ -14,7 +14,9 @@ if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento'])) {
     			echo "<option value=".$row->ID." class=\"listaiscritti\">".htmlentities($row->Cognome)." ".htmlentities($row->Nome)."</option>";
 			}
 		} else {
-			throw new Exception(mysql_errno().":".mysql_error());
+			echo("rpc_iscritti_squadra: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+			exit();
+		}  
 			exit();
 		}
 	} // There is a queryString.
