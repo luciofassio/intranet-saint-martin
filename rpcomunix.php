@@ -10,6 +10,10 @@ if(isset($_POST['queryString'])) {
 	if(strlen($queryString) >0) {
      $query =mysql_query("select idcomuni, comune, codicepostale, provincia from tblcomuni where comune like '".$queryString."%' ORDER BY comune  LIMIT 11");
 		if($query) {
+		if (mysql_errno() <> 0) {
+			echo("rpc_comuni: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+			exit();
+		}  
       while ($row = mysql_fetch_object($query)) {
               echo '<input type"hidden" id="mytown" value="'.htmlentities($row->idcomuni).'|'.htmlentities($row->comune).'|'.htmlentities($row->codicepostale).'|'.htmlentities($row->provincia).'\');">';
       }

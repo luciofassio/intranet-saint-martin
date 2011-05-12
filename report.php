@@ -87,7 +87,9 @@ if (IsResultSet($result)) {
       <div style="clear:both;width:100%;text-align:center;margin-top:80px;">
 		<p><a href="stampa_privacy_param.php" target="_self">Stampa privacy</a></p>
 		<p><a href="report_pasti.php" target="_self">Stampa pasti</a></p>
-		<p><a href="report_iscritti.php" target="_self">Stampa iscritti</a></p>
+		<p><a href="report_iscritti.php?r=report_iscritti_pdf.php" target="_self">Stampa iscritti</a></p>
+		<p><a href="report_iscritti.php?r=report_iscritti_squadra_pdf.php" target="_self">Stampa iscritti per squadra</a></p>
+		<p><a href="report_iscritti.php?r=report_iscritti_ruolo_pdf.php" target="_self">Stampa iscritti per ruolo</a></p>
       </div> <!-- fine corpo pagina -->
      
     </form>  

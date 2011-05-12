@@ -9,6 +9,10 @@ if(isset($_POST['queryString'])) {
   $queryString = mysql_real_escape_string($_POST['queryString']);
 	if(strlen($queryString) >0) {
      $query =mysql_query("select IdParrocchia, Parrocchia FROM tblparrocchie WHERE Parrocchia like '%".$queryString."%' ORDER BY Parrocchia LIMIT 4");
+		if (mysql_errno() <> 0) {
+			echo("rpc_parrocchie: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+			exit();
+		}  
 		if($query) {
       while ($row = mysql_fetch_object($query)) {
               echo '<li onClick="fill_parrocchie(\''.htmlentities($row->IdParrocchia).'|'.htmlentities($row->Parrocchia).'\');">'.stripslashes(htmlentities($row->Parrocchia)).'</li>';

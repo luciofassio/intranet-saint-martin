@@ -23,6 +23,10 @@ if (!isset($_SESSION['authenticated_user'])) {
 		exit();
 }
 $idoperatore = $_SESSION['authenticated_user_id'];
+if (!$postback) {
+	 $_SESSION['required_report']	= $_GET["r"];	
+}
+
 ConnettiDB();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -142,7 +146,10 @@ switch (strtolower($_REQUEST["stampa"])) {
 			if (isset($_POST["cod_evento"])) {
 				if (count($_POST["cod_evento"]) > 0 && count($_POST["cod_evento"]) <= 1) {
 					$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-					header("Location: http://$host$uri/report_iscritti_pdf.php?idevento=".$_POST["cod_evento"][0]);
+					//echo("Location: http://$host$uri/".$_SESSION['required_report']."?idevento=".$_POST["cod_evento"][0]);
+					//die();					
+					header("Location: http://$host$uri/".$_SESSION['required_report']."?idevento=".$_POST["cod_evento"][0]);
+					unset($_SESSION['required_report']);					
 					ob_end_flush();
 				} elseif (count($_POST["cod_evento"]) > 1) {
 					echo "<p style=\"font-weight:bold\">Deve essere selezionato un solo evento</p>";
