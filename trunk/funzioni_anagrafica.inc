@@ -1020,7 +1020,7 @@ function GetRubricaTelefonica($errore) {
     } 
     
     // legge i telefoni associati all'iscritto
-    $query_telefono="SELECT idtelefono,idtipotelefono,id,prefisso,numero,telsms,PrefissoInt FROM tbltelefoni WHERE id='".$_POST['hdnID']."' ORDER BY idtipotelefono ASC";
+    $query_telefono="SELECT idtelefono,idtipotelefono,id,prefisso,numero,telsms,PrefissoInt FROM tblTelefoni WHERE id='".$_POST['hdnID']."' ORDER BY idtipotelefono ASC";
     $rstTelefono=mysql_query($query_telefono);
   
     $telefono = mysql_fetch_object($rstTelefono); 
@@ -1134,9 +1134,9 @@ function GetParentelaInfo() {
           $grado_parentela=$famiglia->IdGradoParentela;
           
           // estrae i famigliari dell'iscritto
-          $query="SELECT tblparentela.IdFamigliare,tblparentela.IdGradoParentela, catechismi.Cognome,catechismi.Nome
-                  FROM tblparentela INNER JOIN catechismi
-                  ON tblparentela.IdFamigliare = catechismi.ID
+          $query="SELECT tblparentela.IdFamigliare,tblparentela.IdGradoParentela, Catechismi.Cognome,Catechismi.Nome
+                  FROM tblparentela INNER JOIN Catechismi
+                  ON tblparentela.IdFamigliare = Catechismi.ID
                   WHERE IdFamiglia=".($famiglia->IdFamiglia)." 
                   AND NOT IdFamigliare=".$_POST["hdnID"]." 
                   ORDER BY IdGradoParentela";
@@ -1255,9 +1255,9 @@ function CreaTabellaFamigliari()
       if ($_POST["hdnID"]!=($dati->IdFamigliare)) { // evita di visualizzare l'iscritto nella tabella    
 
         //utilizzo dei valori estratti per ricostruire i dati dei parenti dell'iscritto
-        $query="SELECT catechismi.ID,catechismi.Cognome,catechismi.Nome,catechismi.Sesso,catechismi.Classe,catechismi.DataScadenzaTessera,tblclassi.IdClasse,tblclassi.Classe 
-                FROM catechismi INNER JOIN tblclassi ON catechismi.Classe=tblclassi.IdClasse 
-                WHERE catechismi.ID=".($dati->IdFamigliare);
+        $query="SELECT Catechismi.ID,Catechismi.Cognome,Catechismi.Nome,Catechismi.Sesso,Catechismi.Classe,Catechismi.DataScadenzaTessera,tblclassi.IdClasse,tblclassi.Classe 
+                FROM Catechismi INNER JOIN tblclassi ON Catechismi.Classe=tblclassi.IdClasse 
+                WHERE Catechismi.ID=".($dati->IdFamigliare);
         
         $result_parente=mysql_query($query);
         if (mysql_num_rows($result) == 0) {
@@ -1384,7 +1384,7 @@ function ControllaScheda($variazione) {
     $DatiVariati=0;
     global $variazione;
     // recupera i dati dal db
-    $query ="SELECT * FROM catechismi WHERE ID=".$_POST["hdnID"];
+    $query ="SELECT * FROM Catechismi WHERE ID=".$_POST["hdnID"];
     
     // invia la richiesta dati al db
     $result=mysql_query($query);
@@ -1823,7 +1823,7 @@ function SalvaDatiParentelaNuovo()
     
     //****** CONTROLLI SUL COMPONENTE DA AGGIUNGERE (NUCLEO A) ******
     //recupera il sesso e la data di nascita
-    $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID =".$id_nucleo_A;
+    $query="SELECT Sesso,Data_di_nascita FROM Catechismi WHERE ID =".$id_nucleo_A;
             
     $nucleoA=mysql_query($query);
     
@@ -1852,11 +1852,11 @@ function SalvaDatiParentelaNuovo()
     
     // controlla se il famigliare da aggiungere è già associato a una famiglia
     // in caso affermativo ne estrae i componenti con le necessarie info
-    $query= "SELECT tblparentela.IdFamigliare,catechismi.Cognome,catechismi.Nome,catechismi.Data_di_nascita,
-                    catechismi.Sesso,tblparentela.IdFamiglia,tblparentela.IdGradoParentela
+    $query= "SELECT tblparentela.IdFamigliare,Catechismi.Cognome,Catechismi.Nome,Catechismi.Data_di_nascita,
+                    Catechismi.Sesso,tblparentela.IdFamiglia,tblparentela.IdGradoParentela
              FROM tblparentela
-             INNER JOIN catechismi
-             ON tblparentela.IdFamigliare = catechismi.ID
+             INNER JOIN Catechismi
+             ON tblparentela.IdFamigliare = Catechismi.ID
              WHERE tblparentela.IdFamiglia=(SELECT IdFamiglia FROM tblparentela WHERE IdFamigliare=".$id_nucleo_A.")";
 
     $nucleoA=mysql_query($query);
@@ -1877,17 +1877,17 @@ function SalvaDatiParentelaNuovo()
     // ****** CONTROLLI SUL COMPONENTE DELLA SCHEDA APERTA (NUCLEO B) ******
     //recupera le info sui componenti della famiglia dell'iscritto della scheda aperta
     $query="SELECT tblparentela.IdFamigliare,tblparentela.IdFamiglia,tblparentela.IdGradoParentela, 
-                   catechismi.Data_di_nascita,catechismi.Sesso
+                   Catechismi.Data_di_nascita,Catechismi.Sesso
             FROM tblparentela
-            INNER JOIN catechismi
-            ON tblparentela.IdFamigliare = catechismi.ID
+            INNER JOIN Catechismi
+            ON tblparentela.IdFamigliare = Catechismi.ID
             WHERE tblparentela.IdFamiglia =".$id_famiglia_B;
             
     $nucleoB=mysql_query($query);
     
     // se non esiste nessun elemento del nucleo B bisogna trovare i dati necessari per i controlli
     if (mysql_num_rows($nucleoB) < 1) {
-        $query="SELECT Sesso,Data_di_nascita FROM catechismi WHERE ID =".$id_nucleo_B;
+        $query="SELECT Sesso,Data_di_nascita FROM Catechismi WHERE ID =".$id_nucleo_B;
             
         $nucleoB1=mysql_query($query);
         
@@ -2420,9 +2420,9 @@ function SalvaDatiParentelaNuovo()
 function GetFamigliariParentelaNucleoA() {
     
     if (isset($_POST["id_famiglia_nucleo_A"]) && $_POST["id_famiglia_nucleo_A"] !="") {
-        $query ="SELECT tblparentela.IdGradoParentela,catechismi.Cognome,catechismi.Nome
-                FROM tblparentela INNER JOIN catechismi
-                ON tblparentela.IdFamigliare = catechismi.ID
+        $query ="SELECT tblparentela.IdGradoParentela,Catechismi.Cognome,Catechismi.Nome
+                FROM tblparentela INNER JOIN Catechismi
+                ON tblparentela.IdFamigliare = Catechismi.ID
                 WHERE tblparentela.IdFamiglia =".$_POST["id_famiglia_nucleo_A"]. "
                 ORDER BY tblparentela.IdGradoParentela";
         

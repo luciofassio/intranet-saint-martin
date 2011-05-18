@@ -10,10 +10,10 @@ if(isset($_POST['queryString'])) {
     
     if(strlen($queryString) >0) {
         //$query = mysql_query("SELECT ID, Cognome, Nome FROM Catechismi WHERE Cognome LIKE '$queryString%' AND Cancellato=False ORDER BY Cognome,Nome LIMIT 10");
-        $query = mysql_query("SELECT catechismi.ID, catechismi.Cognome, catechismi.Nome, tblparentela.IdFamiglia, tblparentela.IdFamigliare, tblparentela.IdGradoParentela
-                FROM Catechismi LEFT JOIN tblparentela ON catechismi.ID=tblparentela.IdFamigliare
+        $query = mysql_query("SELECT Catechismi.ID, Catechismi.Cognome, Catechismi.Nome, tblparentela.IdFamiglia, tblparentela.IdFamigliare, tblparentela.IdGradoParentela
+                FROM Catechismi LEFT JOIN tblparentela ON Catechismi.ID=tblparentela.IdFamigliare
                 WHERE Cognome LIKE '$queryString%' AND Cancellato=False 
-                ORDER BY catechismi.Cognome,catechismi.Nome,tblparentela.IdGradoParentela 
+                ORDER BY Catechismi.Cognome,Catechismi.Nome,tblparentela.IdGradoParentela 
                 LIMIT 12");
         
 		if (mysql_errno() <> 0) {
