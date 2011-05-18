@@ -1,9 +1,9 @@
 <?php 
+session_start();
+
 require('accesso_db.inc');   
 require("funzioni_generali.inc");
 require ("funzioni_anagrafica.inc");
-
-session_start();
 
 $host  = $_SERVER['HTTP_HOST'];
 
