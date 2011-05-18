@@ -87,7 +87,7 @@ function GetDeleted($abilita_pulsante) {
     $nrcestinati=0; // inizializza la variabile che conta il numero dei cestinati in arvhivio
     
     // statement sql da mandare a mysql
-    $query ="SELECT ID,Cognome,Nome,cancellato,DataCancellazione,OperatoreCancellazione FROM Catechismi WHERE Cancellato=true ORDER BY DataCancellazione DESC, Cognome,Nome";
+    $query ="SELECT ID,Cognome,Nome,Cancellato,DataCancellazione,OperatoreCancellazione FROM Catechismi WHERE Cancellato=true ORDER BY DataCancellazione DESC, Cognome,Nome";
 
     $result =mysql_query($query); // estrae gli iscritti cancellati dal database
     
