@@ -542,7 +542,7 @@ function GetData($Data) {
 /**********************************************************************************
  * CANCELLA DATI SCHEDA
  * (pone allo stato di cancellato i dati dell'iscritto
- * e segna il giorno di cancellazione e chi ha cancellato) */
+ * segna il giorno di cancellazione e chi ha cancellato) */
 
 function DeleteDatiScheda() {
     global $errore,$messaggio,$icona;
@@ -551,7 +551,7 @@ function DeleteDatiScheda() {
 
     $data_cancellazione=date('Y-m-d'); // setta la data di cancellazione
     
-    $query="UPDATE catechismi SET cancellato='True',DataCancellazione='$data_cancellazione',OperatoreCancellazione='$operatore' WHERE ID=".$_POST["hdnID"];
+    $query="UPDATE catechismi SET Cancellato=True,DataCancellazione='$data_cancellazione',OperatoreCancellazione='$operatore' WHERE ID=".$_POST["hdnID"];
     $result=mysql_query($query);
 
     $errore=1;
@@ -581,11 +581,11 @@ function RicercaIscritti() {
             unset ($_POST["hdnID"]);
             return;
         } else {
-            $query.="WHERE ID=".$_POST["hdnID"]." AND cancellato='False'";
+            $query.="WHERE ID=".$_POST["hdnID"]." AND Cancellato=False";
             $parola_chiave=$_POST["hdnID"];
         }
     } elseif ($_POST["txtCognome"]!=""){
-        $query.="WHERE cognome LIKE'".$_POST["txtCognome"]."%' AND nome LIKE'".$_POST["txtNome"]."%' AND cancellato='False'";
+        $query.="WHERE cognome LIKE'".$_POST["txtCognome"]."%' AND nome LIKE'".$_POST["txtNome"]."%' AND Cancellato=False";
         $parola_chiave=$_POST["txtNome"]." ".$_POST["txtCognome"];
     } else {
         PulisciCampi();

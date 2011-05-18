@@ -1,6 +1,9 @@
 /* JavaScript Document
  * Oggetto:   Funzioni per pagina web Anagrafica 
- * Creazione: Marzo 2008-novembre 2009-agosto/settembre 2010
+ * Creazione: Marzo 2008
+ * Modifiche: Novembre 2009;
+ *            Agosto-settembre 2010;
+ *            Marzo 2011;
  * Autore:    Marco Fogliadini 
 */
 

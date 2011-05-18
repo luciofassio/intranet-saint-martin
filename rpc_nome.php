@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //session_start();
 require('accesso_db.inc');
 ConnettiDB();
@@ -7,7 +7,7 @@ if(isset($_POST['queryString'])) {
 	// contro sql injection
 	$queryString = mysql_real_escape_string($_POST['queryString']);
 	if(strlen($queryString) >0) {
-		$query = mysql_query("SELECT ID, Cognome, Nome, BarCode FROM Catechismi WHERE Nome LIKE '$queryString%' LIMIT 20");
+		$query = mysql_query("SELECT ID, Cognome, Nome, BarCode FROM Catechismi WHERE Cancellato=False AND Nome LIKE '$queryString%' LIMIT 20");
 		if (mysql_errno() <> 0) {
 			echo("rpc_nome: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
 			exit();

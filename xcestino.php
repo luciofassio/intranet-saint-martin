@@ -71,7 +71,7 @@ function RecuperaCancellati(){
     $id=explode("|",$_POST["id_iscritti"]);
 
     foreach ($id as $valore) {
-      $query="UPDATE Catechismi SET cancellato='False', DataCancellazione=null, OperatoreCancellazione=null WHERE ID=".$valore;
+      $query="UPDATE Catechismi SET Cancellato=False, DataCancellazione=null, OperatoreCancellazione=null WHERE ID=".$valore;
       mysql_query($query);
     }
     
@@ -87,7 +87,7 @@ function GetDeleted($abilita_pulsante) {
     $nrcestinati=0; // inizializza la variabile che conta il numero dei cestinati in arvhivio
     
     // statement sql da mandare a mysql
-    $query ="SELECT ID,Cognome,Nome,cancellato,DataCancellazione,OperatoreCancellazione FROM Catechismi WHERE cancellato='True' ORDER BY DataCancellazione DESC, Cognome,Nome";
+    $query ="SELECT ID,Cognome,Nome,cancellato,DataCancellazione,OperatoreCancellazione FROM Catechismi WHERE Cancellato=true ORDER BY DataCancellazione DESC, Cognome,Nome";
 
     $result =mysql_query($query); // estrae gli iscritti cancellati dal database
     
