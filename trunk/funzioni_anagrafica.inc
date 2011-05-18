@@ -1255,8 +1255,8 @@ function CreaTabellaFamigliari()
       if ($_POST["hdnID"]!=($dati->IdFamigliare)) { // evita di visualizzare l'iscritto nella tabella    
 
         //utilizzo dei valori estratti per ricostruire i dati dei parenti dell'iscritto
-        $query="SELECT Catechismi.ID,Catechismi.Cognome,Catechismi.Nome,Catechismi.Sesso,Catechismi.Classe,Catechismi.DataScadenzaTessera,tblclassi.IdClasse,tblclassi.Classe 
-                FROM Catechismi INNER JOIN tblclassi ON Catechismi.Classe=tblclassi.IdClasse 
+        $query="SELECT Catechismi.ID,Catechismi.Cognome,Catechismi.Nome,Catechismi.Sesso,Catechismi.Classe,Catechismi.DataScadenzaTessera,tblClassi.IdClasse,tblClassi.Classe 
+                FROM Catechismi INNER JOIN tblClassi ON Catechismi.Classe=tblClassi.IdClasse 
                 WHERE Catechismi.ID=".($dati->IdFamigliare);
         
         $result_parente=mysql_query($query);
