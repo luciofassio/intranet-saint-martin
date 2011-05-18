@@ -294,7 +294,7 @@ function DuplicateListino($IDEventoOrigine, $IDEventoDestinazione)
 // Eventi
 // restituisce tutti gli eventi
 function GetEventi() {
-	$result = mysql_query("SELECT * FROM tblEventi ORDER BY Data");
+	$result = mysql_query("SELECT * FROM tblEventi ORDER BY Data DESC");
 	if (mysql_errno() <> 0) {
 		throw new Exception("GetEventi: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
 		exit();
