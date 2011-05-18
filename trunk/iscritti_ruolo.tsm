@@ -1,0 +1,1373 @@
+<!--Query Builder Save File: 07/05/2011 17.36.06-->
+<SqlModelerElement DiagramId="6c8b3383-aa71-4530-9265-074ecb53358f">
+  <DataSetElement>
+    <tsm:CriteriaDataSet xmlns:tsm="http://www.quest.com/2005/07/05/ToadSqlModeler/">
+      <xs:schema id="CriteriaDataSet" targetNamespace="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns:mstns="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:app1="http://www.quest.com/2007/07/12/ToadSqlModeler/" msdata:schemafragmentcount="2">
+        <xs:import namespace="http://www.quest.com/2007/07/12/ToadSqlModeler/" />
+        <xs:element name="CriteriaDataSet" msdata:IsDataSet="true" msdata:Locale="en-US" msdata:EnforceConstraints="False" msdata:Prefix="tsm">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="tableCriteria" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="columnd834a63c-7dfd-4a58-a883-be4194d92237" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="Nome" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="1" />
+                    <xs:element name="column7ed37a2e-b248-4e29-ba34-467c3a06f396" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="Cognome" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="2" />
+                    <xs:element name="column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="Ruolo" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="3" />
+                    <xs:element name="column7a8ccefd-b349-48d7-9c0a-f373d9786c37" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="AbbonamentoPranzo" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="4" />
+                    <xs:element name="columnb860df7d-21df-41e5-abae-de8aa65866a4" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="AbbonamentoCena" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="5" />
+                    <xs:element name="column73e134c6-589c-4096-8e9a-992cd97fa612" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="Pagamento" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="6" />
+                    <xs:element name="columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="Note" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="7" />
+                    <xs:element name="columndb45764e-831e-43b8-893d-bf61244b9b95" msdata:DataType="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:Caption="IDEvento" msdata:Prefix="tsm" type="xs:anyType" minOccurs="0" msdata:Ordinal="8" />
+                  </xs:sequence>
+                  <xs:attribute name="columnCriteria" msdata:ReadOnly="true" msdata:Caption="Field" msdata:Prefix="tsm" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableTrl" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:attribute name="ID" msdata:Prefix="tsm" type="xs:string" use="required" />
+                  <xs:attribute name="Trl" msdata:Prefix="tsm" type="xs:string" />
+                  <xs:attribute name="Subquery" msdata:Prefix="tsm" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableVisibleIndex" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:attribute name="columnName" msdata:Prefix="tsm" type="xs:string" use="required" />
+                  <xs:attribute name="visibleIndex" msdata:Prefix="tsm" type="xs:short" />
+                  <xs:attribute name="width" msdata:Prefix="tsm" type="xs:short" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableNotes" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:attribute name="Id" msdata:Prefix="tsm" type="xs:string" />
+                  <xs:attribute name="Notes" msdata:Prefix="tsm" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tableConnections" msdata:Prefix="tsm">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="app1:Connection" minOccurs="0" />
+                    <xs:element ref="app1:Xml" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+          <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tableTrl" />
+            <xs:field xpath="@mstns:ID" />
+          </xs:unique>
+        </xs:element>
+      </xs:schema>
+      <xs:schema targetNamespace="http://www.quest.com/2007/07/12/ToadSqlModeler/" xmlns:mstns="http://www.quest.com/2005/07/05/ToadSqlModeler/" xmlns="http://www.quest.com/2007/07/12/ToadSqlModeler/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:app1="http://www.quest.com/2007/07/12/ToadSqlModeler/">
+        <xs:import namespace="http://www.quest.com/2005/07/05/ToadSqlModeler/" />
+        <xs:element name="Connection" msdata:Prefix="tsm" type="xs:string" />
+        <xs:element name="Xml" msdata:Prefix="tsm" type="xs:string" />
+      </xs:schema>
+      <tsm:tableCriteria tsm:columnCriteria="Table">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">catechismi</tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237>
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">catechismi</tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396>
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tblruolier</tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6>
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37>
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4>
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:column73e134c6-589c-4096-8e9a-992cd97fa612>
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9>
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:columndb45764e-831e-43b8-893d-bf61244b9b95>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Database">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237>
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396>
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6>
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37>
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4>
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:column73e134c6-589c-4096-8e9a-992cd97fa612>
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9>
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">saint_martin_db</tsm:columndb45764e-831e-43b8-893d-bf61244b9b95>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Aggregate Function">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Where Condition">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 msdata:InstanceType="Quest.Toad.QueryBuilder.WhereClauseClass, ToadCore, Version=4.1.0.220, Culture=neutral, PublicKeyToken=c862883b2ae69822" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"> = 16</tsm:columndb45764e-831e-43b8-893d-bf61244b9b95>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Or">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Group By">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Having Condition">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Sort">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">ASC</tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237>
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">ASC</tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396>
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">ASC</tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6>
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Visible">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237>
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396>
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6>
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37>
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4>
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:column73e134c6-589c-4096-8e9a-992cd97fa612>
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9>
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">True</tsm:columndb45764e-831e-43b8-893d-bf61244b9b95>
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Field Alias">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+      </tsm:tableCriteria>
+      <tsm:tableCriteria tsm:columnCriteria="Table Alias">
+        <tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">catechismi</tsm:columnd834a63c-7dfd-4a58-a883-be4194d92237>
+        <tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">catechismi</tsm:column7ed37a2e-b248-4e29-ba34-467c3a06f396>
+        <tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tblruolier</tsm:column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6>
+        <tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:column7a8ccefd-b349-48d7-9c0a-f373d9786c37>
+        <tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:columnb860df7d-21df-41e5-abae-de8aa65866a4>
+        <tsm:column73e134c6-589c-4096-8e9a-992cd97fa612 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:column73e134c6-589c-4096-8e9a-992cd97fa612>
+        <tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9>
+        <tsm:columndb45764e-831e-43b8-893d-bf61244b9b95 xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">tbliscrizioni</tsm:columndb45764e-831e-43b8-893d-bf61244b9b95>
+      </tsm:tableCriteria>
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{05e7a1ad-0f45-45c7-a0b0-fe74f553ad2a}" tsm:Trl="~All" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{bee84573-c7a8-424c-9d0b-77fbc5a8ba26}" tsm:Trl="~*" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{07ab0448-1073-4a20-9738-dda2f635bd20}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/IDIscrizione/int(11)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{4fbcd97c-b86b-4b9e-8d03-a29230252e3e}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/ID/int(10) unsigned" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{db45764e-831e-43b8-893d-bf61244b9b95}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/IDEvento/int(10) unsigned" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{f878aafc-ccf5-48ce-aaf0-104235f8c1c5}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/IDSquadra/int(10) unsigned" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{ab37bde2-1cfe-4121-b6b5-3f193fec1c5b}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/IDRuolo/int(10) unsigned" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{ef568484-5ef1-4d4d-b1a4-514e816d95e8}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/Stampato/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{9b4890d7-e531-451b-80c1-5397fe1ba696}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/ForzaStampa/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{7a8ccefd-b349-48d7-9c0a-f373d9786c37}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/AbbonamentoPranzo/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{b860df7d-21df-41e5-abae-de8aa65866a4}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/AbbonamentoCena/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{71811840-ec24-4422-8553-8a4dfeaaba5e}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/CenaFinale/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{652db453-4d84-403d-919b-2b83ac0c1abb}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/CenaFinaleOspiti/tinyint(4)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{1f0a160b-300b-4111-807a-ced058da1c9a}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/EventoSpecialeER/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{e01ec8ea-3da8-4697-98f4-2797b20a9a6b}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/CostoComplessivo/float(5,2)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{73e134c6-589c-4096-8e9a-992cd97fa612}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/Pagamento/float(5,2)" />
+      <tsm:tableTrl tsm:ID="{fe82ba8a-cef9-46f2-9be6-b4ddba210d2e}{d95752fe-480e-4eb6-a943-f4d3bd2c53a9}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tbliscrizioni/COLUMNS/Note/varchar(4000)" />
+      <tsm:tableTrl tsm:ID="{c565d3df-107c-4cdd-b394-04bb0678725a}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tblruolier" />
+      <tsm:tableTrl tsm:ID="{c565d3df-107c-4cdd-b394-04bb0678725a}{84883e72-bd92-400b-a7d4-867d09342177}" tsm:Trl="~All" />
+      <tsm:tableTrl tsm:ID="{c565d3df-107c-4cdd-b394-04bb0678725a}{33997492-d6b3-4168-ab6a-86088b6cb7ad}" tsm:Trl="~*" />
+      <tsm:tableTrl tsm:ID="{c565d3df-107c-4cdd-b394-04bb0678725a}{2508d301-49e0-4e47-9756-cc2206d0f3bd}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tblruolier/COLUMNS/IDRuolo/int(11)" />
+      <tsm:tableTrl tsm:ID="{c565d3df-107c-4cdd-b394-04bb0678725a}{4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/tblruolier/COLUMNS/Ruolo/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{edf9a3a1-9215-4b43-a872-f62edef65e01}" tsm:Trl="~All" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{0a3cda86-a465-4938-bef3-616da4668ed3}" tsm:Trl="~*" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{ae325b02-6872-4346-a391-7dbe577c91db}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/ID/int(11)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{7ed37a2e-b248-4e29-ba34-467c3a06f396}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Cognome/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{d834a63c-7dfd-4a58-a883-be4194d92237}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Nome/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{5e20eb7f-a485-476e-adab-9fe438f9edf4}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Sesso/varchar(1)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{5c113be0-057b-4ad0-b2c4-8ef93336f6d2}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Tipo_via/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{0cf3a86b-b3fa-4dbd-b5ec-e548a2178895}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Via/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{6ca44f17-0780-4003-8a08-6a217de7df67}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/numero_civico/varchar(5)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{436714af-f81a-487d-845f-3dd9384dcb18}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/CAP/varchar(5)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{cde211b1-2879-47ed-aebb-91b4d7da1086}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Citt/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{7412253c-8904-465d-9cb0-8b7f1c49e62c}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Provincia/varchar(2)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{13864595-4307-4f7e-87d6-ab382688fdd6}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/email/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{278e954e-a99d-4838-a6a5-bec29b65ced3}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Data_di_nascita/datetime" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{d75edc2f-31f0-417f-8397-63b7b783b2ce}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Luogo_di_nascita/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{83e1df95-8cf2-45c5-ac96-65d9927f8e0e}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Classe/int(11)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{1b325cf7-d35b-4614-a454-bcb0b2ecffa3}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Sezione/int(11)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{db039868-0cc2-4dcf-91f1-8fcf10b3320f}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Data_del_Battesimo/datetime" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{f25cc8b6-58a0-4fc6-914e-e4cf4314ea9a}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Parrocchia_del_Battesimo/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{8fc8a411-835c-48c9-a62c-b1ce4691d434}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Padrino_o_Madrina/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{964284c3-7de3-4e56-bb91-64e6b80edabd}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Indirizzo_Padrino_o_Madrina/varchar(255)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{850e93bd-d03b-464c-b1c4-7853e5f6f6b0}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Parrocchia_Padrino_o_Madrina/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{9cffe1fc-a6bd-45e7-a482-d94fa1127dc4}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Consegnato/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{59e8edd4-96e4-4cd1-b661-0b8b8e2d040b}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Consegnato1/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{bf8f795e-e54e-4d38-8fcf-c77c041ef1eb}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Correzione/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{3c7687f7-ffa8-49b9-840c-1acb49d21b8c}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Invitato/varchar(2)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{4e258907-0a45-47d3-8caf-d8ccb4dd7c4c}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/QuotaOratorio/double(5,2)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{752b3d99-eb1a-45eb-99f4-cd38156a6d6a}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/DataTesseramento/datetime" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{84a9e1bd-5836-4da6-a5b5-8bb0eaae547c}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Gen/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{f091e757-2779-4ea9-9f2b-92b0a6165f43}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/BarCode/varchar(13)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{b4bc6db3-e5ed-4004-b820-1656c6cfb8e6}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/BcLettere/varchar(50)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{4d500d77-4fdc-44e5-8ec6-b78061ff8402}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Sconto/int(11)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{a6d4466a-2d24-4ae8-82f2-e4cfe6f5d2ab}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Denaro/float" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{eed874c8-6e46-48c7-8a04-2dc6e876d220}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/NoNUmMaxConsumazioni/tinyint(1)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{073f1cc5-8ff9-4963-914c-0c917f4a044e}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Presenza/int(11)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{f0c0aa89-e8b6-4c51-b3b5-2bc95df0618f}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Coro/enum('True','False')" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{d125cc75-1f3d-4b70-bd51-40d403ede780}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/Parrocchia_Provenienza/int(11)" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{4c601230-c341-42ab-84dd-5c14d0d69ec8}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/DataScadenzaTessera/datetime" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{9cbaadcb-9cdb-4d88-b3f9-6066aa21378f}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/TipoQuota/int(10) unsigned" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{71744abe-5368-4113-bc3a-60c724f022ba}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/IdRuolo/int(10) unsigned" />
+      <tsm:tableTrl tsm:ID="{ce029bea-8f8b-48dd-9824-1ceb8306a2ca}{87f44a00-f5c2-469f-9630-86023a27af9e}" tsm:Trl="mysql://root@localhost/TABLE/saint_martin_db/catechismi/COLUMNS/cancellato/int(1) unsigned" />
+      <tsm:tableVisibleIndex tsm:columnName="columnd834a63c-7dfd-4a58-a883-be4194d92237" tsm:visibleIndex="1" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column7ed37a2e-b248-4e29-ba34-467c3a06f396" tsm:visibleIndex="2" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6" tsm:visibleIndex="3" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column7a8ccefd-b349-48d7-9c0a-f373d9786c37" tsm:visibleIndex="4" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="columnb860df7d-21df-41e5-abae-de8aa65866a4" tsm:visibleIndex="5" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="column73e134c6-589c-4096-8e9a-992cd97fa612" tsm:visibleIndex="6" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9" tsm:visibleIndex="7" tsm:width="90" />
+      <tsm:tableVisibleIndex tsm:columnName="columndb45764e-831e-43b8-893d-bf61244b9b95" tsm:visibleIndex="8" tsm:width="90" />
+      <tsm:tableConnections>
+        <tsm:Connection xmlns:tsm="http://www.quest.com/2007/07/12/ToadSqlModeler/">root@localhost (saint_martin_db)</tsm:Connection>
+        <tsm:Xml xmlns:tsm="http://www.quest.com/2007/07/12/ToadSqlModeler/">&amp;lt;Connection type=&amp;quot;MySQL&amp;quot; autoCommit=&amp;quot;True&amp;quot;&amp;gt;&amp;lt;Path&amp;gt;MySQL&amp;lt;/Path&amp;gt;&amp;lt;AutoConnect&amp;gt;False&amp;lt;/AutoConnect&amp;gt;&amp;lt;Database&amp;gt;saint_martin_db&amp;lt;/Database&amp;gt;&amp;lt;Host&amp;gt;localhost&amp;lt;/Host&amp;gt;&amp;lt;User&amp;gt;root&amp;lt;/User&amp;gt;&amp;lt;Password&amp;gt;B2889625433285CF&amp;lt;/Password&amp;gt;&amp;lt;WinAuth&amp;gt;False&amp;lt;/WinAuth&amp;gt;&amp;lt;LastConnectionDate&amp;gt;2011-05-07T15:29:28.9133031&amp;lt;/LastConnectionDate&amp;gt;&amp;lt;Options&amp;gt;&amp;lt;Protocol type=&amp;quot;Socket&amp;quot; /&amp;gt;&amp;lt;HTTP host=&amp;quot;&amp;quot; user=&amp;quot;&amp;quot; /&amp;gt;&amp;lt;/Options&amp;gt;&amp;lt;/Connection&amp;gt;</tsm:Xml>
+      </tsm:tableConnections>
+    </tsm:CriteriaDataSet>
+  </DataSetElement>
+  <DiagramElement>
+    <Information>
+      <Version>4.1.0.220</Version>
+    </Information>
+    <Control>
+      <DragBorderOnly>True</DragBorderOnly>
+      <ShowToolTips>True</ShowToolTips>
+      <DrawHighQuality>True</DrawHighQuality>
+      <AutoScroll>True</AutoScroll>
+      <Zoom>100</Zoom>
+      <BackColor>Window</BackColor>
+      <MinimizeToIcon>False</MinimizeToIcon>
+    </Control>
+    <Tables>
+      <Table Type="Quest.Toad.ModelerDrawing.DrawingControls.TableObject" ID="fe82ba8a-cef9-46f2-9be6-b4ddba210d2e">
+        <Properties>
+          <Name>tbliscrizioni</Name>
+          <Alias>tbliscrizioni</Alias>
+        </Properties>
+        <Control Type="Quest.Toad.ModelerDrawing.Controls.DefaultTableControl" Width="16" Height="16">
+          <ShowColumnDetails>False</ShowColumnDetails>
+          <ShowTableItems>False</ShowTableItems>
+          <ShowTableItemsTitle>False</ShowTableItemsTitle>
+          <ShowTableItemsCloseButton>False</ShowTableItemsCloseButton>
+          <TableItemsTitle>
+          </TableItemsTitle>
+          <TableItemsToolTip>
+          </TableItemsToolTip>
+          <Bounds>411, 14, 250, 200</Bounds>
+          <Minimized>False</Minimized>
+          <Visible>True</Visible>
+          <BorderStyle>Fixed3D</BorderStyle>
+          <ToolTip><![CDATA[saint_martin_db.tbliscrizioni
+Connection: root@localhost (saint_martin_db)]]></ToolTip>
+          <ShowMinimizeButton>True</ShowMinimizeButton>
+          <Icon>FF0064CEFF0064CEFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9C00000000000000000000000000000000FF0064CEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF302F9C00000000000000000000000000000000FF309ACEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF302F9C00000000000000000000000000000000FF30CFCEFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF302F9CFF000000FF000000FF00000000000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF47FF00FF47FF00FF47FF00FF000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF000000FF309AFFFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF000000FF000000FF302F9CFF000000FF000000FF00000000000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF000000FF47FF00FF47FF00FF47FF00FF00000000000000000000000000000000000000FF629ACEFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF00000000000000000000000000000000000000FF309ACEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF000000FF47FF00FF16C000FF16C000FF00000000000000000000000000000000000000FF0064CEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF000000FF000000FF302F9CFF000000FF000000FF00000000000000FF0064CEFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF000000FF47FF00FF47FF00FF47FF00FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF47FF00FF16C000FF16C000FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF47FF00FF16C000FF16C000FF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF000000FF00000000000000</Icon>
+        </Control>
+        <Columns>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="05e7a1ad-0f45-45c7-a0b0-fe74f553ad2a">
+            <Name>All</Name>
+            <Alias><![CDATA[(Add All Columns)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="bee84573-c7a8-424c-9d0b-77fbc5a8ba26">
+            <Name>*</Name>
+            <Alias><![CDATA[* (Wildcard)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="07ab0448-1073-4a20-9738-dda2f635bd20" Width="16" Height="16">
+            <Name>IDIscrizione</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Bold</FontStyle>
+            <FontColor>
+            </FontColor>
+            <Icon>00000000000000000000000000000000000000000000000000000000FF8C8150FF8C815000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFFD67FFF8C81500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFEFEF0FFFFF885FFFFD67FFF8C8150000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFDFCC8FF7B762FFFA98540FFFFFEF9FFFFD67FFF8C815000000000000000000000000000000000000000000000000000000000FF818134FFFEEA64FFFCF996FFFFF13DFF818130FFA98540FFFFFEF9FFFFD67FFF8C815000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFCF996FFFFF13DFFFFF13DFFFFF13DFFFFD67FFF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FFFEEA64FFFEFDE2FFFFF13DFFFFD67FFFFEC650FFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FFFEEA64FFFFD67FFF977D42FFFEAC5BFFFEAC5BFFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FF818165FFD0BD81FF958165FF81815DFFFDE695FFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FF686555FFFDF1B0FFD79551FF817C660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFDD181FFD7AC6FFFFED495FFD79551FF81814A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FF73705DFF686555FF817C66FFB2A78100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Icon>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4fbcd97c-b86b-4b9e-8d03-a29230252e3e">
+            <Name>ID</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="db45764e-831e-43b8-893d-bf61244b9b95">
+            <Name>IDEvento</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="f878aafc-ccf5-48ce-aaf0-104235f8c1c5">
+            <Name>IDSquadra</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ab37bde2-1cfe-4121-b6b5-3f193fec1c5b">
+            <Name>IDRuolo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ef568484-5ef1-4d4d-b1a4-514e816d95e8">
+            <Name>Stampato</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="9b4890d7-e531-451b-80c1-5397fe1ba696">
+            <Name>ForzaStampa</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="7a8ccefd-b349-48d7-9c0a-f373d9786c37">
+            <Name>AbbonamentoPranzo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="b860df7d-21df-41e5-abae-de8aa65866a4">
+            <Name>AbbonamentoCena</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="71811840-ec24-4422-8553-8a4dfeaaba5e">
+            <Name>CenaFinale</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="652db453-4d84-403d-919b-2b83ac0c1abb">
+            <Name>CenaFinaleOspiti</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1f0a160b-300b-4111-807a-ced058da1c9a">
+            <Name>EventoSpecialeER</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="e01ec8ea-3da8-4697-98f4-2797b20a9a6b">
+            <Name>CostoComplessivo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="73e134c6-589c-4096-8e9a-992cd97fa612">
+            <Name>Pagamento</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d95752fe-480e-4eb6-a943-f4d3bd2c53a9">
+            <Name>Note</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+        </Columns>
+        <Items />
+        <Attributes />
+      </Table>
+      <Table Type="Quest.Toad.ModelerDrawing.DrawingControls.TableObject" ID="c565d3df-107c-4cdd-b394-04bb0678725a">
+        <Properties>
+          <Name>tblruolier</Name>
+          <Alias>tblruolier</Alias>
+        </Properties>
+        <Control Type="Quest.Toad.ModelerDrawing.Controls.DefaultTableControl" Width="16" Height="16">
+          <ShowColumnDetails>False</ShowColumnDetails>
+          <ShowTableItems>False</ShowTableItems>
+          <ShowTableItemsTitle>False</ShowTableItemsTitle>
+          <ShowTableItemsCloseButton>False</ShowTableItemsCloseButton>
+          <TableItemsTitle>
+          </TableItemsTitle>
+          <TableItemsToolTip>
+          </TableItemsToolTip>
+          <Bounds>766, 17, 250, 200</Bounds>
+          <Minimized>False</Minimized>
+          <Visible>True</Visible>
+          <BorderStyle>Fixed3D</BorderStyle>
+          <ToolTip><![CDATA[saint_martin_db.tblruolier
+Connection: root@localhost (saint_martin_db)]]></ToolTip>
+          <ShowMinimizeButton>True</ShowMinimizeButton>
+          <Icon>FF0064CEFF0064CEFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9C00000000000000000000000000000000FF0064CEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF302F9C00000000000000000000000000000000FF309ACEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF302F9C00000000000000000000000000000000FF30CFCEFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF302F9CFF000000FF000000FF00000000000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF47FF00FF47FF00FF47FF00FF000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF000000FF309AFFFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF000000FF000000FF302F9CFF000000FF000000FF00000000000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF000000FF47FF00FF47FF00FF47FF00FF00000000000000000000000000000000000000FF629ACEFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF00000000000000000000000000000000000000FF309ACEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF000000FF47FF00FF16C000FF16C000FF00000000000000000000000000000000000000FF0064CEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF000000FF000000FF302F9CFF000000FF000000FF00000000000000FF0064CEFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF000000FF47FF00FF47FF00FF47FF00FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF47FF00FF16C000FF16C000FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF47FF00FF16C000FF16C000FF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF000000FF00000000000000</Icon>
+        </Control>
+        <Columns>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="84883e72-bd92-400b-a7d4-867d09342177">
+            <Name>All</Name>
+            <Alias><![CDATA[(Add All Columns)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="33997492-d6b3-4168-ab6a-86088b6cb7ad">
+            <Name>*</Name>
+            <Alias><![CDATA[* (Wildcard)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="2508d301-49e0-4e47-9756-cc2206d0f3bd" Width="16" Height="16">
+            <Name>IDRuolo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Bold</FontStyle>
+            <FontColor>
+            </FontColor>
+            <Icon>00000000000000000000000000000000000000000000000000000000FF8C8150FF8C815000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFFD67FFF8C81500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFEFEF0FFFFF885FFFFD67FFF8C8150000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFDFCC8FF7B762FFFA98540FFFFFEF9FFFFD67FFF8C815000000000000000000000000000000000000000000000000000000000FF818134FFFEEA64FFFCF996FFFFF13DFF818130FFA98540FFFFFEF9FFFFD67FFF8C815000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFCF996FFFFF13DFFFFF13DFFFFF13DFFFFD67FFF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FFFEEA64FFFEFDE2FFFFF13DFFFFD67FFFFEC650FFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FFFEEA64FFFFD67FFF977D42FFFEAC5BFFFEAC5BFFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FF818165FFD0BD81FF958165FF81815DFFFDE695FFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FF686555FFFDF1B0FFD79551FF817C660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFDD181FFD7AC6FFFFED495FFD79551FF81814A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FF73705DFF686555FF817C66FFB2A78100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Icon>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6">
+            <Name>Ruolo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>Ascending</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+        </Columns>
+        <Items />
+        <Attributes />
+      </Table>
+      <Table Type="Quest.Toad.ModelerDrawing.DrawingControls.TableObject" ID="ce029bea-8f8b-48dd-9824-1ceb8306a2ca">
+        <Properties>
+          <Name>catechismi</Name>
+          <Alias>catechismi</Alias>
+        </Properties>
+        <Control Type="Quest.Toad.ModelerDrawing.Controls.DefaultTableControl" Width="16" Height="16">
+          <ShowColumnDetails>False</ShowColumnDetails>
+          <ShowTableItems>False</ShowTableItems>
+          <ShowTableItemsTitle>False</ShowTableItemsTitle>
+          <ShowTableItemsCloseButton>False</ShowTableItemsCloseButton>
+          <TableItemsTitle>
+          </TableItemsTitle>
+          <TableItemsToolTip>
+          </TableItemsToolTip>
+          <Bounds>24, 27, 250, 200</Bounds>
+          <Minimized>False</Minimized>
+          <Visible>True</Visible>
+          <BorderStyle>Fixed3D</BorderStyle>
+          <ToolTip><![CDATA[saint_martin_db.catechismi
+Connection: root@localhost (saint_martin_db)]]></ToolTip>
+          <ShowMinimizeButton>True</ShowMinimizeButton>
+          <Icon>FF0064CEFF0064CEFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9C00000000000000000000000000000000FF0064CEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF302F9C00000000000000000000000000000000FF309ACEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF302F9C00000000000000000000000000000000FF30CFCEFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF302F9CFF000000FF000000FF00000000000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF47FF00FF47FF00FF47FF00FF000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF000000FF309AFFFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF000000FF000000FF302F9CFF000000FF000000FF00000000000000FF309AFFFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF000000FF47FF00FF47FF00FF47FF00FF00000000000000000000000000000000000000FF629ACEFF302F9CFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF9C9ACEFF000000FF47FF00FF16C000FF16C000FF00000000000000000000000000000000000000FF309ACEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF000000FF47FF00FF16C000FF16C000FF00000000000000000000000000000000000000FF0064CEFF302F9CFFFFFFFFFFFFFFFFFF9C9ACEFFFFFFFFFFFFFFFFFF9C9ACEFF000000FF000000FF000000FF302F9CFF000000FF000000FF00000000000000FF0064CEFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF302F9CFF000000FF47FF00FF47FF00FF47FF00FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF47FF00FF16C000FF16C000FF0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF47FF00FF16C000FF16C000FF000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF000000FF000000FF00000000000000</Icon>
+        </Control>
+        <Columns>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="edf9a3a1-9215-4b43-a872-f62edef65e01">
+            <Name>All</Name>
+            <Alias><![CDATA[(Add All Columns)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="0a3cda86-a465-4938-bef3-616da4668ed3">
+            <Name>*</Name>
+            <Alias><![CDATA[* (Wildcard)]]></Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="ae325b02-6872-4346-a391-7dbe577c91db" Width="16" Height="16">
+            <Name>ID</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Bold</FontStyle>
+            <FontColor>
+            </FontColor>
+            <Icon>00000000000000000000000000000000000000000000000000000000FF8C8150FF8C815000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFFD67FFF8C81500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFEFEF0FFFFF885FFFFD67FFF8C8150000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFDFCC8FF7B762FFFA98540FFFFFEF9FFFFD67FFF8C815000000000000000000000000000000000000000000000000000000000FF818134FFFEEA64FFFCF996FFFFF13DFF818130FFA98540FFFFFEF9FFFFD67FFF8C815000000000000000000000000000000000000000000000000000000000FF8C8150FFFEEA64FFFCF996FFFFF13DFFFFF13DFFFFF13DFFFFD67FFF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FFFEEA64FFFEFDE2FFFFF13DFFFFD67FFFFEC650FFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FFFEEA64FFFFD67FFF977D42FFFEAC5BFFFEAC5BFFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000FF818165FF818165FFD0BD81FF958165FF81815DFFFDE695FFD79551FF818171000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FF686555FFFDF1B0FFD79551FF817C660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FFFDD181FFD7AC6FFFFED495FFD79551FF81814A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000FF8C8150FF73705DFF686555FF817C66FFB2A78100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Icon>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="7ed37a2e-b248-4e29-ba34-467c3a06f396">
+            <Name>Cognome</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>Ascending</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d834a63c-7dfd-4a58-a883-be4194d92237">
+            <Name>Nome</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>True</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>Ascending</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5e20eb7f-a485-476e-adab-9fe438f9edf4">
+            <Name>Sesso</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="5c113be0-057b-4ad0-b2c4-8ef93336f6d2">
+            <Name>Tipo_via</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="0cf3a86b-b3fa-4dbd-b5ec-e548a2178895">
+            <Name>Via</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="6ca44f17-0780-4003-8a08-6a217de7df67">
+            <Name>numero_civico</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="436714af-f81a-487d-845f-3dd9384dcb18">
+            <Name>CAP</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="cde211b1-2879-47ed-aebb-91b4d7da1086">
+            <Name>Citt</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="7412253c-8904-465d-9cb0-8b7f1c49e62c">
+            <Name>Provincia</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="13864595-4307-4f7e-87d6-ab382688fdd6">
+            <Name>email</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="278e954e-a99d-4838-a6a5-bec29b65ced3">
+            <Name>Data_di_nascita</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d75edc2f-31f0-417f-8397-63b7b783b2ce">
+            <Name>Luogo_di_nascita</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="83e1df95-8cf2-45c5-ac96-65d9927f8e0e">
+            <Name>Classe</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="1b325cf7-d35b-4614-a454-bcb0b2ecffa3">
+            <Name>Sezione</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="db039868-0cc2-4dcf-91f1-8fcf10b3320f">
+            <Name>Data_del_Battesimo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="f25cc8b6-58a0-4fc6-914e-e4cf4314ea9a">
+            <Name>Parrocchia_del_Battesimo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="8fc8a411-835c-48c9-a62c-b1ce4691d434">
+            <Name>Padrino_o_Madrina</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="964284c3-7de3-4e56-bb91-64e6b80edabd">
+            <Name>Indirizzo_Padrino_o_Madrina</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="850e93bd-d03b-464c-b1c4-7853e5f6f6b0">
+            <Name>Parrocchia_Padrino_o_Madrina</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="9cffe1fc-a6bd-45e7-a482-d94fa1127dc4">
+            <Name>Consegnato</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="59e8edd4-96e4-4cd1-b661-0b8b8e2d040b">
+            <Name>Consegnato1</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="bf8f795e-e54e-4d38-8fcf-c77c041ef1eb">
+            <Name>Correzione</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="3c7687f7-ffa8-49b9-840c-1acb49d21b8c">
+            <Name>Invitato</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4e258907-0a45-47d3-8caf-d8ccb4dd7c4c">
+            <Name>QuotaOratorio</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="752b3d99-eb1a-45eb-99f4-cd38156a6d6a">
+            <Name>DataTesseramento</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="84a9e1bd-5836-4da6-a5b5-8bb0eaae547c">
+            <Name>Gen</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="f091e757-2779-4ea9-9f2b-92b0a6165f43">
+            <Name>BarCode</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="b4bc6db3-e5ed-4004-b820-1656c6cfb8e6">
+            <Name>BcLettere</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4d500d77-4fdc-44e5-8ec6-b78061ff8402">
+            <Name>Sconto</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="a6d4466a-2d24-4ae8-82f2-e4cfe6f5d2ab">
+            <Name>Denaro</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="eed874c8-6e46-48c7-8a04-2dc6e876d220">
+            <Name>NoNUmMaxConsumazioni</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="073f1cc5-8ff9-4963-914c-0c917f4a044e">
+            <Name>Presenza</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="f0c0aa89-e8b6-4c51-b3b5-2bc95df0618f">
+            <Name>Coro</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="d125cc75-1f3d-4b70-bd51-40d403ede780">
+            <Name>Parrocchia_Provenienza</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="4c601230-c341-42ab-84dd-5c14d0d69ec8">
+            <Name>DataScadenzaTessera</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="9cbaadcb-9cdb-4d88-b3f9-6066aa21378f">
+            <Name>TipoQuota</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="71744abe-5368-4113-bc3a-60c724f022ba">
+            <Name>IdRuolo</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+          <Column Type="Quest.Toad.ModelerDrawing.DrawingControls.ColumnObject" ID="87f44a00-f5c2-469f-9630-86023a27af9e">
+            <Name>cancellato</Name>
+            <Alias>
+            </Alias>
+            <ToolTip>
+            </ToolTip>
+            <Checked>False</Checked>
+            <Filter>
+            </Filter>
+            <SortOrder>None</SortOrder>
+            <Grouped>False</Grouped>
+            <FontStyle>Regular</FontStyle>
+            <FontColor>
+            </FontColor>
+          </Column>
+        </Columns>
+        <Items />
+        <Attributes />
+      </Table>
+    </Tables>
+    <Relations>
+      <Relation Type="Quest.Toad.ModelerDrawing.DrawingControls.RelationObject" ID="19c3756f-4c6e-4bcb-b363-0b11e766df0e">
+        <Properties>
+          <Table1>fe82ba8a-cef9-46f2-9be6-b4ddba210d2e</Table1>
+          <Table2>ce029bea-8f8b-48dd-9824-1ceb8306a2ca</Table2>
+          <RelationType>InnerJoin</RelationType>
+          <ColumnCount>1</ColumnCount>
+        </Properties>
+        <Control>
+          <Visible>True</Visible>
+          <ShowCaption>True</ShowCaption>
+          <ShowJoin>True</ShowJoin>
+          <ToolTip>
+          </ToolTip>
+          <LineWidth>1</LineWidth>
+        </Control>
+        <Lines>
+          <Line Type="Quest.Toad.ModelerDrawing.DrawingControls.RelationLineObject">
+            <Column1>4fbcd97c-b86b-4b9e-8d03-a29230252e3e</Column1>
+            <Column2>ae325b02-6872-4346-a391-7dbe577c91db</Column2>
+            <Condition>Equal</Condition>
+            <LineWidth>1</LineWidth>
+            <LineStyle>Solid</LineStyle>
+            <PointType1>Line</PointType1>
+            <PointType2>ArrowSolid</PointType2>
+          </Line>
+        </Lines>
+      </Relation>
+      <Relation Type="Quest.Toad.ModelerDrawing.DrawingControls.RelationObject" ID="2967e98f-25ba-47ae-bc8d-b08916c94b8c">
+        <Properties>
+          <Table1>fe82ba8a-cef9-46f2-9be6-b4ddba210d2e</Table1>
+          <Table2>c565d3df-107c-4cdd-b394-04bb0678725a</Table2>
+          <RelationType>InnerJoin</RelationType>
+          <ColumnCount>1</ColumnCount>
+        </Properties>
+        <Control>
+          <Visible>True</Visible>
+          <ShowCaption>True</ShowCaption>
+          <ShowJoin>True</ShowJoin>
+          <ToolTip>
+          </ToolTip>
+          <LineWidth>1</LineWidth>
+        </Control>
+        <Lines>
+          <Line Type="Quest.Toad.ModelerDrawing.DrawingControls.RelationLineObject">
+            <Column1>ab37bde2-1cfe-4121-b6b5-3f193fec1c5b</Column1>
+            <Column2>2508d301-49e0-4e47-9756-cc2206d0f3bd</Column2>
+            <Condition>Equal</Condition>
+            <LineWidth>1</LineWidth>
+            <LineStyle>Solid</LineStyle>
+            <PointType1>Line</PointType1>
+            <PointType2>ArrowSolid</PointType2>
+          </Line>
+        </Lines>
+      </Relation>
+    </Relations>
+    <Objects />
+  </DiagramElement>
+  <WhereClauseElement>
+    <columnd834a63c-7dfd-4a58-a883-be4194d92237 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column7ed37a2e-b248-4e29-ba34-467c3a06f396 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column4dbb655b-8fb4-4c53-b5e0-17dade6ac3b6 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column7a8ccefd-b349-48d7-9c0a-f373d9786c37 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <columnb860df7d-21df-41e5-abae-de8aa65866a4 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <column73e134c6-589c-4096-8e9a-992cd97fa612 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <columnd95752fe-480e-4eb6-a943-f4d3bd2c53a9 WhereCondition="None" OrWhereCondition="None" HavingCondition="None" />
+    <columndb45764e-831e-43b8-893d-bf61244b9b95 WhereCondition="&lt;SOAP-ENV:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:clr=&quot;http://schemas.microsoft.com/soap/encoding/clr/1.0&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xD;&#xA;&lt;SOAP-ENV:Body&gt;&#xD;&#xA;&lt;a1:WhereClauseClass id=&quot;ref-1&quot; xmlns:a1=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.QueryBuilder/ToadCore&quot;&gt;&#xD;&#xA;&lt;caseInsensitive&gt;false&lt;/caseInsensitive&gt;&#xD;&#xA;&lt;operandType1&gt;Constant&lt;/operandType1&gt;&#xD;&#xA;&lt;operandType2&gt;Constant&lt;/operandType2&gt;&#xD;&#xA;&lt;condition id=&quot;ref-4&quot;&gt;=&lt;/condition&gt;&#xD;&#xA;&lt;constant1 id=&quot;ref-5&quot;&gt;16&lt;/constant1&gt;&#xD;&#xA;&lt;constant2 id=&quot;ref-6&quot;&gt;&lt;/constant2&gt;&#xD;&#xA;&lt;quoteString&gt;false&lt;/quoteString&gt;&#xD;&#xA;&lt;likeType&gt;-1&lt;/likeType&gt;&#xD;&#xA;&lt;aggregateLeft xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;aggregateRight xsi:null=&quot;1&quot;/&gt;&#xD;&#xA;&lt;havingClause&gt;false&lt;/havingClause&gt;&#xD;&#xA;&lt;sqlEngine href=&quot;#ref-7&quot;/&gt;&#xD;&#xA;&lt;column1ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2ColumnName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column1TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;column2TableName href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;freeformWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;dateRangeWhereClause href=&quot;#ref-6&quot;/&gt;&#xD;&#xA;&lt;columnIsDate&gt;false&lt;/columnIsDate&gt;&#xD;&#xA;&lt;columnIsNumeric&gt;true&lt;/columnIsNumeric&gt;&#xD;&#xA;&lt;/a1:WhereClauseClass&gt;&#xD;&#xA;&lt;a3:SqlEngineMySql id=&quot;ref-7&quot; xmlns:a3=&quot;http://schemas.microsoft.com/clr/nsassem/Quest.Toad.MySQL/ToadMySQL&quot;&gt;&#xD;&#xA;&lt;SqlEngine_x002B_groupByOrAggregateComplete&gt;false&lt;/SqlEngine_x002B_groupByOrAggregateComplete&gt;&#xD;&#xA;&lt;/a3:SqlEngineMySql&gt;&#xD;&#xA;&lt;/SOAP-ENV:Body&gt;&#xD;&#xA;&lt;/SOAP-ENV:Envelope&gt;&#xD;&#xA;" OrWhereCondition="None" HavingCondition="None" />
+  </WhereClauseElement>
+  <DistinctElement Distinct="False" />
+  <ParentColumnElement ParentColumnName="" ParentTableName="" />
+  <SubQueryCondition SubQueryCondition="" />
+  <TOPRowCountElement TOPRowCount="0" />
+  <TOPPercentElement TOPPercent="False" />
+  <QueryTextElement><![CDATA[SELECT catechismi.Nome,
+       catechismi.Cognome,
+       tblruolier.Ruolo,
+       tbliscrizioni.AbbonamentoPranzo,
+       tbliscrizioni.AbbonamentoCena,
+       tbliscrizioni.Pagamento,
+       tbliscrizioni.Note,
+       tbliscrizioni.IDEvento
+  FROM    (   saint_martin_db.tbliscrizioni tbliscrizioni
+           INNER JOIN
+              saint_martin_db.tblruolier tblruolier
+           ON (tbliscrizioni.IDRuolo = tblruolier.IDRuolo))
+       INNER JOIN
+          saint_martin_db.catechismi catechismi
+       ON (tbliscrizioni.ID = catechismi.ID)
+ WHERE (tbliscrizioni.IDEvento = 16)
+ORDER BY tblruolier.Ruolo ASC, catechismi.Cognome ASC, catechismi.Nome ASC]]></QueryTextElement>
+  <HeterogeneousQueryElement HeterogeneousQuery="False" />
+  <AnsiJoinsElement AnsiJoins="True" />
+</SqlModelerElement>
