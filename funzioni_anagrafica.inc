@@ -267,7 +267,7 @@ function GetData($Data) {
         
         // controlla se i dati sono di un nuovo iscritto o da aggiornare e costruisce le query
         if ($scheda_id != 0 || $scheda_id !=null){
-            $query = "UPDATE catechismi SET Cognome='".$scheda_cognome."', Nome='".$scheda_nome."', Sesso='".$scheda_sesso."'";
+            $query = "UPDATE Catechismi SET Cognome='".$scheda_cognome."', Nome='".$scheda_nome."', Sesso='".$scheda_sesso."'";
                  
                 if ($scheda_dataN != "" || $scheda_dataN != null) { 
                     $query.=", Data_di_nascita ='".$scheda_dataN."'";
@@ -378,7 +378,7 @@ function GetData($Data) {
                $query.=" WHERE id=".$scheda_id;
         } else {
             // prima di salvare controlla se c'è una omonimia sui campi cognome, nome, sesso e data di nascita
-            $query="SELECT Cognome,Nome,Sesso,Data_di_nascita FROM catechismi WHERE Cognome='".$scheda_cognome."' and Nome='".$scheda_nome."' and Sesso='".$scheda_sesso."'";
+            $query="SELECT Cognome,Nome,Sesso,Data_di_nascita FROM Catechismi WHERE Cognome='".$scheda_cognome."' and Nome='".$scheda_nome."' and Sesso='".$scheda_sesso."'";
             $result=mysql_query($query);
             if (mysql_num_rows($result)>0) { // se trova un'omonimia la confronta con le date di nascita
                 while ($row=mysql_fetch_array($result))
@@ -405,7 +405,7 @@ function GetData($Data) {
             
             if (!$omonimia) {
                // costruisce la query in base alla presenza dei dati
-               $query="INSERT INTO catechismi (Cognome,Nome,Sesso";
+               $query="INSERT INTO Catechismi (Cognome,Nome,Sesso";
                $value="VALUES ('$scheda_cognome','$scheda_nome','$scheda_sesso'";
             
                 if ($scheda_dataN !="") {
@@ -551,7 +551,7 @@ function DeleteDatiScheda() {
 
     $data_cancellazione=date('Y-m-d'); // setta la data di cancellazione
     
-    $query="UPDATE catechismi SET Cancellato=True,DataCancellazione='$data_cancellazione',OperatoreCancellazione='$operatore' WHERE ID=".$_POST["hdnID"];
+    $query="UPDATE Catechismi SET Cancellato=True,DataCancellazione='$data_cancellazione',OperatoreCancellazione='$operatore' WHERE ID=".$_POST["hdnID"];
     $result=mysql_query($query);
 
     $errore=1;
