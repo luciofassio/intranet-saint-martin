@@ -8,7 +8,7 @@ if(isset($_POST['queryString'])) {
 	// control sql injection
 	$queryString = mysql_real_escape_string($_POST['queryString']);
 	if(strlen($queryString) >0) {
-		$query = mysql_query("SELECT ID, Cognome, Nome, BarCode FROM Catechismi WHERE Cognome LIKE '$queryString%' AND cancellato='False' ORDER BY Cognome,Nome LIMIT 10");
+		$query = mysql_query("SELECT ID, Cognome, Nome, BarCode FROM Catechismi WHERE Cognome LIKE '$queryString%' AND Cancellato=False ORDER BY Cognome,Nome LIMIT 10");
 		if (mysql_errno() <> 0) {
 			echo("rpc_catechismi: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
 			exit();

@@ -56,7 +56,7 @@ ConnettiDB();
   
         <div id="crediti">
             <?php
-                print ("&copy; 2008-".date('Y')." | "); 
+                print ("(P) 2008-".date('Y')." | "); 
             ?>
             <a href="javascript:ReleaseCredits('apri');">Release & Credits</a>
         </div>
@@ -131,7 +131,7 @@ ConnettiDB();
           <p>
               <ul>
                   <li><strong>Release:</strong> 2.0.x</li>
-                  <li><strong>Copyright:</strong> <?php print("&copy; 2008-".date('Y'));?></li>
+                  <li><strong>License:</strong> Gnu/Gpl v. 2.x</li>
                   <li><strong>Owner:</strong> Oratorio Saint-Martin de Corl&eacute;ans
                   <li><strong>Address:</strong> Viale Europa, 1 - 11100 Aosta (Italy)
                   <li><strong>Developpers:</strong>
@@ -145,7 +145,8 @@ ConnettiDB();
         </div>
         <div id="scritta_forbidden">
               <p>
-                  An unauthorized copy of this software is forbidden
+                  &nbsp;
+                  <!-- An unauthorized copy of this software is forbidden -->
               </p>
           
               <p class="bottone_chiudi_crediti">

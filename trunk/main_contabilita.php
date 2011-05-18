@@ -105,7 +105,7 @@ ConnettiDB();
             </div>
       
             <div id="scrittagestionevoci">      
-                <a href="">Gestione Voci</a>
+                <a href="xcontabilita.php">Gestione Cassa</a>
             </div>
      
             <div id="stampamovimenti">      
