@@ -1,4 +1,4 @@
-<?php
+  <?php
       //connessione al db
       ConnettiDb();
      
@@ -1627,15 +1627,15 @@ function CreaTabellaRuoli()
         return;
     }   
     
-    $query= "SELECT tblanimatori.IDAnimatore,tblruolioratorio.RuoloOratorio,tblClassi.Classe,tblsezioni.Sezione
+    $query= "SELECT tblanimatori.IDAnimatore,tblruolioratorio.RuoloOratorio,tblClassi.Classe,tblSezioni.Sezione
             FROM tblanimatori INNER JOIN tblruolioratorio
             ON tblanimatori.IDRuolo = tblruolioratorio.IdRuoloOratorio
             INNER JOIN tblClassi
             ON tblanimatori.IDClasse = tblClassi.IDClasse
-            INNER JOIN tblsezioni
-            ON tblanimatori.IDSezione = tblsezioni.IDSezione
+            INNER JOIN tblSezioni
+            ON tblanimatori.IDSezione = tblSezioni.IDSezione
             WHERE tblanimatori.ID =".$_POST["hdnID"]."
-            ORDER BY tblruolioratorio.IDRuoloOratorio ASC, tblClassi.IDClasse, tblsezioni.IDSezione ASC";
+            ORDER BY tblruolioratorio.IDRuoloOratorio ASC, tblClassi.IDClasse, tblSezioni.IDSezione ASC";
     
     $result =mysql_query($query);
     
