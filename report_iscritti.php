@@ -25,6 +25,7 @@ if (!isset($_SESSION['authenticated_user'])) {
 $idoperatore = $_SESSION['authenticated_user_id'];
 if (!$postback) {
 	 $_SESSION['required_report']	= $_GET["r"];	
+	 $_SESSION['required_report_title']	= $_GET["t"];	
 }
 
 ConnettiDB();
@@ -90,7 +91,7 @@ if (IsResultSet($result)) {
 ?>
       <!-- ******************** sezione barra di navigazione ***************************************-->
     <div id="barranavigazione">
-        | <a href="homepage.php">home page</a> | <a href="inserisci_prenotazioni.php">iscrizioni &amp; prenotazioni Er</a> |
+        | <a href="homepage.php">home page</a> | <a href="report.php">elenco report</a> |<a href="inserisci_prenotazioni.php">iscrizioni &amp; prenotazioni Er</a> |
     </div> 
    </div> <!-- fine sezione intestazione -->
      <div id="myoperatore">
@@ -111,7 +112,10 @@ if (IsResultSet($rstEventoCorrente)) {
 $rstEventi = GetEventi();
 if (IsResultSet($rstEventi)) {
 	if (mysql_num_rows($rstEventi) > 0) {
-		echo "<table style=\"margin:60px auto;width:80%\" border=0>";
+		echo "<table style=\"margin:60px auto 10px ;width:80%\" border=0>";
+			echo "<tr>";
+			echo "<th colspan=4>".$_SESSION['required_report_title']."</th>";
+			echo "</tr>";
 			echo "<tr>";
 			echo "<th style=\"text-align:left;width:90%\">Evento</th>";
 			echo "<th style=\"text-align:center;width:5%\">Data</th>";
@@ -140,16 +144,16 @@ if (IsResultSet($rstEventi)) {
 //print_r($_POST);
 //var_dump($_POST);
 // aggiorno i dati se è stato richiesto
+$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 switch (strtolower($_REQUEST["stampa"])) {
 	case "stampa":		
 		if ($_POST["postback"]) {
 			if (isset($_POST["cod_evento"])) {
 				if (count($_POST["cod_evento"]) > 0 && count($_POST["cod_evento"]) <= 1) {
-					$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 					//echo("Location: http://$host$uri/".$_SESSION['required_report']."?idevento=".$_POST["cod_evento"][0]);
 					//die();					
 					header("Location: http://$host$uri/".$_SESSION['required_report']."?idevento=".$_POST["cod_evento"][0]);
-					unset($_SESSION['required_report']);					
+					//unset($_SESSION['required_report']);					
 					ob_end_flush();
 				} elseif (count($_POST["cod_evento"]) > 1) {
 					echo "<p style=\"font-weight:bold\">Deve essere selezionato un solo evento</p>";
@@ -157,14 +161,19 @@ switch (strtolower($_REQUEST["stampa"])) {
 			}
 		}
 		break;
+	case "elenco report":		
+		header("Location: http://$host$uri/report.php");
+		break;
 	default:
 }
 ?>
-      </div> <!-- fine corpo pagina -->
-     
+      </div> <!-- fine corpo pagina -->    
 		<!-- *********** bottone per salvare gli eventi ******************* -->
 		<div id="stampa">
-			 <div style="text-align:center"><input name="stampa" type="submit" value ="Stampa"/></div>
+			 <div style="text-align:center">
+			 	<input name="stampa" type="submit" value ="Stampa"/>&nbsp;&nbsp;
+			 	<input name="stampa" type="submit" value ="Elenco report"/>
+			 </div>
 		</div>
     </form>  
 	</div>

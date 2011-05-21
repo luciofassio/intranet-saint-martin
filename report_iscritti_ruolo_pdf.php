@@ -13,7 +13,7 @@ $pdf->AliasNbPages();
 // The fourth parameter is the Database you'd like to run the report on. 
 $pdf->connect('localhost','root','mysql','saint_martin_db'); 
 // This is the title of the Report generated. 
-$attr=array('tMargin'=>50,'titleFontSize'=>18,'titleText'=>"Iscritti per ruolo dell'evento ".GetNomeEventoByID($_GET['idevento'])); 
+$attr=array('titleFontSize'=>18,'titleText'=>"Iscritti per ruolo\n".GetNomeEventoByID($_GET['idevento'])); 
 // This is your query. It should be a 'SELECT' query. 
 // Reports are run over 'SELECT' querires generally
 
