@@ -13,27 +13,27 @@ $pdf->AliasNbPages();
 // The fourth parameter is the Database you'd like to run the report on. 
 $pdf->connect('localhost','root','mysql','saint_martin_db'); 
 // This is the title of the Report generated. 
-$attr=array('titleFontSize'=>20,'titleText'=>"Iscritti per squadra dell'evento ".GetNomeEventoByID($_GET['idevento'])); 
+$attr=array('titleFontSize'=>18,'titleText'=>"Iscritti all'evento speciale per squadra\n".GetNomeEventoByID($_GET['idevento'])); 
 // This is your query. It should be a 'SELECT' query. 
 // Reports are run over 'SELECT' querires generally
 
 $report_sql = "SELECT 0 AS 'Num.',
-       catechismi.Cognome,
-       catechismi.Nome,
-       tblsquadre.NomeSquadra as 'Squadra',
-       tbliscrizioni.Note,
+       Catechismi.Cognome,
+       Catechismi.Nome,
+       tblSquadre.NomeSquadra as 'Squadra',
+       tblIscrizioni.Note
 
- FROM    (tbliscrizioni tbliscrizioni
+FROM    (tblIscrizioni tblIscrizioni
            INNER JOIN
-              tblsquadre tblsquadre
-           ON (tbliscrizioni.IDSquadra = tblsquadre.IDSquadra))
+              tblSquadre tblSquadre
+           ON (tblIscrizioni.IDSquadra = tblSquadre.IDSquadra))
        INNER JOIN
-          catechismi catechismi
-       ON (catechismi.ID = tbliscrizioni.ID)
- WHERE tbliscrizioni.IDEvento = ".$_GET['idevento']." AND EventoSpecialeER = 1
- ORDER BY tblsquadre.NomeSquadra ASC,
-          catechismi.Cognome ASC,
-          catechismi.Nome ASC";
+          Catechismi Catechismi
+       ON (Catechismi.ID = tblIscrizioni.ID)
+ WHERE tblIscrizioni.IDEvento = ".$_GET['idevento']." AND EventoSpecialeER = 1
+ ORDER BY tblSquadre.NomeSquadra ASC,
+          Catechismi.Cognome ASC,
+          Catechismi.Nome ASC";
 $totalize = "0,0,0,0,0";
 $groupby =  "0,0,0,1,0";
 $pdf->mysql_report($report_sql,false,$attr, $totalize, $groupby); 

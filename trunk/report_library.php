@@ -14,6 +14,7 @@ var	$tablegroupbybreak ; 	// gestione delle rotture sulle colonne
 var $headerset; 
 var $footerset; 
 var $maxY; 
+var $endOfPage = 777.85;
 
 function _beginpage($orientation) { 
     $this->page++; 
@@ -83,10 +84,18 @@ function Header()
     // Check if header for this page already exists 
     if(!$this->headerset[$this->page]) { 
         $fullwidth = $this->ComputeReportWidth(); 
-        $this->SetY(($this->tMargin) - ($this->FontSizePt/$this->k)*2); 
         $this->cellFontSize = $this->FontSizePt ; 
         $this->SetFont('Arial','',( ( $this->titleFontSize) ? $this->titleFontSize : $this->FontSizePt )); 
-        $this->Cell(0,$this->FontSizePt,$this->titleText,0,1,'C'); 
+        $titleRows = explode("\n", $this->titleText);
+        // calcolo il margine superiore in modo da fare stare il titolo
+        $this->tMargin = $this->FontSizePt * count($titleRows) * 1.5;
+        // k è l'unità di misura in uso (1=punti, 72=pollici, ....)
+        $this->SetY(($this->tMargin - ($this->FontSizePt * count($titleRows) / $this->k))/2); 
+        foreach ($titleRows as $value) {
+        	$this->Cell(0,$this->FontSizePt,$value,0,1,'C');
+        }
+        //$this->Cell(0,$this->FontSizePt,$this->titleText,0,1,'C'); 
+        //$this->tMargin = $this->GetY();
         $l = ($this->lMargin); 
         $this->SetFont('Arial','',$this->cellFontSize); 
 		$i = 0;
@@ -151,7 +160,7 @@ function morepagestable($lineheight=8) {
     while($data=mysql_fetch_row($this->results)) { 
         $this->page = $currpage; 
         // write the horizontal borders 
-		//$this->SetDrawColor(0,0,0);
+		//$this->SetDrawColor(0,0,255);
         $this->Line($l,$h,$fullwidth+$l,$h); 
 		//$this->SetDrawColor(0,0,0);
 		
@@ -239,9 +248,15 @@ function morepagestable($lineheight=8) {
 		// echo "\$tmpheight: ".$tmpheight."<br/>";
 		if($newheight > 0) {
        		if ($yTopRow < $tmpheight) {
-				// chiudo la riga della pagina precedente
-				if ($tmpheight > $yTopRow) {
-					$tmpheight = 777.85;
+				// se la stampa è già scivolata alla pagina successiva
+				// la riporto alla precedente
+				$nextpage = $this->page;
+       			if ($this->page > $maxpage) {
+       				$this->page = $maxpage;
+				}
+       			// chiudo la riga della pagina precedente
+				if ($tmpheight > $yTopRow && $tmpheight < $endOfPage) {
+					$tmpheight = $endOfPage;
 				}
 				//$this->SetDrawColor(255,0,0);
 				$this->Line($this->lMargin,$tmpheight,$fullwidth+$this->lMargin,$tmpheight);
@@ -256,6 +271,8 @@ function morepagestable($lineheight=8) {
 				} 
 				$this->Line($xvb, $yTopRow, $xvb, $tmpheight); 
 				//$this->SetDrawColor(0,0,0);
+				// eventualmente ripristino la posizione della pagina
+				$this->page = $nextpage;
 			}
 			// imposto le coordinate della pagina nuova
 			$maxpage += 1;
@@ -345,17 +362,20 @@ function query($query){
 
 function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){ 
 
-    $temp = explode(",", $totalize);
+    // costruisco l'array dei totali
+	$temp = explode(",", $totalize);
 	foreach ($temp as $n) {
 		$this->tabletotalize[] = (int)$n;
 		$this->tabletotals[] = 0;
 	}
-    $temp = explode(",", $groupby);
+    // costruisco l'array dei raggruppamenti
+	$temp = explode(",", $groupby);
 	foreach ($temp as $n) {
 		$this->tablegroupby[] = (int)$n;
 		$this->tablegroupbybreak[] = "";
 	}
 		
+	// carico i parametri della chiamata
 	foreach($attr as $key=>$val){ 
         $this->$key = $val ; 
     } 
