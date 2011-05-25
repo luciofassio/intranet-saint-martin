@@ -770,7 +770,7 @@ if ($_SESSION['access_level'] >3) {
             </fieldset>
             
         </p>
-        <br />
+        
         <p class="ChiudiDivBilancio">
             <input type="button" id="ElaboraBilancio" value="Elabora" onClick="DivBilancio('elabora');" /> 
             <input type="button" id="ChiudiDivBilancio" value="Chiudi" onClick="DivBilancio('chiudi');" /> 

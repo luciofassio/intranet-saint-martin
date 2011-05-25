@@ -1,4 +1,4 @@
---
+﻿--
 -- Definition of table `tblcapitolicontabilita`
 --
 
@@ -14,7 +14,7 @@ CREATE TABLE `tblcapitolicontabilita` (
 -- Dumping data for table `tblcapitolicontabilita`
 --
 
-/*!40000 ALTER TABLE `tblcontabilita` DISABLE KEYS */;
+
 
 INSERT INTO `tblcapitolicontabilita`
 (`IdCapitolo`,`SiglaCapitolo`,`Capitolo`)
@@ -30,13 +30,13 @@ VALUES
   (8,'SPE','Spettacoli'),
   (9,'CTB','Contributi');
   
-/*!40000 ALTER TABLE `tblcapitolicontabilita` ENABLE KEYS */;
+
 
 --
 -- Definition of table `tblvocicontabilita`
 --
 
-DROP TABLE IF EXISTS tblvocicontabilita`;
+DROP TABLE IF EXISTS `tblvocicontabilita`;
 CREATE TABLE `tblvocicontabilita` (
   `IdVoci` INTEGER NOT NULL auto_increment,
   `Voce` VARCHAR(45) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE `tblvocicontabilita` (
 -- Dumping data for table `tblvocicontabilita`
 --
 
-/*!40000 ALTER TABLE `tblvocicontabilita` DISABLE KEYS */;
+
 INSERT INTO `tblvocicontabilita` (`IdVoci`,`Voce`,`IdCapitolo`,`Movimentazione`) VALUES 
  (1,'Toner',2,'U'),
  (2,'Risme Carta A4',2,'U'),
@@ -74,15 +74,13 @@ INSERT INTO `tblvocicontabilita` (`IdVoci`,`Voce`,`IdCapitolo`,`Movimentazione`)
  (21,'Progetti',9,'E'),
  (22,'Offerte',9,'E'),
  (23,'Risme Carta A3',2,'U');
-/*!40000 ALTER TABLE `tblvocicontabilita` ENABLE KEYS */;
-
 
 --
 -- Definition of table `tblcontabilita`
 --
 
-DROP TABLE IF EXISTS tblvocicontabilita`;
-CREATE TABLE `tblvocicontabilita` (
+DROP TABLE IF EXISTS `tblcontabilita`;
+CREATE TABLE `tblcontabilita` (
   `IdContabilita` INTEGER NOT NULL auto_increment,
   `DataOperazione` DATETIME,
   `Contabilita` VARCHAR(2),
@@ -92,6 +90,4 @@ CREATE TABLE `tblvocicontabilita` (
   `Importo` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY  (`IdContabilita`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabella per la gestione della contabilita';
-
-
 
