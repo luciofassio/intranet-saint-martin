@@ -544,7 +544,7 @@ function PopolaVoci($stringa){
         
         case "F": // filtra le voci in relazione ai capitoli (nel div voci e capitoli)
           $query="SELECT * FROM tblvocicontabilita INNER JOIN tblcapitolicontabilita ON tblvocicontabilita.IdCapitolo=tblcapitolicontabilita.IdCapitolo WHERE tblvocicontabilita.IdCapitolo=".$_POST["addCapitoli"]." ORDER BY Voce";
-          unset ($_POST["FiltroVoce"]);
+          //unset ($_POST["FiltroVoce"]);
         break;
         
         case "FEC": // filtra le voci in relazione ai capitoli (nella barra comandi)
@@ -576,7 +576,7 @@ function PopolaVoci($stringa){
             $selected="selected";
         }     
          
-        echo  "<option value=\"".$row->IdVoci."\" onDblClick=\"ModificaVociCapitoli('voce');\" $selected>" 
+        echo  "<option value=\"".$row->IdVoci."\" onClick=\"ResetCapitoliSigla();\" onDblClick=\"ModificaVociCapitoli('voce');\" $selected>" 
               .htmlentities($row->Voce)
               .$spazi
               ."(".$row->SiglaCapitolo
@@ -594,7 +594,7 @@ function PopolaCapitoli($stringa){
     
     if (isset($_POST["addVoci"])) {
         unset($_POST["addCapitoli"]);
-        
+
         $query="SELECT tblvocicontabilita.IdCapitolo
                 FROM tblvocicontabilita
                 INNER JOIN tblcapitolicontabilita
@@ -612,7 +612,6 @@ function PopolaCapitoli($stringa){
     if (isset($_POST["addCapitoli"])) {
         $indice=$_POST["addCapitoli"];
     }
-
     
     $result = mysql_query($query);
     
@@ -628,9 +627,9 @@ function PopolaCapitoli($stringa){
             
             default:
                 if ($indice!=$row->IdCapitolo){
-                    echo "<option name=\"optCapitoli\" id=\"optCapitoli\" value=\"".$row->IdCapitolo."\" onClick=\"FiltraVoci()\" onDblClick=\"ModificaVociCapitoli('capitolo');\" >" .htmlentities($row->SiglaCapitolo)."\t-\t".htmlentities($row->Capitolo)."</option>";
+                    echo "<option name=\"optCapitoli\" id=\"optCapitoli\" value=\"".$row->IdCapitolo."\" onClick=\"Filtra()\" >" .htmlentities($row->SiglaCapitolo)."\t-\t".htmlentities($row->Capitolo)."</option>";
                 } else {
-                    echo "<option name=\"optCapitoli\" id=\"optCapitoli\" value=\"".$row->IdCapitolo."\" onClick=\"FiltraVoci()\" onDblClick=\"ModificaVociCapitoli('capitolo');\" selected>" .htmlentities($row->SiglaCapitolo)."\t-\t".htmlentities($row->Capitolo)."</option>";
+                    echo "<option name=\"optCapitoli\" id=\"optCapitoli\" value=\"".$row->IdCapitolo."\" onClick=\"Filtra()\" selected>" .htmlentities($row->SiglaCapitolo)."\t-\t".htmlentities($row->Capitolo)."</option>";
                 }
             break;
         }

@@ -17,6 +17,18 @@ switch (lsBrowser) {
   break;
 }
 
+
+//***************************************************************************************
+//funzione per resettare i campi capitolo e sigla nella sezione voci&capitoli
+function ResetCapitoliSigla() {
+    document.getElementById("txtCapitolo").value=null;
+    document.getElementById("txtSigla").value=null;
+    document.getElementById("addCapitoli").selectedIndex=-1;
+    
+    return;
+}
+
+
 //***************************************************************************************
 //Visualizza/nasconde il div del Bilancio
 function DivBilancio(azione) {
@@ -246,7 +258,7 @@ function DivAperto(stringa) {
 
 //***************************************************************************************
 // funzione per filtrare le voci e i capitoli
-function FiltraVoci() {
+function Filtra(stringa,myclick) {
     var selCapitoli = document.getElementById("addCapitoli");
     
     if (selCapitoli.selectedIndex >-1) {
@@ -259,6 +271,9 @@ function FiltraVoci() {
     
     // deseleziona eventuali voci selezionate
     document.getElementById("addVoci").selectedIndex=-1;
+    
+    // dichiara quale div deve rimanere aperto
+    document.getElementById("divAperto").value="VC"
     
     // invia i dati a PHP
     document.getElementById("frmVociCapitoli").submit();
@@ -680,6 +695,13 @@ function ControlloVoce(stringa) {
         case 'focus':
             campo.style.color="red";
             campo.style.textAlign="left";
+            if (document.getElementById("txtCapitolo").value!="" || document.getElementById("txtCapitolo").value!=null) {
+                document.getElementById("txtCapitolo").value=null;
+                document.getElementById("txtSigla").value=null;
+                if (document.getElementById("addVoci").selectedIndex==-1){
+                    document.getElementById("btnAggiungi").value="Aggiungi";
+                } 
+            }
         break;
     
          case 'blur':
@@ -827,12 +849,12 @@ function SalvaVociCapitoli(stringa) {
     if (!DatiOk) { 
         StampaMessaggioErrore(messaggio,true,nr_errori);
     } else {
-        switch (stringa) {
-            case "aggiungi":
+        switch (document.getElementById("btnAggiungi").value) {
+            case "Aggiungi":
                 azione.value="addVoceCapitolo";
             break;
             
-            case "modifica":
+            case "Modifica":
                 azione.value=myAction;
             break;
         
