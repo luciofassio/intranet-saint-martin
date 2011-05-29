@@ -633,13 +633,13 @@ table.ec td.layoutECusc {
                     Capitolo <br />
                      <input type="text" name="txtCapitolo" id="txtCapitolo" maxlength="30" onfocus="ControlloCapitolo('focus');" onblur="ControlloCapitolo('blur');" 
                      value="<?php 
-                                if ($_POST["FiltroVoce"]!="F") {
+                                //if ($_POST["FiltroVoce"]!="F") {
                                     $result= RecuperaCapitolo();
                                     if ($result) {
                                         $row=mysql_fetch_object($result);
                                         echo (htmlentities($row->Capitolo));
                                     }
-                                }
+                                //}
                             ?>" />
                      
                      <br /><br />
@@ -726,7 +726,7 @@ if ($_SESSION['access_level'] >3) {
 </form>
 
 <!-- SEZIONE DIV BILANCIO-->
-<form name="frmBilancio" id="frmBilancio" method ="post" action ="xstampa_bilancio.php">    
+<form name="frmBilancio" id="frmBilancio" method ="post" action ="xstampa_bilancio.php" target="_blank">    
     <div id="div_bilancio">
         <p class="intestazioneerrori">Elabora Bilancio</p>
         
