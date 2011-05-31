@@ -874,11 +874,11 @@ function SalvaDatiRubrica() {
         
         // prepara la query per la ricerca del telefono da salvare
         // controlla se il numero è nuovo e quindi da salvare o è semplicemente da aggiornare
-        $query="SELECT IDTipoTelefono,ID FROM tbltelefoni WHERE IDTipoTElefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
+        $query="SELECT IDTipoTelefono,ID FROM tblTelefoni WHERE IDTipoTElefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
         $result=mysql_query($query);
         
         if (mysql_num_rows($result)>0) {
-            $query="UPDATE tbltelefoni SET Prefisso='".$valore["Prefisso"]."', Numero='".$valore["Numero"]."', TelSMS=".$valore["TelSMS"].", PrefissoInt='".$valore["PrefissoInt"]."' ";
+            $query="UPDATE tblTelefoni SET Prefisso='".$valore["Prefisso"]."', Numero='".$valore["Numero"]."', TelSMS=".$valore["TelSMS"].", PrefissoInt='".$valore["PrefissoInt"]."' ";
             $query.="WHERE IDTipoTelefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
         } else {
             $query="INSERT INTO tblTelefoni (ID,Prefisso,Numero,IDTipoTelefono,TelSMS,PrefissoInt) VALUES(".$_POST['hdnID'].",'".$valore['Prefisso']."','".$valore['Numero']."',".$valore['IDTipoTelefono'].",".$valore['TelSMS'].",'".$valore['PrefissoInt']."')"; 
@@ -899,7 +899,7 @@ function SalvaDatiRubrica() {
     $TipoTelefono=explode("|",$_POST["DatiRubrica"]);
     
     foreach ($TipoTelefono as $valore) {
-        $query="DELETE FROM tbltelefoni WHERE IDTipoTelefono=".$valore." AND ID=".$_POST["hdnID"];  
+        $query="DELETE FROM tblTelefoni WHERE IDTipoTelefono=".$valore." AND ID=".$_POST["hdnID"];  
         mysql_query($query);
     }
 

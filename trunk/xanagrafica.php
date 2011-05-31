@@ -23,7 +23,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
 <head>
    <title>Gestione Oratorio / Anagrafica</title>
    <!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
   <script type="text/javascript" src="./js/f_anagrafica.js"></script>
   <script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
