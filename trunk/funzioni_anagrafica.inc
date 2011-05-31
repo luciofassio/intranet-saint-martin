@@ -194,19 +194,19 @@ function GetData($Data) {
        
        // imposta le variabili con i valori dei campi 
         $scheda_id=$_POST["hdnID"];
-        $scheda_cognome=addslashes($_POST["cognome"]);
-        $scheda_nome=addslashes($_POST["nome"]);
+        $scheda_cognome=$_POST["cognome"];
+        $scheda_nome=$_POST["nome"];
         $scheda_sesso=$_POST["sesso"];
         $scheda_dataN=$_POST["data_nascita"];
-        $scheda_luogoN=addslashes($_POST["natoa"]);
+        $scheda_luogoN=$_POST["natoa"];
         $scheda_tipo_via=$_POST["stradario"];
-        $scheda_via=addslashes($_POST["indirizzo"]);
-        $scheda_numero_civico=addslashes($_POST["numero"]);
-        $scheda_comune=addslashes($_POST["comune"]);
+        $scheda_via=$_POST["indirizzo"];
+        $scheda_numero_civico=$_POST["numero"];
+        $scheda_comune=$_POST["comune"];
         $scheda_cap=$_POST["cap"];
-        $scheda_provincia=addslashes($_POST["prov"]);
-        $scheda_email=addslashes($_POST["myemail"]);
-        $scheda_parrocchia=addslashes($_POST["hdnIdParrocchia"]);
+        $scheda_provincia=$_POST["prov"];
+        $scheda_email=$_POST["myemail"];
+        $scheda_parrocchia=$_POST["hdnIdParrocchia"];
         $scheda_spedizione=$_POST["chkspedizione"];
         $scheda_tipo_quota=$_POST["myquota"];
         $scheda_myaltraquota=$_POST["myaltraquota"];
