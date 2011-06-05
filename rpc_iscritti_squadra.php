@@ -17,8 +17,6 @@ if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento'])) {
 			echo("rpc_iscritti_squadra: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
 			exit();
 		}  
-			exit();
-		}
 	} // There is a queryString.
 } else {
 	echo 'Questa pagina non deve essere acceduta direttamente.';
