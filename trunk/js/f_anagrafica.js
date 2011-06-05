@@ -1032,7 +1032,7 @@ function AbilitaAltraQuota() {
         if (tipoquota[i].checked==true) {
             if (tipoquota[i].value==4) {
                 document.getElementById("myaltraquota").disabled=false;
-                document.getElementById("myaltraquota").value="";
+                //document.getElementById("myaltraquota").value="";
                 document.getElementById("myaltraquota").focus();
             } else {
                   document.getElementById("myaltraquota").disabled=true;
