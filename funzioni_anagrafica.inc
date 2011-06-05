@@ -787,7 +787,11 @@ function GetQuoteOratorio() {
                     
                     $classe="myaltraquota_x";
                     
-                    print("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value=".$_POST["myaltraquota"]."  /><strong>&nbsp;&euro;</strong></th>");
+                    if ($tipo_quota==4) {
+                        print("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value=".$_POST["myaltraquota"]."  /><strong>&nbsp;&euro;</strong></th>");
+                    } else {
+                        print("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value=0.00  /><strong>&nbsp;&euro;</strong></th>");
+                    }
                 break;
                 
                 case -2: // non pagata
