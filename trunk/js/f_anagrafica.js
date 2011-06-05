@@ -225,7 +225,8 @@ function ResetCampoCognome() {
     cognome.style.color ="black";
     cognome.style.background ="#FAF176";
     cognome.style.border="1px dotted grey";
-            
+    document.getElementById("suggestions").style.visibility="visible";
+    document.getElementById("suggestions_names").style.visibility="hidden";        
     return;
 }    
          
@@ -237,6 +238,8 @@ function ResetCampoNome() {
     nome.style.color ="black";
     nome.style.background ="#FAF176";
     nome.style.border="1px dotted grey";
+    document.getElementById("suggestions").style.visibility="hidden";
+    document.getElementById("suggestions_names").style.visibility="visible";        
     return;
 }
 
@@ -1046,6 +1049,7 @@ return;
 function RilevaTab(obj) {
       if (obj.keyCode==9) {
           $('#suggestions').hide();
+          $('#suggestions_names').hide();
           $('#suggestions_comuni').hide();
           $('#suggestions_parrocchie').hide();
       }

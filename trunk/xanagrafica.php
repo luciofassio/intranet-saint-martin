@@ -97,7 +97,6 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                     
                     <label for="txtCognome"><strong>Cognome</strong></label>
                     <input type="text" style="border: 1px dotted grey;" name="txtCognome" id="txtCognome" onkeyup="lookup(this.value);" onblur="fill();" onfocus="ResetCampoCognome()" onkeypress="RilevaTab(event);" autocomplete="off" />
-                    &nbsp;
 								
                     <div class="suggestionsBox" id="suggestions" style="display: none;">
 									     <img src="./Immagini/upArrow.png" style="position: relative; top: -12px; left: 50px;" alt="" />
@@ -105,25 +104,24 @@ $idoperatore = $_SESSION['authenticated_user_id'];
 										      &nbsp;
 									     </div>
 								    </div>
-               </div>    
+              </div>
                 
               <div id ="etichettanome">    
                     <label for="txtNome"><strong>Nome</strong></label>
                     <input type="text" style="border: 1px dotted grey;" name="txtNome" id="txtNome" onkeyup="lookup_names(this.value);" onfocus="ResetCampoNome();" onblur="fill_names();" onkeypress="RilevaTab(event);" autocomplete="off" />
                     
-                    <div class="suggestionsBox" id="suggestions_names" style="display: none;">
+                    <div class="suggestionsBoxNames" id="suggestions_names" style="display: none;">
 									     <img src="./Immagini/upArrow.png" style="position: relative; top: -12px; left: 50px;" alt="" />
 									     <div class="suggestionList" id="autoSuggestionsListNames">
 										      &nbsp;
 									     </div>
 								    </div>
-              </div>      
+             </div>      
                     
-              <div id ="barcode">      
-                    &nbsp;
+              <div id ="barcode">     
                     <label for="txtBarCode"><strong>Cod. a barre</strong></label>
                     <input type="text" style="border: 1px dotted grey;" name="txtBarCode" id="txtBarCode" autocomplete="off" onfocus="ResetCampoBarCode();" onblur="ControlloInputCodiceBarre();" onKeyPress="InvioBarCode(event);"/>
-	                &nbsp;
+	                <br /><br /><br />
                     <input type="button" name="caricaPersona" id="caricaPersona" value="cerca" onClick="btnCercaIscritti();" disabled />
               </div>
             
@@ -388,7 +386,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                         <label for="comune" id="comune"><strong>Citt&agrave;/Comune</strong></label>
                        <input type="text" name="comune" id="miocomune" onkeyup="lookup_comuni(this.value);" onblur="fill_comuni();" onfocus="FuocoCampoComune()" onkeypress="RilevaTab(event);" class ="campoestratto" autocomplete="off" 
                        value= "<?php echo ($_POST["comune"]); ?>" size="25" \>
-                       <div class="suggestionsBox" id="suggestions_comuni" style="display: none;">
+                       <div class="suggestionsBoxComuni" id="suggestions_comuni" style="display: none;">
         									<img src="./Immagini/upArrow.png" style="position: relative; top: -13px; left: 75px;" alt="" />
                           <div class="suggestionList" id="autoSuggestionsListComuni">
 				          						&nbsp;
