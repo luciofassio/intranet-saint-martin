@@ -306,7 +306,7 @@ CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, strtotime($rowEv
 
               <div id="TestoNote">
                 <label for="note">Note</label> <br />
-                <textarea name="note" rows="5" cols="27" id="note" class="nero"><?php echo $note ?></textarea>  
+                <textarea name="note" rows="5" cols="27" id="note" class="nero"><?php echo stripslashes($note) ?></textarea>  
 			  </div>
               <div style="clear:both;width:65%;margin-top:65px">
                   <div style="float:left">
