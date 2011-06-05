@@ -138,9 +138,10 @@
             $errore=0;
         break;
      } 
-    
-    RicercaIscritti();
-    
+   
+   if ($errore==0)  {
+      RicercaIscritti();
+   } 
 /**********************>>>>>>>>>> FUNZIONE PER IL CALCOLO DELLA DATA <<<<<<<<***************************/ 
 function GetData($Data) {
     // Crea l'array $giorni per il calcolo della data
@@ -786,7 +787,7 @@ function GetQuoteOratorio() {
                     
                     $classe="myaltraquota_x";
                     
-                    print("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value='0.00' $disabled /><strong>&nbsp;&euro;</strong></th>");
+                    print("<input type='text' class=\"".$classe."\" name='myaltraquota' id='myaltraquota' size='10' onblur='ControlloQuota()' onfocus='FuocoCampoQuota()' value=".$_POST["myaltraquota"]."  /><strong>&nbsp;&euro;</strong></th>");
                 break;
                 
                 case -2: // non pagata
@@ -908,8 +909,11 @@ function SalvaDatiRubrica() {
  
 // ********************* FUNZIONE PER CONVERTIRE LA DATA DAL FORMATO DI MYSQL A QUELLO ITALIANO ******
 function ConvertiData($data) {
+    
     if ($data!=null || $data!="") {
-        $data =substr($data,8,2)."/".substr($data,5,2)."/".substr($data,0,4);
+        if (strpos($data,"/")!=2) {
+            $data =substr($data,8,2)."/".substr($data,5,2)."/".substr($data,0,4);
+        }
     }
      return $data;   
 } 
