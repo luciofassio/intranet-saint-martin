@@ -409,7 +409,7 @@ function InsertIscrizioneER($ID, $IDEventoCorrente, $IDRuolo, $note, $Abbonament
 	if ($EventoSpecialeER == "") $EventoSpecialeER = "0";
 	if ($Pagamento == "") $Pagamento = "0";
 	$sql = "INSERT tblIscrizioni (ID, IDEvento, IDRUolo, Note, AbbonamentoPranzo, AbbonamentoCena, CostoComplessivo, CenaFinale, CenaFinaleOspiti, EventoSpecialeER, Pagamento) VALUES(%1\$s, %2\$s, %3\$s, '%4\$s', %5\$s, %6\$s, %7\$s, %8\$s, %9\$s, %10\$s, %11\$s)";
-	$sql = sprintf($sql, $ID, $IDEventoCorrente, $IDRuolo, str_replace("'", "''", $note), $AbbonamentoPranzo, $AbbonamentoCena, str_replace(",", ".", $CostoTotaleEuro), $CenaFinale, str_replace(",", ".", $NrOspiti), $EventoSpecialeER, str_replace(",", ".", $Pagamento));
+	$sql = sprintf($sql, $ID, $IDEventoCorrente, $IDRuolo, $note, $AbbonamentoPranzo, $AbbonamentoCena, str_replace(",", ".", $CostoTotaleEuro), $CenaFinale, str_replace(",", ".", $NrOspiti), $EventoSpecialeER, str_replace(",", ".", $Pagamento));
 	//ob_clean();
 	//echo $sql;
 	//exit();
@@ -431,7 +431,7 @@ function UpdateIscrizioneER($IDIscr, $IDRuolo, $note, $AbbonamentoPranzo, $Abbon
 	if ($EventoSpecialeER == "") $EventoSpecialeER = "0";
 	if ($Pagamento == "") $Pagamento = "0";
 	$sql = "UPDATE tblIscrizioni SET IDRUolo=%1\$s, Note='%2\$s', AbbonamentoPranzo=%4\$s, AbbonamentoCena=%5\$s, CostoComplessivo=%6\$s, CenaFinale=%7\$s, CenaFinaleOspiti=%8\$s, EventoSpecialeER=%9\$s, Pagamento=%10\$s WHERE IDIscrizione=%3\$s";
-	$sql = sprintf($sql, $IDRuolo, str_replace("'", "''", $note), $IDIscr, $AbbonamentoPranzo, $AbbonamentoCena, str_replace(",", ".", $CostoTotaleEuro), $CenaFinale, str_replace(",", ".", $NrOspiti), $EventoSpecialeER, str_replace(",", ".", $Pagamento));
+	$sql = sprintf($sql, $IDRuolo, $note, $IDIscr, $AbbonamentoPranzo, $AbbonamentoCena, str_replace(",", ".", $CostoTotaleEuro), $CenaFinale, str_replace(",", ".", $NrOspiti), $EventoSpecialeER, str_replace(",", ".", $Pagamento));
 	//ob_clean();
 	//echo "Pranzo: ".$AbbonamentoPranzo."<br/>";
 	//echo $sql;
