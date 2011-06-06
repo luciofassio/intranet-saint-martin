@@ -1001,7 +1001,7 @@ if (dt=="dn") {
     }
 }
 // controlla che l'anno inserito non sia bisestile e assegna il valore alla variabile indice
-if ((Number(yy) % 4) == 0) {
+if ((Number(yy) % 4) == 0 && Number(mm)==2) {
 	indice=0;
 } else {
 	indice=Number(mm);
