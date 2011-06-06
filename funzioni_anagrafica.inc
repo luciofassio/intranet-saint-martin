@@ -1485,14 +1485,14 @@ function ControllaScheda($variazione) {
         }
     }
     
-    if (isset($_POST["myaltraquota"])) {
+    /*if (isset($_POST["myaltraquota"])) {
         if ($_POST["myaltraquota"]!=htmlentities($record["QuotaOratorio"])) {
             $DatiVariati++;
             if (strpos($variazione,"Quota Oratorio")===false) {
                 $variazione.="| Quota Oratorio | ";
             }
         }
-    }
+    }*/
     
     if (isset($_POST["mydataT"])) {
         switch ($_POST["mydataT"]) {
