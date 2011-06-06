@@ -27,6 +27,7 @@
             unset($_POST["hdnID"]);
             unset($_POST["hdnIDParente"]);
             unset($_POST["txtCognome"]);
+            PulisciCampi(); //cancella tutti i valori da tutti i $_post dei campi
         break;
         
         case "delete_parente":
@@ -141,7 +142,8 @@
    
    if ($errore==0)  {
       RicercaIscritti();
-   } 
+   }
+   
 /**********************>>>>>>>>>> FUNZIONE PER IL CALCOLO DELLA DATA <<<<<<<<***************************/ 
 function GetData($Data) {
     // Crea l'array $giorni per il calcolo della data
@@ -216,15 +218,23 @@ function GetData($Data) {
         $scheda_classe=$_POST["myclassi"];
         $scheda_sezione=$_POST["mysezione"];
         $scheda_partecipazione=$_POST["optPartecipa"];
-        $scheda_coro=$_POST["chkCoro"];
-        //$scheda_ruolo=$_POST["myruolo"];
         
-        // controlla i dati provenienti dai checkbox
+        if (isset($_POST["chkCoro"])) {
+            $scheda_coro="True";
+        } else {
+            $scheda_coro="False";
+        }
+        
+        //$scheda_coro=$_POST["chkCoro"];
+        //$scheda_ruolo=$_POST["myruolo"];
+       
+        /* controlla i dati provenienti dai checkbox
        if ($scheda_coro) {
             $scheda_coro="True";
         } else {
             $scheda_coro="False";
         }
+        */
         
         if ($scheda_partecipazione=="") {
             $scheda_partecipazione=2; //non partecipa alle attività dell'oratorio
