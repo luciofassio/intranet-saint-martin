@@ -66,6 +66,5 @@ if ($rstListino) {
 }
 ?>
 </table>
-<p class="note"><sup>1. Gli abbonamenti "Pranzo", "Cena" e "Pranzo+Cena" non comprendono il costo della Cena Finale dell'Estate Ragazzi</sup></p>
 </body>
 </html>
