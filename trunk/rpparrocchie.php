@@ -15,7 +15,7 @@ if(isset($_POST['queryString'])) {
 		}  
 		if($query) {
       while ($row = mysql_fetch_object($query)) {
-              echo '<li onClick="fill_parrocchie(\''.htmlentities($row->IdParrocchia).'|'.htmlentities($row->Parrocchia).'\');">'.stripslashes(htmlentities($row->Parrocchia)).'</li>';
+              echo '<li onClick="fill_parrocchie(\''.htmlentities($row->IdParrocchia).'|'.addslashes(htmlentities($row->Parrocchia)).'\');">'.stripslashes(htmlentities($row->Parrocchia)).'</li>';
       }
 		} else {
       echo ("ERRORE: la ricerca nel database non ha dato risultati.");
