@@ -3,10 +3,11 @@ require('accesso_db.inc');
 require ('bar128.php');							// Our Library of Barcode Functions
 
 ob_clear;
+$id = $_GET["id"];
 $prezzo_iscrizione = "";
 $copie = 0;
 ConnettiDB();
-if($_POST["anno"] == "" || $_POST["gruppi"] == "") {
+if(($_POST["anno"] == "" || $_POST["gruppi"] == "") && $id == "") {
 	echo "<strong>Deve essere selezionato il gruppo e l'anno di abbonamento</strong>";
 	exit();
 }
@@ -17,6 +18,9 @@ if($_POST["copie"] != "" && !is_numeric($_POST["copie"])) {
 	if($_POST["copie"] != "") {
 		$copie = $_POST["copie"];
 	}
+}
+if ($id <> "") {
+	$_POST["anno"] = date("Y");
 }
 ?>
 
@@ -213,8 +217,12 @@ if ($copie > 0) {
 	for($p = 0;$p < $copie; $p++) {
 		StampaPagina();
 	}
-} else {
-  $rstTesserati = GetTesserati($_POST["anno"], $_POST["gruppi"]);
+} else { 
+	if ($id <> "") {
+		$rstTesserati = GetTesseratiByID($id);
+	} else {
+  		$rstTesserati = GetTesserati($_POST["anno"], $_POST["gruppi"]);
+  	}
 	if($rstTesserati) {
 		if(mysql_num_rows($rstTesserati) > 0) {
       while ($rowTesserati = mysql_fetch_object($rstTesserati)){
@@ -291,7 +299,7 @@ if ($copie > 0) {
 				}	
         StampaPagina();
       }				
-		}
+	}
   }
 }
 
@@ -640,7 +648,18 @@ function GetTesserati($anno, $gruppo)
 	}  
     return $result;
 }
-
+function GetTesseratiByID($ID)
+{
+	$sql = "SELECT ID FROM Catechismi WHERE ID=%1\$s";
+	$sql = sprintf($sql, $ID);
+	
+	$result = mysql_query($sql);
+	if (mysql_errno() <> 0) {
+		throw new Exception("GetTesseratiByID: ".mysql_errno().":".mysql_error());
+		exit();
+	}  
+    return $result;
+}
 ?>
 </body>
 <!-- script type="text/javascript">

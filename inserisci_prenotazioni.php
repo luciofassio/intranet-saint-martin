@@ -191,7 +191,7 @@ $result = GetOperatore($idoperatore);
 $row = mysql_fetch_object($result);
 // preparo il link alla stampa della privacy
 if ($hdnID != null) {
-	$stampa_privacy = "<a href=stampa_privacy.php?id=".$hdnID." target=_blank >stampa privacy</a>";
+	$stampa_privacy = "<a href=stampa_privacy_totale.php?id=".$hdnID." target=_blank >stampa privacy</a>";
 } else {
 	$stampa_privacy = "stampa privacy";
 }
