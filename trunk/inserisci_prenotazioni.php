@@ -314,7 +314,7 @@ CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, strtotime($rowEv
 					  <input type="button" name="listino" id= "listino" value = "listino" onclick="aprilistino()" />
 				  </div>
                   <div style="float:right">
-				      <input type="button" name="carica_iscrizione" id= "carica_iscrizione" value = "Carica iscrizione" onclick="CaricaIscrizione()" />
+				      <input type="button" name="carica_iscrizione" id= "carica_iscrizione" value = "Carica evento" onclick="CaricaIscrizione()" />
 				  </div>
 			  </div>
         	</div> <!-- fine della sezione iscrizionedati -->
