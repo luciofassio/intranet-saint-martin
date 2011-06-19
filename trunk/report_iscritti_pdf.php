@@ -382,7 +382,7 @@ $attr=array('titleFontSize'=>20,'titleText'=>"Bilancio dell'evento ".GetNomeEven
 // Reports are run over 'SELECT' querires generally
 $report_sql =  "SELECT 0 AS 'Num.', Cognome, Nome, CostoComplessivo AS 'Cifra da pagare', Pagamento AS 'Cifra pagata', AbbonamentoCena AS AC, CenaFinale AS CF,tblIscrizioni.Note ";
 $report_sql .= "FROM tblIscrizioni tblIscrizioni INNER JOIN Catechismi Catechismi ";
-$report_sql .= "ON (tblIscrizioni.ID = Catechismi.ID) WHERE tblIscrizioni.IDEvento = ".$_GET['idevento']." AND tblIscrizioni.IDRuolo=1 ORDER BY Catechismi.Cognome ASC, Catechismi.Nome ASC"; 
+$report_sql .= "ON (tblIscrizioni.ID = Catechismi.ID) WHERE tblIscrizioni.IDEvento = ".$_GET['idevento']." ORDER BY Catechismi.Cognome ASC, Catechismi.Nome ASC"; 
 $pdf->mysql_report($report_sql,false,$attr); 
 exit();
 ?>

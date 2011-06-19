@@ -71,3 +71,6 @@ elenco abbonati pranzo, cena, per evento, alfabetico
 4. utenti e abilitazione funzioni
 
 ====================================================================================================
+numero iscritti per squdra diviso per bambini/animatori/catechisiti/assistenti
+nome della squadra
+sostituire animatore medie con assistente animatore
