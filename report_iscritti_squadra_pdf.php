@@ -21,7 +21,6 @@ $report_sql = "SELECT 0 AS 'Num.',
        Catechismi.Cognome,
        Catechismi.Nome,
        tblSquadre.NomeSquadra as 'Squadra',
-       tblIscrizioni.Note,
        tblIscrizioni.AbbonamentoCena AS AC,
        tblIscrizioni.CenaFinale AS CF,
        tblIscrizioni.CostoComplessivo AS 'Da pagare_',
@@ -38,8 +37,10 @@ $report_sql = "SELECT 0 AS 'Num.',
  ORDER BY tblSquadre.NomeSquadra ASC,
           Catechismi.Cognome ASC,
           Catechismi.Nome ASC";
-$totalize = "0,0,0,0,0,0,0,1,1,0";
-$groupby =  "0,0,0,1,0,0,0,0,0,0";
+//echo $report_sql;
+//die();
+$totalize = "0,0,0,0,0,0,1,1,0";
+$groupby =  "0,0,0,1,0,0,0,0,0";
 $pdf->mysql_report($report_sql,false,$attr, $totalize, $groupby); 
 exit();
 ?>
