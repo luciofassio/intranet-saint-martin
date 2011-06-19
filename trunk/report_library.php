@@ -149,7 +149,7 @@ function morepagestable($lineheight=8) {
 	$maxpage = 1;
     $l = $this->lMargin; 
     $startheight = $h = $this->GetY(); 
-    $startpage = $currpage = $this->page; 
+    $startpage = $this->page; 
 
     // calculate the whole width 
     $fullwidth = $this->ComputeReportWidth(); 
@@ -158,17 +158,22 @@ function morepagestable($lineheight=8) {
 	// scorro le righe
     $row = 0; 
     while($data=mysql_fetch_row($this->results)) { 
-        $this->page = $currpage; 
         // write the horizontal borders 
 		//$this->SetDrawColor(0,0,255);
         $this->Line($l,$h,$fullwidth+$l,$h); 
 		//$this->SetDrawColor(0,0,0);
 		
 		// elaboro le rotture dei gruppi
-		for ($g = 0; $g < count($this->tablegroupby); $g++) {
+		$breakingNow = false;
+        for ($g = 0; $g < count($this->tablegroupby); $g++) {
 			if ($this->tablegroupby[$g] > 0) {
 				if ($this->tablegroupbybreak[$this->tablegroupby[$g] - 1] <> $data[$g]) {
 					// stampo la rottura
+					// se la rottura causa un cambio pagina lo forzo 
+					// per posizionare esattamente la rottura stesa
+					//if($h + $lineheight * 1.5 > $this->endOfPage) {
+					//	$this->AddPage();
+					//}
 					$h += $lineheight / 2;
 					$this->SetXY($l,$h + ($lineheight / 4));
 					$this->setFillColor(200,200,200); 
@@ -177,8 +182,18 @@ function morepagestable($lineheight=8) {
 					$this->tablegroupbybreak[$this->tablegroupby[$g] - 1] = $data[$g];
 					// echo("data: ".$data[$g]."<br>");
 					$h = $this->Gety();
-					$tmpheight = $this->Gety();
-				}
+					// abbiamo cambiato pagina?
+					if($this->page > $maxpage) {
+						$breakingNow = true;
+						if($newheight < $this->GetY()) { 
+							$newheight = $this->GetY(); 
+						}
+					} else {
+						if($tmpheight < $this->GetY()) { 
+							$tmpheight = $this->GetY(); 
+						}
+					}
+									}
 			}
 		}
 		
@@ -187,8 +202,7 @@ function morepagestable($lineheight=8) {
 		$i = 0;
 		// scorro le colonne
         foreach($data as $col => $txt) { 
-			if ($this->tablegroupby[$i] == 0) {
-				$this->page = $currpage; 
+        	if ($this->tablegroupby[$i] == 0) {
 				$this->SetXY($l,$h); 
 				
 				// formatto i numeri in modo europeo
@@ -211,6 +225,9 @@ function morepagestable($lineheight=8) {
 						}
 						break;
 				} 
+				if ($txt == "Bianca") {
+					$l = $l;		
+				}
 				//echo mysql_field_type($this->results,$i).mysql_field_flags($this->results, $i).'<br/>';
 				// echo "\$txt::::::::::::::::::::::::: ".$txt."<br/>";
 				$this->MultiCell($this->tablewidths[$col],$lineheight,$txt,0,$this->colAlign[$col]); 
@@ -226,7 +243,12 @@ function morepagestable($lineheight=8) {
 				// abbiamo cambiato pagina?
 				if($this->page > $maxpage) {
 					if($newheight < $this->GetY()) { 
-						$newheight = $this->GetY(); 
+						$newheight = $this->GetY();
+					}
+					// ritorno alla pagina precedente per stampare le altre celle della riga
+					// a meno che il cambio pagina sia dovuto a una rottura di gruppo
+					if(!$breakingNow){
+						$this->page = $maxpage;
 					}
 				} else {
 					if($tmpheight < $this->GetY()) { 
@@ -247,7 +269,7 @@ function morepagestable($lineheight=8) {
 		// echo "\$newheight: ".$newheight."<br/>";
 		// echo "\$tmpheight: ".$tmpheight."<br/>";
 		if($newheight > 0) {
-       		if ($yTopRow < $tmpheight) {
+       		if ($yTopRow < $tmpheight && !$breakingNow) {
 				// se la stampa è già scivolata alla pagina successiva
 				// la riporto alla precedente
 				$nextpage = $this->page;
@@ -255,8 +277,8 @@ function morepagestable($lineheight=8) {
        				$this->page = $maxpage;
 				}
        			// chiudo la riga della pagina precedente
-				if ($tmpheight > $yTopRow && $tmpheight < $endOfPage) {
-					$tmpheight = $endOfPage;
+				if ($tmpheight > $yTopRow && $tmpheight < $this->endOfPage) {
+					$tmpheight = $this->endOfPage;
 				}
 				//$this->SetDrawColor(255,0,0);
 				$this->Line($this->lMargin,$tmpheight,$fullwidth+$this->lMargin,$tmpheight);
@@ -280,7 +302,11 @@ function morepagestable($lineheight=8) {
 			$tmpheight = $newheight;
 			$newheight = 0;
 			$yTopRow = $maxY;
-
+			
+			if($breakingNow) {
+				$yTopRow += $lineheight;
+			}	
+			
 			//$this->SetDrawColor(0,0,0);
 			$xvb = $this->lMargin;
 			$i = 0;
@@ -291,7 +317,7 @@ function morepagestable($lineheight=8) {
 				}
 				$i++;
 			} 
-			$this->Line($xvb, $yTopRow, $xvb, $tmpheight); 
+			$this->Line($xvb, $yTopRow, $xvb, $tmpheight);
 			//$this->SetDrawColor(0,0,0);
 		} else {	
 			//$this->SetDrawColor(0,0,0);
@@ -311,8 +337,6 @@ function morepagestable($lineheight=8) {
 		$h = $tmpheight; 
 		// set the "pointer" to the left margin 
         $l = $this->lMargin; 
-        // set the $currpage to the last page 
-        $currpage = $maxpage; 
         unset($datas[$row]); 
         $row++ ; 
     } 
@@ -321,8 +345,6 @@ function morepagestable($lineheight=8) {
 	// write the horizontal border
 	$this->Line($l,$h,$fullwidth+$l,$h); 
 	foreach($this->tabletotalize as $col => $tot) { 
-
-		$this->page = $currpage; 
 		$this->SetXY($l,$h); 
 		if ($tot) {
 			$this->MultiCell($this->tablewidths[$col],$lineheight,chr(128).' '.number_format($this->tabletotals[$col], 2, ',', '.'),0,$this->colAlign[$col]); 
