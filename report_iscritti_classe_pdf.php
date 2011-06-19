@@ -22,8 +22,8 @@ $report_sql = "SELECT
 	   Catechismi.Cognome,
        Catechismi.Nome,
        tblClassi.Classe,
-       tblIscrizioni.CostoComplessivo AS 'Importo da pagare',
-       tblIscrizioni.Pagamento AS 'Importo pagato',
+       tblIscrizioni.CostoComplessivo AS 'Da pagare ==',
+       tblIscrizioni.Pagamento AS 'Pagato ====',
 	   tblIscrizioni.Note
   FROM    (   saint_martin_db.Catechismi Catechismi
            INNER JOIN
@@ -32,7 +32,7 @@ $report_sql = "SELECT
        INNER JOIN
           saint_martin_db.tblIscrizioni tblIscrizioni
        ON (tblIscrizioni.ID = Catechismi.ID)
- WHERE (tblIscrizioni.IDEvento = ".$_GET['idevento'].") AND (tblIscrizioni.IDRuolo = 1)
+ WHERE (tblIscrizioni.IDEvento = ".$_GET['idevento'].")
 ORDER BY Catechismi.Classe, Catechismi.Cognome ASC, Catechismi.Nome ASC";
 //echo $report_sql;
 //die();

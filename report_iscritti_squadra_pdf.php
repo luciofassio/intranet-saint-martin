@@ -25,7 +25,8 @@ $report_sql = "SELECT 0 AS 'Num.',
        tblIscrizioni.AbbonamentoCena AS AC,
        tblIscrizioni.CenaFinale AS CF,
        tblIscrizioni.CostoComplessivo AS 'Da pagare_',
-       tblIscrizioni.Pagamento AS 'Pagato____'
+       tblIscrizioni.Pagamento AS 'Pagato____',
+	   tblIscrizioni.Note
  FROM    (   saint_martin_db.tblIscrizioni tblIscrizioni
            INNER JOIN
               saint_martin_db.tblSquadre tblSquadre
@@ -37,8 +38,8 @@ $report_sql = "SELECT 0 AS 'Num.',
  ORDER BY tblSquadre.NomeSquadra ASC,
           Catechismi.Cognome ASC,
           Catechismi.Nome ASC";
-$totalize = "0,0,0,0,0,0,0,1,1";
-$groupby =  "0,0,0,1,0,0,0,0,0";
+$totalize = "0,0,0,0,0,0,0,1,1,0";
+$groupby =  "0,0,0,1,0,0,0,0,0,0";
 $pdf->mysql_report($report_sql,false,$attr, $totalize, $groupby); 
 exit();
 ?>
