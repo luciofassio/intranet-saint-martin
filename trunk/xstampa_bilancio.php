@@ -52,9 +52,10 @@ function GetDatiSintetici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo HAVING tblcontabilita.Operazione='E'";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo, tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E'";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='E'";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione
+                  HAVING tblcontabilita.Operazione='E'";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita,
@@ -90,6 +91,7 @@ function GetDatiSintetici(){
     } 
     echo "</table>";
     echo "<p style=\"page-break-before: always; margin-top:460px\" />";
+    
     // VISUALIZZA LE USCITE
     echo str_repeat("<br />",3)."<table id=\"tblDatiSinteticiUscite\">";
     echo "<tr>";
@@ -97,9 +99,9 @@ function GetDatiSintetici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo HAVING tblcontabilita.Operazione='U'";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U'";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U'";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U'";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita, 
@@ -168,9 +170,9 @@ function GetDatiAnalitici(){
     // RECUPERA E VISUALIZZA LE ENTRATE
     // prepara il filtro
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo HAVING tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
     }
     
     //ottiene il numero di voci per capitolo
@@ -194,9 +196,9 @@ function GetDatiAnalitici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdVoce HAVING tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Contabilita HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita,
@@ -248,7 +250,7 @@ function GetDatiAnalitici(){
               echo "<td class=\"dx_capitolo\"><span style=\"font-weight:bold;\">".FormattaValuta($grantotale_entrate)." &euro;</span></td>";
               echo "</tr>";
           } else {
-              echo "<tr><td class=\"sx\" colspan=\"4\">Nessuna passivit&agrave; &egrave; iscritta nelle Entrate"; 
+              echo "<tr><td class=\"sx\" colspan=\"4\">Nessuna attivit&agrave; &egrave; iscritta nelle Entrate"; 
           }
       }
       echo "</table>";
@@ -260,9 +262,9 @@ function GetDatiAnalitici(){
      //RECUPERA E VISUALIZZA LE USCITE
     // prepara il filtro
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo HAVING tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
     }
     
     //ottiene il numero di voci per capitolo
@@ -287,9 +289,9 @@ function GetDatiAnalitici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdVoce HAVING tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Contabilita HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U' ";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita,
@@ -438,8 +440,8 @@ if (result) {
   print "<td>&nbsp</td>";
   print "<td>&nbsp</td>";
   print "<td class=\"sx_capitolo\"><span style=\"font-weight:bold;\">TOTALE</span></td>";
-  print "<td class=\"dx\"><span style=\"font-weight:bold;\">".FormattaValuta($totale_entrate)."</span></td>";
-  print "<td class=\"dx\"><span style=\"font-weight:bold;\">-".FormattaValuta($totale_uscite)."</span></td>";
+  print "<td class=\"dx\"><span style=\"font-weight:bold;\">".FormattaValuta($totale_entrate)." &euro;</span></td>";
+  print "<td class=\"dx\"><span style=\"font-weight:bold;\">-".FormattaValuta($totale_uscite)." &euro;</span></td>";
   print "</tr>";
   print "<tr>";
   print "<td>&nbsp</td>";
@@ -447,11 +449,11 @@ if (result) {
   print "<td>&nbsp</td>";
   print "<td class=\"sx_capitolo\"><span style=\"font-weight:bold;\">SALDO</span></td>";
   if ($saldo >0 ) {
-      print "<td class=\"dx\"><span style=\"font-weight:bold;\">".FormattaValuta($saldo)."</span></td>";
+      print "<td class=\"dx\"><span style=\"font-weight:bold;\">".FormattaValuta($saldo)." &euro;</span></td>";
       print "<td class=\"sx\">&nbsp</td>";
   } else {
       print "<td class=\"sx\">&nbsp</td>";
-      print "<td class=\"dx\"><span style=\"font-weight:bold;\">-".FormattaValuta($saldo)."</span></td>";
+      print "<td class=\"dx\"><span style=\"font-weight:bold;\">-".FormattaValuta($saldo)." &euro;</span></td>";
   }
         
   print "</tr>";
