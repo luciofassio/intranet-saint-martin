@@ -91,7 +91,8 @@ if (IsResultSet($result)) {
 		<p><a href="report_iscritti.php?r=report_iscritti_squadra_pdf.php&t=Stampa iscritti per squadra" target="_self">Stampa iscritti per squadra</a></p>
 		<p><a href="report_iscritti.php?r=report_iscritti_classe_pdf.php&t=Stampa iscritti per classe" target="_self">Stampa iscritti per classe</a></p>
 		<p><a href="report_iscritti.php?r=report_iscritti_ruolo_pdf.php&t=Stampa iscritti per ruolo" target="_self">Stampa iscritti per ruolo</a></p>
-		<p><a href="report_iscritti.php?r=report_iscritti_eventospeciale_pdf.php&t=Stampa iscritti all'evento speciale" target="_self">Stampa iscritti all'evento speciale</a></p>
+		<p><a href="report_iscritti.php?r=report_iscritti_eventospeciale_pdf.php&t=Stampa iscritti all'evento speciale" target="_self">Stampa iscritti all'evento speciale</a></p>		
+		<p><a href="report_iscritti.php?r=report_iscritti_cena_finale_pdf.php&t=Stampa iscritti alla cena finale" target="_self">Stampa iscritti alla cena finale</a></p>
       </div> <!-- fine corpo pagina -->
      
     </form>  
