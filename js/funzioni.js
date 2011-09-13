@@ -880,19 +880,6 @@ function AbilitaCampiPerSubmit() {
 	document.getElementById("CostoTotaleEuro").disabled = false;
 }
 
-// funzione per aprire e chiudere il div release&credits nell'home page
-function ReleaseCredits(myaction)
-{
-  switch (myaction) {
-      case "apri":
-          document.getElementById("release_credits").style.visibility= "visible";
-      break;
-      
-      case "chiudi":
-          document.getElementById("release_credits").style.visibility= "hidden";
-      break;
-  }
-}
 
 			/*********************** SEZIONE PRANZI ********************************/
 

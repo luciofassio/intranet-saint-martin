@@ -114,9 +114,9 @@ function UpdateIscrizioneSquadra($IDIscr, $IDSquadra) {
 }
 
 // funzioni intranet
-function GetApplicazioni($IDOperatore)
+function GetApplicazioni($IDOperatore,$menu_padre)
 {
-	$result = mysql_query("SELECT * FROM tblOperatoriXFunzioni inner join tblFunzioni on (tblOperatoriXFunzioni.id_funzione =  tblFunzioni.id_funzione) where id_operatore='".$IDOperatore."' ORDER BY sequenza");
+  $result = mysql_query("SELECT * FROM tblOperatoriXFunzioni inner join tblFunzioni on (tblOperatoriXFunzioni.id_funzione =  tblFunzioni.id_funzione) where id_operatore='".$IDOperatore."' AND menu_padre=".$menu_padre." ORDER BY sequenza");
 	if (mysql_errno() <> 0) {
 		throw new Exception("GetApplicazioni: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
 		exit();
@@ -183,7 +183,7 @@ function GetPersona($ID) {
 
 // persona con per disclaimer privacy
 function GetPersonaPrivacy($ID) {
-	$sql = "SELECT Cognome, Nome, Tipo_via, Via, numero_civico, CAP, Citt, Provincia,email,Sesso,Data_di_nascita,Luogo_di_nascita,tblClassi.Classe,tblSezioni.Sezione,Parrocchia_Provenienza,Prefisso,Numero,TelSMS FROM ((Catechismi LEFT OUTER JOIN tblTelefoni ON (Catechismi.ID = tblTelefoni.ID)) LEFT OUTER JOIN tblClassi ON (Catechismi.Classe = tblClassi.IDClasse)) LEFT OUTER JOIN tblSezioni ON (Catechismi.Sezione = tblSezioni.IDSezione) WHERE (tblTelefoni.IDTipoTelefono IN (1,2,3,4,5,6,7,null) OR tblTelefoni.IDTipoTelefono is null) AND Catechismi.ID = %1\$s ORDER BY tblTelefoni.IDTipoTelefono";
+	$sql = "SELECT Cognome, Nome, Tipo_via, Via, numero_civico, CAP, Citt, Provincia,email,Sesso,Data_di_nascita,Luogo_di_nascita,Catechismi.Classe AS IndiceClasse,tblClassi.Classe,tblSezioni.Sezione,Parrocchia_Provenienza,Prefisso,Numero,TelSMS FROM ((Catechismi LEFT OUTER JOIN tblTelefoni ON (Catechismi.ID = tblTelefoni.ID)) LEFT OUTER JOIN tblClassi ON (Catechismi.Classe = tblClassi.IDClasse)) LEFT OUTER JOIN tblSezioni ON (Catechismi.Sezione = tblSezioni.IDSezione) WHERE (tblTelefoni.IDTipoTelefono IN (1,2,3,4,5,6,7,null) OR tblTelefoni.IDTipoTelefono is null) AND Catechismi.ID = %1\$s ORDER BY tblTelefoni.IDTipoTelefono";
 	$sql = sprintf($sql, $ID);
 	$result = mysql_query($sql);
 	if (mysql_errno() <> 0) {

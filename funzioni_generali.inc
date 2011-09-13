@@ -249,15 +249,30 @@ function SelectCSS($nomeCSS) {
 			switch ($nomeCSS) {
 				case "":
 					echo "<link href=\"./css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
-					break;
-				case "styleanagrafica":
+				break;
+				
+        case "styleanagrafica":
 					echo "<link href=\"./css/styleanagrafica.css\" rel=\"stylesheet\" type=\"text/css\" />";
-					break;
+				break;
 			}
-			break;
-	    case "FF":
-	    
-	    
+    break;
+
+	  case "FF":
+	    switch ($nomeCSS) {
+          case "":
+              echo "<link href=\"./css/style_ff.css\" rel=\"stylesheet\" type=\"text/css\" />";
+				  break;
+				
+          case "styleanagrafica":
+					     echo "<link href=\"./css/styleanagrafica_ff.css\" rel=\"stylesheet\" type=\"text/css\" />";
+				  break;
+			
+          case "struttura_pagina":
+              echo "<link href=\"./css/struttura_pagina_ff.css\" rel=\"stylesheet\" type=\"text/css\" />";
+          break;
+      }
+	  break;  
+
 		case "IW":
 			switch ($nomeCSS) {
 				case "":

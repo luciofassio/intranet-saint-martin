@@ -149,7 +149,7 @@ td.larghezzacella {
 }
 
 table.rubrica {
-  width: 220px;
+  width: 250px;
   margin-top: -10px;
   float: right;
   border: 1px dotted grey;
@@ -250,6 +250,8 @@ if ($copie > 0) {
             $email = htmlentities($row->{'email'});
 						
             $classe = htmlentities($row->Classe);
+            
+            $IndiceClasse=$row->IndiceClasse;
 						
             $sezione = htmlentities($row->Sezione); 
 						
@@ -296,7 +298,9 @@ if ($copie > 0) {
               $cellulare_padre = htmlentities($row->Prefisso."/".$row->Numero);
 					  } 
 					}
-				}	
+				}
+				
+				$parentela=GetParentela($idPersona);
         StampaPagina();
       }				
 	}
@@ -316,12 +320,14 @@ global $data_nascita;
 global $luogo_nascita;
 global $email;
 global $classe;
+global $IndiceClasse;
 global $sezione; 
 global $parrocchia;
 global $telefono_casa;
 global $cellulare_ragazzo;
 global $cellulare_mamma;
 global $cellulare_padre;
+global $parentela;
 ?>
 
 	
@@ -368,32 +374,52 @@ global $cellulare_padre;
 
             <tr>
 				        <td>
-                    Cognome: <strong><?php echo $cognome ?></strong>
-				            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Nome: <strong><?php echo $nome ?></strong>
+                    Nominativo: <strong><?php echo $cognome." ".$nome; ?></strong>
+				            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Nome: <strong><?php echo $nome ?></strong> -->
                 </td>
                
                 <td rowspan=6>
                 
                     <table class="rubrica">
                         <tr>
+                            <th class="intestazionerubrica">SMS</th>
                             <th class="intestazionerubrica">RUBRICA</th>
                         </tr>
                         
                         <tr>
+                            <td class="quadrato">&nbsp;</td>
                             <td class="cellarubrica">Casa: <strong><?php echo $telefono_casa; ?></strong></td>
                         </tr>
                         
                         <tr>
-                            <td class="cellarubrica">Cell. ragazzo/a: <strong><?php echo $cellulare_ragazzo; ?></strong></td>
+                            <td class="quadrato">&nbsp;</td>
+                            <td class="cellarubrica"><?php 
+                                if ($IndiceClasse==16) {
+                                    echo "Cellulare: ";
+                                } elseif($IndiceClasse < 7) {
+                                    echo "Cell. bimbo/a: ";
+                                }
+                                  else {
+                                    echo "Cell. ragazzo/a: ";
+                                }
+                            ?>
+                            <strong><?php echo $cellulare_ragazzo; ?></strong></td>
                         </tr>
                         
                         <tr>
+                            <td class="quadrato">&nbsp;</td>
                             <td class="cellarubrica">Cell. mamma: <strong><?php echo $cellulare_mamma; ?></strong></td>
                         </tr>
                         
                         <tr>
+                            <td class="quadrato">&nbsp;</td>
                             <td class="cellarubrica">Cell. pap&agrave;: <strong><?php echo $cellulare_padre; ?></strong></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="quadrato">&nbsp;</td>
+                            <td class="cellarubrica">Altro:</td>
                         </tr>
                     </table>
                 </td>
@@ -419,12 +445,27 @@ global $cellulare_padre;
 			   </tr>
 			
 			   <tr>
-				    <td>Classe a scuola: <strong><?php echo $classe ?></strong></td>
+				    <?php if ($IndiceClasse>14) {?>
+                <td>Gruppo  : <strong><?php echo $classe ?></strong></td>
+            <?php 
+              } else {
+            ?>
+            <td>Classe a scuola: <strong><?php echo $classe ?></strong></td>
+            <?php } ?>
 			   </tr>
 			   
          <tr>
 				      <td>
-                Giorno di catechismo:&nbsp;
+                <?php 
+                    if ($IndiceClasse<8) {
+                        echo "Giorno di catechismo: ";
+                    } elseif ($IndiceClasse>7 && $IndiceClasse<15) {
+                        echo "Giorno del Gruppo: ";
+                    } else {
+                        echo "Giorno di formazione: ";
+                    }
+                ?>
+                
                 <strong> 
                     <?php 
                           if ($sezione=="**********") {
@@ -442,8 +483,14 @@ global $cellulare_padre;
 			   </tr>
 			
 			<tr>
-				<td class="bordino" colspan="2">Ho altri fratelli/sorelle? &nbsp;<strong>Sì - No</strong>&nbsp;&nbsp;&nbsp;&nbsp;Come si chiamano? 
+				<?php 
+            if ($parentela) {
+                echo "<td class=\"bordino\" colspan=\"2\">Fratelli/Sorelle: <strong>".$parentela."</strong></td>";
+            } else {
+        ?>
+        <td class="bordino" colspan="2">Ho altri fratelli/sorelle? &nbsp;<strong>Sì - No</strong>&nbsp;&nbsp;&nbsp;&nbsp;Come si chiamano? 
         <br /> <br />Che classe fanno?
+        <?php } ?>
 			</tr>
 
 			<tr>
@@ -612,7 +659,7 @@ global $cellulare_padre;
 			<br /><br />
 			
       <div style="float:left">
-          Data:&nbsp;&nbsp; 
+          <strong> Data:</strong> &nbsp; 
                 <?php 
                     if ($copie == 0) {
                         echo date("d/m/Y");
@@ -622,19 +669,38 @@ global $cellulare_padre;
                 ?>
       </div>
       
-      <div style="float:right">
-          Firma del genitore: _________________________________
+      <div style="float:right;">
+          <?php 
+              $gg_oggi=date("d");
+              $mm_oggi=date("m");
+              $yy_oggi=date("Y");
+              $gg_nascita=substr($data_nascita,0,2);
+              $mm_nascita=substr($data_nascita,3,2);
+              $yy_nascita=substr($data_nascita,6,4);
+              
+              if ($yy_oggi-$yy_nascita==18) {
+                  if ((int)($mm_nascita.$gg_nascita)>(int)($mm_oggi.$gg_oggi)) {
+                      echo "<strong>Firma del genitore:</strong> ".str_repeat("_",40);
+                  } else {
+                      echo "<strong>Firma:</strong> ".str_repeat("_",40);
+                  }
+              } elseif ($yy_oggi-$yy_nascita<18) {
+                    echo "<strong>Firma del genitore:</strong> ".str_repeat("_",40);
+              } else {
+                    echo "<strong>Firma:</strong> ".str_repeat("_",40);
+              } 
+          ?>
       </div>
 		</div>
 	</div> 
-	<p style="page-break-after: always; margin-top:460px;" />
+	<p style="page-break-after: always;" /> <!-- margin-top:460px;" / -->
 <?php
     return;
 }
 
 function GetTesserati($anno, $gruppo)
 {
-	$sql = "SELECT ID FROM Catechismi WHERE YEAR(DataTesseramento) = %1\$s ";
+	$sql = "SELECT ID,Classe FROM Catechismi WHERE YEAR(DataTesseramento) = %1\$s ";
 	if($gruppo != 0) {
 		$sql .= "AND Classe IN (SELECT IDClasse FROM tblClassi WHERE fkGruppo = %2\$s) ";
 	}
@@ -659,6 +725,33 @@ function GetTesseratiByID($ID)
 		exit();
 	}  
     return $result;
+}
+
+function GetParentela($ID) {
+  $parentela=null;
+  $query="SELECT tblparentela.IdFamigliare,tblparentela.IdGradoParentela,Catechismi.Nome,tblClassi.Sigla 
+          FROM tblparentela
+          INNER JOIN Catechismi
+          ON tblparentela.IdFamigliare=Catechismi.ID
+          INNER JOIN tblClassi
+          ON Catechismi.Classe=tblClassi.IDClasse
+          WHERE tblparentela.IdFamiglia=(SELECT IdFamiglia FROM tblparentela WHERE IdFamigliare=".$ID.")
+          AND IdGradoParentela>2 
+          ORDER BY Catechismi.Nome";
+
+    $result_parentela=mysql_query($query) or die("Ops! Problemi con questa query <br><br>".$query);
+    
+    if ($result_parentela) {
+        while ($row=mysql_fetch_object($result_parentela)) {
+            $parentela.=htmlentities($row->Nome)." (".$row->Sigla.") ";
+        }
+        
+    } else {
+      return false;
+    }
+    
+    return $parentela;
+
 }
 ?>
 </body>
