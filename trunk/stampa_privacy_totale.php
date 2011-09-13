@@ -240,9 +240,9 @@ if ($copie > 0) {
 						}	
 						
             $sesso = $row->Sesso;
-						
-						if (strval($row->Data_di_nascita) != "0000-00-00 00:00:00") {
-							$data_nascita = htmlentities(date("d/m/Y", strtotime($row->Data_di_nascita)));
+            
+						if (strval($row->Data_di_nascita) != "0000-00-00 00:00:00" && strval($row->Data_di_nascita)!=null) {
+              $data_nascita = htmlentities(date("d/m/Y", strtotime($row->Data_di_nascita)));
 						} else {
 							$data_nascita = "";
 						}
