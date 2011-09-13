@@ -8,6 +8,10 @@ ALTER TABLE `tblFunzioni` ADD COLUMN `menu_padre` INTEGER UNSIGNED NOT NULL AFTE
 -- aggiorna la sequenza della funzione uscita programma
 UPDATE `tblFunzioni` SET `sequenza`=8 WHERE `id_funzione`=4;
 
+-- aggiorna l'icona della funzione anagrafica
+UPDATE `tblFunzioni` SET `immagine`='./Immagini/xanagrafica.png' WHERE `id_funzione`=1;
+
+
 -- Inserisce i nuovi dati nella tabella tblfunzioni
 INSERT INTO `tblFunzioni`
   (`id_funzione`,`sequenza`,`nome`,`url`,`immagine`,`immagine_testo`,`menu_padre`)
