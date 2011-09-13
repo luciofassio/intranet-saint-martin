@@ -76,11 +76,11 @@ body {
 #campi_ricerca {
   visibility: hidden;
   position: absolute;
-  width: 30%;
-  height: 55px;
+  width:30%;
+  height:55px;
   top: 20%;
-  left:35%;
-  /*left: 120px;*/
+  /*left:25%;*/
+  left: 343px;
 }
 
 fieldset.cornice {

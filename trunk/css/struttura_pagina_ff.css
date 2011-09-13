@@ -48,7 +48,7 @@ body {
   font-weight: bold;
 }
 
-#scritta_location{
+#scritta_location { /* location=dove ci si trova con le pagine web all'interno del programma */
   position: absolute;
   top: 510px;
   left: 50px;

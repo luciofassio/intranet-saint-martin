@@ -13,7 +13,17 @@ if (!isset($_SESSION['authenticated_user'])) {
 		exit();
 }
 
+// Controlla se l'utente ha selezionato il menù principale o un sottomenù
+if (isset($_GET["menu_padre"])) {
+    $menu_padre=$_GET["menu_padre"];
+} else {
+    $menu_padre=0;
+}
+
+// Identifica l'operatore che si è loggato
 $idoperatore = $_SESSION['authenticated_user_id'];
+
+
 ConnettiDB();
 
 ?>
@@ -25,11 +35,102 @@ ConnettiDB();
     
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-  <?php SelectCSS(""); ?>   
+  <?php SelectCSS("struttura_pagina"); ?>   
 
-	<script type="text/javascript" src="./js/funzioni.js"></script>
-   
+<script type="text/javascript" >
   
+// funzione per aprire e chiudere il div release&credits nell'home page
+function ReleaseCredits(myaction) {
+  switch (myaction) {
+      case "apri":
+          document.getElementById("release_credits").style.visibility= "visible";
+      break;
+      
+      case "chiudi":
+          document.getElementById("release_credits").style.visibility= "hidden";
+      break;
+  }
+}
+
+</script>
+
+<style>
+#mymenuhome { /* posiziona la tabella con le funzioni */
+  position: absolute;
+  top: 100px;
+  /*left: 260px;*/
+  left:100px;
+  width:70%;
+  /*width: 700px;*/
+  text-align: left;
+}
+
+#crediti { /* posiziona in pagina il copyright e la voce "Release & Credits" */
+  position: absolute;
+  top:510px;
+  left:50px;
+  color: grey;
+}
+
+#release_credits { /* div che mostra la versione del software e i suoi crediti */
+  visibility: hidden;
+  position: absolute;
+  top: 110px;
+  left:240px;
+  /*left: 370px;*/
+  width: 500px;
+  height: 300px;
+  background: white;
+  border: 3px solid #FF8C00;
+  -moz-border-radius: 7px
+}
+
+#image_crediti{
+  position: relative;
+  width:100px;
+  top: 10px;
+  left: 10px;
+  padding-right: 3px;
+  padding-bottom: 120px;
+  border-right: 1px dotted grey;
+}
+
+#crediti_scritta{
+  position: absolute;
+  top: 0px;
+  left:100px;
+}
+
+.scritta_crediti_titolo{ /* regola la scritta Gestione Oratorio */
+  font-family: Arial Black, sans-serif;
+  font-size: large;
+  text-align: center;
+  top: 10px;
+}
+
+#scritta_forbidden{
+  position: absolute;
+  top: 220px;
+  left: 5px;
+  text-align: center;
+  width:490px;
+  font-weight: bold;
+  border-top: 1px dotted grey;
+}
+
+#ChiudiCrediti{
+  width: 100px;
+  left: 200px;
+}
+
+#scritta_location_home { /* location=dove ci si trova con le pagine web all'interno del programma */
+  position: absolute;
+  top: 45px;
+  left: 100px;
+  color: green;
+}
+</style>
+
 </head>
 
 <body class="logon">
@@ -49,9 +150,16 @@ ConnettiDB();
         <div id="scritta_barra">
             ORATORIO SAINT-MARTIN
         </div>
-  
-        <div id="scritta_location">
-            home page > men&ugrave; principale
+        
+        <div id="scritta_location_home">
+        <?php
+            if ($menu_padre==0) {
+                echo "home page > men&ugrave; principale";
+            } else {
+               echo "| <a href=\"homepage.php\">men&ugrave; principale</a> |";   
+            }
+        ?>
+        
         </div>
   
         <div id="crediti">
@@ -86,13 +194,20 @@ ConnettiDB();
     <table border="0" width="100%">
     
     <?php
-        $result = GetApplicazioni($idoperatore);
+        $result = GetApplicazioni($idoperatore,$menu_padre);
+        // controlla se l'utente tenta di accedere a un sottomenù senza essere configurato dagli amministratori del sistema
+        if (mysql_num_rows($result)==0){
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            header("Location: http://$host$uri/homepage.php");
+		        exit();
+        }
+        
         $row = mysql_fetch_array($result);
         while($row){
     ?>
     
         <tr>
-            <td class="cellaimmagini"><img src="<?php	echo htmlentities($row['immagine']); ?>" alt="<?php	echo htmlentities($row['immagine_testo']); ?>"  height="70" width="70" /></td>
+            <td class="cellaimmagini"><a href="<?php echo htmlentities($row['url']);?>"><img src="<?php	echo htmlentities($row['immagine']); ?>" title="<?php	echo htmlentities($row['immagine_testo']); ?>"  height="70" width="70" /></a></td>
             <td class="celladescrizione"><a href="<?php echo htmlentities($row['url']);?>"><strong><?php echo htmlentities($row['nome']);?></strong></a></td>
 
         <?php
@@ -107,7 +222,7 @@ ConnettiDB();
         <?php
 	         }
         ?>
-            <td class="cellaimmagini"><img src="<?php	echo htmlentities($row['immagine']); ?>" alt="<?php	echo htmlentities($row['immagine_testo']); ?>"  height="70" width="70" /></td>
+            <td class="cellaimmagini"><a href="<?php echo htmlentities($row['url']);?>"><img src="<?php	echo htmlentities($row['immagine']); ?>" title="<?php	echo htmlentities($row['immagine_testo']); ?>"  height="70" width="70" /></a></td>
             <td class="celladescrizione"><a href="<?php echo htmlentities($row['url']);?>"><strong><?php echo htmlentities($row['nome']);?></strong></a></td>
         </tr>
     

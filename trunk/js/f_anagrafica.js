@@ -890,7 +890,9 @@ function FiltroStringa(stringa) {
             if (indice == 0 
                               || vecchiocarattere.charCodeAt(0) == 32 // spazio
                               || vecchiocarattere.charCodeAt(0)==39   // apostrofo
-                              || vecchiocarattere.charCodeAt(0)==45)  // trattino -
+                              || vecchiocarattere.charCodeAt(0)==45  // trattino -
+                              || vecchiocarattere.charCodeAt(0)==40 //parentesi aperta
+                )
             {
                 nuovastringa += carattere.toUpperCase();
             } else {
