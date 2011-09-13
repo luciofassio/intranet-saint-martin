@@ -745,9 +745,10 @@ function GetParentela($ID) {
     
     if ($result_parentela) {
         while ($row=mysql_fetch_object($result_parentela)) {
-            $parentela.=htmlentities($row->Nome)." (".$row->Sigla.") ";
+            if ($row->IdFamigliare!=$ID) {
+                $parentela.=htmlentities($row->Nome)." (".$row->Sigla.") ";
+            }
         }
-        
     } else {
       return false;
     }
