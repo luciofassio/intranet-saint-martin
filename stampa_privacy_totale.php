@@ -238,7 +238,9 @@ if ($copie > 0) {
 						} else {
 							$indirizzo = htmlentities($row->Tipo_via)." ".htmlentities($row->Via).", ".htmlentities($row->numero_civico)." - ".htmlentities($row->CAP)." ".htmlentities($row->Citt)." (".htmlentities($row->Provincia).")";
 						}	
-						$sesso = $row->Sesso;
+						
+            $sesso = $row->Sesso;
+						
 						if (strval($row->Data_di_nascita) != "0000-00-00 00:00:00") {
 							$data_nascita = htmlentities(date("d/m/Y", strtotime($row->Data_di_nascita)));
 						} else {
@@ -700,7 +702,7 @@ global $parentela;
 
 function GetTesserati($anno, $gruppo)
 {
-	$sql = "SELECT ID,Classe FROM Catechismi WHERE YEAR(DataTesseramento) = %1\$s ";
+	$sql = "SELECT ID,Classe FROM Catechismi WHERE YEAR(DataTesseramento) = %1\$s AND Cancellato=false ";
 	if($gruppo != 0) {
 		$sql .= "AND Classe IN (SELECT IDClasse FROM tblClassi WHERE fkGruppo = %2\$s) ";
 	}
@@ -716,7 +718,7 @@ function GetTesserati($anno, $gruppo)
 }
 function GetTesseratiByID($ID)
 {
-	$sql = "SELECT ID FROM Catechismi WHERE ID=%1\$s";
+	$sql = "SELECT ID FROM Catechismi WHERE ID=%1\$s AND Cancellato=false";
 	$sql = sprintf($sql, $ID);
 	
 	$result = mysql_query($sql);
