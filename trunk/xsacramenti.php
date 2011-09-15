@@ -222,7 +222,6 @@ fieldset.cornice {
   top:0%;
   left:46%;
   height:397px;
- 
 }
 
 #etichettacognome {
