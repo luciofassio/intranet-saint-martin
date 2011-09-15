@@ -168,14 +168,19 @@ em {
 
 <body>
 <?php 
- // ottiene il gruppo da stampare
- $id_gruppo=$_GET["gp"];
- $azione=$_POST["azione_stampa"];
- 
-  // stabilisce quante schede può stampare per pagina
-  $nr_elementi_pagina=2;
+ // variabili di servizio
+$id_gruppo=$_GET["gp"]; // ottiene il gruppo da stampare
+$azione=$_POST["azione_stampa"]; // ottiene l'azione da svolgere
+$nr_elementi_pagina=2; // stabilisce quante schede può stampare per pagina
+
+// controlla se deve evidenziare i documenti mancanti
+if (isset($_POST["chkEvidenzia"])){
+    $evidenzia=true;
+} else {
+    $evidenzia=false;
+}
     
-  // prepara la query da inviare a Mysql
+// prepara la query da inviare a Mysql
   switch ($id_gruppo) {
       case 0: // per gli iscritti senza gruppo
           $query="SELECT Catechismi.Nome,Catechismi.Cognome,Catechismi.Data_di_nascita,Catechismi.Luogo_di_nascita,Catechismi.Sesso, tblsacramenti.* 
@@ -214,6 +219,7 @@ em {
   if ($nr_iscritti==0) {
 ?>
      <form name="Iscritti" method ="post" action="xsacramenti.php?scr=<?php echo $sacramento; ?>">
+         <input type="hidden" name="sezione" value="elenco" />
          <div id='nessuno_in_elenco'>
               <div id="titolo_stampa_documenti">
                   Stampa documenti
@@ -311,7 +317,12 @@ em {
             </table>
         </ul>
         
-        <p>&nbsp;</p>
+        <p>
+            <span style="font-size:small;text-align:left;">
+                <input type="checkbox" name="chkEvidenzia" />
+                Evidenzia i documenti mancanti
+            </span>
+        </p>
         
         <p>
             <input type="submit"
@@ -344,8 +355,6 @@ em {
             // dà il via libera alla stampante
             echo "<script type= \"text/javascript\">";
 	          echo "window.print();\n";
-            echo "document.getElementById('StatisticheIscritti').action='xsacramenti.php?scr=".$sacramento."';";
-            echo "document.getElementById('StatisticheIscritti').submit();";
             echo "</script>";
         break;
     } // chiude lo switch per l'azione ($azione)
@@ -423,6 +432,7 @@ return;
 function StampaDati($result) {
       global $nr_elementi_pagina;
       global $i;
+      global $evidenzia;
       $elementi=0;
       
       echo "<div id='dati'>\n";
@@ -432,14 +442,14 @@ function StampaDati($result) {
       $i++;
       
       echo "<tr>\n";
-      echo "<th valign='top' width='5%' rowspan=13><span style='padding:0.15em;background:#C0C0C0;'>".$i."</span></th>\n";
+      echo "<th valign='top' width='5%' rowspan=13><span style='padding:0.2em;background:#C0C0C0;'>".$i."</span></th>\n";
       if ($row->Sesso=='M') {
           $natoa="Nato a ";
       } else {
           $natoa="Nata a ";
       }
-      echo "<th colspan='2' >".$row->Cognome." ".$row->Nome.
-      "<br /><span style='text-transform:uppercase;font-size:small;line-height:165%;'>".$natoa.$row->Luogo_di_nascita." il ".ConvertiData($row->Data_di_nascita)."</span></th>\n";
+      echo "<th colspan='2'><span style='font-size:x-large;line-height:100%'>".$row->Cognome." ".$row->Nome.
+      "</span><br /><span style='font-variant:small-caps;font-size:small;line-height:165%;'>".$natoa.$row->Luogo_di_nascita." il ".ConvertiData($row->Data_di_nascita)."</span></th>\n";
       echo "</tr>\n";
       
       echo "<tr>\n";
@@ -447,11 +457,15 @@ function StampaDati($result) {
       if ($row->DataBattesimo!="" || $row->DataBattesimo!=null) {
           echo "<td class=\"datielencodx\">".ConvertiData($row->DataBattesimo)."</td>\n";
       } else {
-          echo "<td class=\"datielencodx\"\n>
-                <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
-                    Manca la data del battesimo
-                </span>
-                </td>\n";
+          if ($evidenzia) { 
+              echo "<td class=\"datielencodx\"\n>
+                    <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
+                        Manca la data del battesimo
+                    </span>
+                    </td>\n";
+          } else {
+              echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -460,10 +474,14 @@ function StampaDati($result) {
       if ($row->ParrocchiaBattesimo!="" || $row->ParrocchiaBattesimo!=null) {
           echo "<td class=\"datielencodx\">".$row->ParrocchiaBattesimo."</td>\n";
       } else {
-          echo "<td class=\"datielencodx\"\n>
-                <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
-                    Manca la parrocchia del battesimo
-                </span></td>\n";
+          if ($evidenzia) {
+              echo "<td class=\"datielencodx\"\n>
+                    <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
+                        Manca la parrocchia del battesimo
+                    </span></td>\n";
+          } else {
+                echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -472,10 +490,14 @@ function StampaDati($result) {
       if ($row->IndirizzoParrocchiaBattesimo!="" || $row->IndirizzoParrocchiaBattesimo!=null) {
           echo "<td class=\"datielencodx\">".$row->IndirizzoParrocchiaBattesimo."</td>\n";
       } else {
-           echo "<td class=\"datielencodx\"\n>
-                <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
-                    Manca indirizzo parrocchia battesimo
-                </span></td>\n";
+           if ($evidenzia) {
+              echo "<td class=\"datielencodx\"\n>
+                    <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
+                        Manca indirizzo parrocchia battesimo
+                   </span></td>\n";
+            } else {
+                  echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -483,11 +505,14 @@ function StampaDati($result) {
       echo "<td class=\"datielencosx\">Certificato battesimo:</td>\n";
       switch ($row->CertificatoBattesimo) {
           case 0:
-               echo "<td class=\"datielencodx\">
-                    <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
-                        Dato non disponibile
-                    </span></td>\n";
-                    
+               if ($evidenzia) {
+                  echo "<td class=\"datielencodx\">
+                      <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
+                          Dato non disponibile
+                        </span></td>\n";
+                } else {
+                    echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+                }
           break;
           
           case 1:
@@ -495,7 +520,12 @@ function StampaDati($result) {
           break;
           
            case 2:
-              echo "<td class=\"datielencodx\"> <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non consegnato</span></td>\n";
+              if ($evidenzia) {
+                  echo "<td class=\"datielencodx\">
+                        <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non consegnato</span></td>\n";
+              } else {
+                  echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
           break;
       
            case 3:
@@ -509,10 +539,14 @@ function StampaDati($result) {
       if ($row->NominativoPadrinoMadrina!="" || $row->NominativoPadrinoMadrina!=null) {
           echo "<td class=\"datielencodx\">".$row->NominativoPadrinoMadrina."</td>\n";
       } else {
-          echo "<td class=\"datielencodx\"\n>
-                <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
+          if ($evidenzia) {
+              echo "<td class=\"datielencodx\"\n>
+                    <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
                     Manca il nominativo del padrino/madrina
-                </span></td>\n";
+                    </span></td>\n";
+          } else {
+              echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -521,10 +555,14 @@ function StampaDati($result) {
       if ($row->ParrocchiaPadrinoMadrina!="" || $row->ParrocchiaPadrinoMadrina!=null) {
           echo "<td class=\"datielencodx\">".$row->ParrocchiaPadrinoMadrina."</td>\n";
       } else {
-          echo "<td class=\"datielencodx\"\n>
-                <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
+          if ($evidenzia) {
+              echo "<td class=\"datielencodx\"\n>
+                    <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>
                     Manca la parrocchia del padrino/madrina
-          </span></td>\n";
+                    </span></td>\n";
+          } else {
+              echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -533,7 +571,12 @@ function StampaDati($result) {
       if ($row->CertificatoIdoneita) {
           echo "<td class=\"datielencodx\">Consegnato</td>\n";
       } else {
-          echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non consegnato</span></td>\n";
+          if ($evidenzia) {
+              echo "<td class=\"datielencodx\">
+              <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non consegnato</span></td>\n";
+          } else {
+              echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -542,7 +585,11 @@ function StampaDati($result) {
       if ($row->ContributoVersato) {
           echo "<td class=\"datielencodx\">Versato</td>\n";
       } else {
-          echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non versato</span></td>\n";
+          if ($evidenzia) {
+              echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non versato</span></td>\n";
+          } else {
+              echo "<td class=\"datielencodx\"\n>Non versato</td>";
+          }
       }
       echo "</tr>\n";
       
@@ -581,8 +628,6 @@ function StampaDati($result) {
           echo "</table>\n"; 
           echo "</div> <!-- div dati tabella -->\n";
           break;
-          //echo "</div> <!-- contenuto pagina -->\n";
-//          echo "<p style='page-break-after:always;'";
       }
   }
       return;
