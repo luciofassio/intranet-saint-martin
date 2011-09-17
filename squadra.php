@@ -61,7 +61,9 @@ $postback = $_POST['postback'];
 				squadreiscritti = document.getElementById("squadreiscritti");
 				// inietto i dati nel controlllo
 				if(data.length > 0) {
-					$('#squadreiscritti').html(data);
+					resp = data.split("|");
+					$('#num_iscritti').html(resp[0]);
+					$('#squadreiscritti').html(resp[1]);
 					squadreiscritti.selectedIndex = -1;
 				} else {
 					squadreiscritti.options.length = 0;
@@ -181,8 +183,9 @@ while ($row = mysql_fetch_array($result)) {
                 </select>
      	       
             <div id="info">
-                <p>N° iscritti squadra:</p>
-                <p>Colore squadra:</p>
+                <br/>
+                <p>N° iscritti squadra: <span id="num_iscritti"></span></p>
+                <!-- p>Colore squadra:<span id="colore_squadra"></span></p -->
             </div>
             
             <!-- div id="bottoneiscritti">
