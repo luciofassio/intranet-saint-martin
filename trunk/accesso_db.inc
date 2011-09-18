@@ -236,7 +236,7 @@ function GetCellulareSMSByID($ID) {
 // Ruoli
 function GetRuoli()
 {
-	$result = mysql_query("SELECT 0 AS IDRuolo, 'Seleziona ruolo' AS Ruolo UNION SELECT * FROM tblRuoliER ORDER BY IDRuolo");
+	$result = mysql_query("SELECT 0 AS IDRuolo, 'Seleziona ruolo' AS Ruolo UNION SELECT IDRuolo, Ruolo FROM tblRuoliER ORDER BY IDRuolo");
 	if (mysql_errno() <> 0) {
 		throw new Exception("GetRuoli: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
 		exit();

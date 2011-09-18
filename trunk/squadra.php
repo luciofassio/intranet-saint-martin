@@ -60,10 +60,12 @@ $postback = $_POST['postback'];
 			$.post("rpc_iscritti_squadra.php", {IDSquadra: ""+nomesquadre[nomesquadre.selectedIndex].value+"", IDEvento: ""+idEvento+""}, function(data){
 				squadreiscritti = document.getElementById("squadreiscritti");
 				// inietto i dati nel controlllo
-				if(data.length > 0) {
+				if (data.length > 0) {
 					resp = data.split("|");
 					$('#num_iscritti').html(resp[0]);
 					$('#squadreiscritti').html(resp[1]);
+					$('#ruoli').html(resp[2]);
+					$('#iscritti_x_ruolo').html(resp[3]);
 					squadreiscritti.selectedIndex = -1;
 				} else {
 					squadreiscritti.options.length = 0;
@@ -72,7 +74,11 @@ $postback = $_POST['postback'];
 		} // lookup
 		
    </script>
-  
+<style>
+select {
+	font-family: Courier New;
+}
+</style>  
 </head>
 
 <body onload="inizializza()">
@@ -183,9 +189,14 @@ while ($row = mysql_fetch_array($result)) {
                 </select>
      	       
             <div id="info">
-                <br/>
-                <p>N° iscritti squadra: <span id="num_iscritti"></span></p>
-                <!-- p>Colore squadra:<span id="colore_squadra"></span></p -->
+                <div style="float:left">
+					N° iscritti squadra:<br/> 
+					<span id="ruoli"></span>
+				</div>
+                <div style="float:right;margin-left:10px"> 
+					<span id="num_iscritti"></span><br/>
+					<span id="iscritti_x_ruolo"></span>
+				</div>
             </div>
             
             <!-- div id="bottoneiscritti">
@@ -209,7 +220,6 @@ while ($row = mysql_fetch_array($result)) {
               <div id="btnChiudi">
                     <input type="button" name="btnChiudi" value="chiudi" onclick="window.close()" />
               </div>
-  
       </fieldset>
   </div>
 	<input type="hidden" id="error_message" name="error_message" value="<?php echo $error_message ?>">
