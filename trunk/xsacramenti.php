@@ -704,6 +704,7 @@ fieldset.cornice {
                       autocomplete="off"
                       onfocus="ResetCampo('data_battesimo','#CCFF99');"
                       onblur="ControlloDataInserita(this.value,'data_battesimo','dn','green','white');"
+                      onkeypress="RilevaTab(event);"
                       value="<?php echo $_POST["data_battesimo"]?>" />
           </p>
           <p">
@@ -754,7 +755,7 @@ fieldset.cornice {
                      name="optBattesimo"
                      value="2" 
               <?php 
-                  if ($_POST["optBattesimo"]==2){
+                  if ($_POST["optBattesimo"]==2|| $_POST["optBattesimo"]==0) {
                       echo "checked";
                   }
               ?> />NON CONS
@@ -763,7 +764,7 @@ fieldset.cornice {
               <input type="radio"
                      name="optBattesimo"
                      value="3"
-                     onclick="AssegnaBattesimo('opt');";
+                     onclick="AssegnaBattesimo('opt');"
               <?php 
                   if ($_POST["optBattesimo"]==3){
                       echo "checked";
@@ -788,7 +789,9 @@ fieldset.cornice {
                      onfocus="ResetCampo('nome_padrino','#CCFF99');"
                      onblur="FiltroStringa(this.value,'nome_padrino','purple');"
                      value="<?php echo $_POST["nome_padrino"]?>"
-                     onBlur="FiltroStringa(this.value,'nome_padrino');" />
+                     onBlur="FiltroStringa(this.value,'nome_padrino');"
+                     onkeypress="RilevaTab(event);"  
+              />
           </p>
           <p>
               <label class="schedadati"><strong>Parrocchia </strong></label>

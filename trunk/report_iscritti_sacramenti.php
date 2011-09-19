@@ -51,7 +51,7 @@ $row=null;
 @media screen,print {
 
 body {
-  font-family:Verdana;
+  font-family: Verdana,Arial;
 }
 
 h1 {
@@ -348,10 +348,13 @@ if (isset($_POST["chkEvidenzia"])){
             for ($nr_pagina=1;$nr_pagina<=$nr_pagine;$nr_pagina++) {
                 StampaIntestazione();
                 StampaDati($result);
-                if ($nr_pagine>1){
-                    echo "<p style='page-break-after:always;' />\n";
-                }
+
+                // evita l'errore dell'ultimo salto pagina quando gli iscritti sono dispari 
+                if ($nr_pagina!=$nr_pagine) {
+                    echo "<p style='page-break-after:always;' />\n";         
+                } 
             }
+            
             // dà il via libera alla stampante
             echo "<script type= \"text/javascript\">";
 	          echo "window.print();\n";
@@ -405,7 +408,7 @@ function StampaIntestazione() {
                 </tr>
                   
                 <tr>
-                    <td>Gruppo:</td>
+                    <td>Data celebrazione:</td>
                     <td><strong><?php GetGruppo($id_gruppo,$sacramento,'data');?></strong>
                     </td>
                 </tr>
