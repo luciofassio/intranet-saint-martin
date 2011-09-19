@@ -84,6 +84,7 @@ blockquote.divgruppi label.div_gruppi{
   display: block;
   float:left;
 }
+
 #scheda{
   visibility: hidden;
   position:absolute; 
@@ -194,15 +195,6 @@ blockquote.divgruppi label.div_gruppi{
   font-size:small;
 }
 /*********************** REGOLE IMPAGINAZIONE CAMPI DI RICERCA ISCRITTI ******************/
-#left {
-  position:relative;
-  float:left;
-}
-
-#right {
-  position:relative;
-}
-
 #campi_ricerca {
   visibility: visible;
   position: absolute;
@@ -234,7 +226,7 @@ fieldset.cornice {
 }
 
 #etichettacognome {
-  /*position: absolute;
+  /*position: relative; */
  /* top:50%;*/
   height:25px;
   width:100%;
@@ -632,6 +624,7 @@ fieldset.cornice {
                        id="txtDataRestituzione"
                        onfocus="ResetCampo('txtDataRestituzione','#FAF176');"
                        onblur="ControlloInput('txtDataRestituzione',false);"
+                       size ="10"
                 />
              </p>
              
