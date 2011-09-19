@@ -194,6 +194,15 @@ blockquote.divgruppi label.div_gruppi{
   font-size:small;
 }
 /*********************** REGOLE IMPAGINAZIONE CAMPI DI RICERCA ISCRITTI ******************/
+#left {
+  position:relative;
+  float:left;
+}
+
+#right {
+  position:relative;
+}
+
 #campi_ricerca {
   visibility: visible;
   position: absolute;
@@ -517,6 +526,7 @@ fieldset.cornice {
             <input type="hidden" name="trovati" id="trovati" value="<?php echo ($_POST['trovati']);?>" />
             <input type="hidden" name="sezione" id="sezione" value="<?php echo ($_POST['sezione']);?>" />
             
+            <div id="left">
             <fieldset class="cornice"><legend>Cerca iscritto... &nbsp;</legend>
                 <blockquote class="ricerca_iscritti">
                 <div id="etichettacognome">
@@ -591,7 +601,9 @@ fieldset.cornice {
                   </p>
               </div>
           </fieldset>
+        </div> <!-- left --> 
         
+        <div id="right">
         <fieldset class="cornice" id="fldStampe">
             <legend>Stampa... &nbsp;</legend>
             
@@ -649,24 +661,8 @@ fieldset.cornice {
                        value ="Tabulati archivio"
                 />
             </p>
-           
-           <!-- <p class="ricerca">
-                      <strong>Filtro anno</strong>
-                      <input type="text"
-                              style="border:1px dotted grey; font-weight:bold;"
-                              name="txtAnno"
-                              id="txtAnno"
-                              onfocus="ResetCampo('txtAnno','#FAF176');"
-                              onblur="ControlloInput('txtAnno',true);"
-                              value="<?php echo date('Y'); ?>" />
-                  </p> -->
         </fieldset>
-       
-        <!--  
-        <div id="nuovoiscritto">
-            <input type="button" name="newentry" id="newentry" value="nuova iscrizione" onClick="btnNuovoIscritto();" />
-        </div>       
-        -->
+       </div> <!-- right -->
     </div>
  <!-- FINE SEZIONE CAMPI DI RICERCA ISCRITTI -->   
 
