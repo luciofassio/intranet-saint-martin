@@ -162,6 +162,7 @@ blockquote.divgruppi label.div_gruppi{
 
 #gruppo{
   font-weight:bold;
+  width:150px;
 }
 
 #data_iscrizione{
