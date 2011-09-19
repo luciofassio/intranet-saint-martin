@@ -519,7 +519,6 @@ fieldset.cornice {
             <input type="hidden" name="sezione" id="sezione" value="<?php echo ($_POST['sezione']);?>" />
             
             <table>
-            
             <tr>
                 <td>
             <fieldset class="cornice"><legend>Cerca iscritto... &nbsp;</legend>
@@ -534,7 +533,9 @@ fieldset.cornice {
                            onblur="fill();"
                            onfocus="ResetCampo('txtCognome','#FAF176')"
                            onkeypress="RilevaTab(event,'');"
-                           autocomplete="off" />
+                           autocomplete="off" 
+                           size ="15"
+                    />
 
                     <div class="suggestionsBox" id="suggestions" style="display: none;">
                        <img src="./Immagini/upArrow.png" style="position: relative; top: -15px; left: 50px;" alt="" />
