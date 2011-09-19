@@ -35,7 +35,7 @@ if ($id <> "") {
 body {
 	font-family: arial;
 	font-size: 9pt;
-	line-height: 0.99em;
+	line-height: 0.69em;
 }
 
 h1 {
@@ -83,7 +83,7 @@ ul {
 /* REGOLE PER ID OGGETTI */
 
 #contenutopagina {
-	width: 90%;
+	width: 100%;
 	height: 85%;
 	text-align: left;
 	padding:0px 0px 0px 0px;
@@ -198,6 +198,8 @@ $telefono_casa;
 $cellulare_ragazzo;
 $cellulare_mamma;
 $cellulare_padre;
+$tipomodulo;
+$modulo;
 
 
 // devo fare moduli in bianco?
@@ -214,11 +216,24 @@ if ($copie > 0) {
 	$parrocchia = str_repeat("_",30);
 	$telefono_casa = str_repeat("&nbsp;",20);
 	$cellulare_ragazzo = str_repeat("&nbsp;",20);
-	for($p = 0;$p < $copie; $p++) {
-		StampaPagina();
+	$tipo_modulo[0]="dall'asilo alla 1<sup>a</sup> media";
+	$tipo_modulo[1]="dalla 2<sup>a</sup> media alla 5<sup>a</sup> superiore";
+	$tipo_modulo[2]="dopo le superiori &amp; adulti";
+	$indice_classe[0]=7; //fino alla 1a media
+	$indice_classe[1]=14;//fino alla 5a superiore 
+	$indice_classe[2]=15;// per giovani e adulti
+	
+  for ($modulo=0;$modulo<3;$modulo++) {
+      $tipomodulo=$tipo_modulo[$modulo];
+      $IndiceClasse=$indice_classe[$modulo];
+      for($p = 0;$p < $copie; $p++) {
+		      StampaPagina();
+	   }
 	}
 } else { 
-	if ($id <> "") {
+	$tipomodulo="";
+	
+  if ($id <> "") {
 		$rstTesserati = GetTesseratiByID($id);
 	} else {
   		$rstTesserati = GetTesserati($_POST["anno"], $_POST["gruppi"]);
@@ -330,6 +345,8 @@ global $cellulare_ragazzo;
 global $cellulare_mamma;
 global $cellulare_padre;
 global $parentela;
+global $tipomodulo;
+global $modulo;
 ?>
 
 	
@@ -357,28 +374,33 @@ global $parentela;
             <img src="./Immagini/logoratorio.png" id="logo_oratorio" width ="40" height="40" alt="logo oratorio" />
             <strong>Oratorio Saint Martin - Viale Europa, 1 - 11100 Aosta - Tel. 0165/554234 </strong>
 		    </div>
-        
-        <h2>ISCRIZIONE <?php echo $_POST["anno"]." - ".($_POST["anno"] + 1) ?></h2>
+        <?php 
+            if ($copie==0) {
+        ?>
+                <h2>ISCRIZIONE <?php echo $_POST["anno"]." - ".($_POST["anno"] + 1) ?></h2>
+        <?php 
+            } else {  
+        ?>
+            <h2>ISCRIZIONE ANNO <?php
+                echo str_repeat("_",5);
+            }
+        ?></h2>
         
         <div id="mybarcode">
             <?php 
                 if ($copie ==0) {
                     echo bar128(str_pad($idPersona,13,"0",STR_PAD_LEFT ),140);
                 } else {
-                    echo "<style> .tabella_anagrafica {margin-top:10px;} </style>";
+                    echo "<span style='font-weight:bold;background:black;padding:0.2em;color:white;'>".$tipomodulo."</span>";
+                    echo "<style> .tabella_anagrafica {margin-top:-10px;} </style>";
                 }
               ?> 
         </div>
         
-        
-        
         <table class="tabella_anagrafica" border=0>
-
             <tr>
 				        <td>
                     Nominativo: <strong><?php echo $cognome." ".$nome; ?></strong>
-				            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Nome: <strong><?php echo $nome ?></strong> -->
                 </td>
                
                 <td rowspan=6>
@@ -448,7 +470,7 @@ global $parentela;
 			
 			   <tr>
 				    <?php if ($IndiceClasse>14) {?>
-                <td>Gruppo  : <strong><?php echo $classe ?></strong></td>
+                <td>Gruppo (giovane/adulto)  : <strong><?php echo $classe ?></strong></td>
             <?php 
               } else {
             ?>
@@ -673,24 +695,32 @@ global $parentela;
       
       <div style="float:right;">
           <?php 
-              $gg_oggi=date("d");
-              $mm_oggi=date("m");
-              $yy_oggi=date("Y");
-              $gg_nascita=substr($data_nascita,0,2);
-              $mm_nascita=substr($data_nascita,3,2);
-              $yy_nascita=substr($data_nascita,6,4);
-              
-              if ($yy_oggi-$yy_nascita==18) {
-                  if ((int)($mm_nascita.$gg_nascita)>(int)($mm_oggi.$gg_oggi)) {
+              if ($copie>0) {
+                  if ($modulo<2) {
                       echo "<strong>Firma del genitore:</strong> ".str_repeat("_",40);
                   } else {
                       echo "<strong>Firma:</strong> ".str_repeat("_",40);
                   }
-              } elseif ($yy_oggi-$yy_nascita<18) {
-                    echo "<strong>Firma del genitore:</strong> ".str_repeat("_",40);
               } else {
-                    echo "<strong>Firma:</strong> ".str_repeat("_",40);
-              } 
+                    $gg_oggi=date("d");
+                    $mm_oggi=date("m");
+                    $yy_oggi=date("Y");
+                    $gg_nascita=substr($data_nascita,0,2);
+                    $mm_nascita=substr($data_nascita,3,2);
+                    $yy_nascita=substr($data_nascita,6,4);
+              
+                    if ($yy_oggi-$yy_nascita==18) {
+                        if ((int)($mm_nascita.$gg_nascita)>(int)($mm_oggi.$gg_oggi)) {
+                            echo "<strong>Firma del genitore:</strong> ".str_repeat("_",40);
+                        } else {
+                            echo "<strong>Firma:</strong> ".str_repeat("_",40);
+                        }
+                    } elseif ($yy_oggi-$yy_nascita<18) {
+                          echo "<strong>Firma del genitore:</strong> ".str_repeat("_",40);
+                    } else {
+                          echo "<strong>Firma:</strong> ".str_repeat("_",40);
+                    } 
+              }
           ?>
       </div>
 		</div>

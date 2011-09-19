@@ -480,10 +480,11 @@ function FiltroStringa(stringa,campo,colore) {
     document.getElementById(campo).value=nuovastringa;
     document.getElementById(campo).style.background="white";
     document.getElementById(campo).style.color=colore;
-
+    
     if (campo=='parrocchia_battesimo') {
       AssegnaBattesimo('blur');
     }
+    
     return nuovastringa;
 }
 /**************************************************************************************************
