@@ -556,7 +556,9 @@ fieldset.cornice {
                            onfocus="ResetCampo('txtNome','#FAF176');"
                            onblur="fill_names();"
                            onkeypress="RilevaTab(event,'');"
-                           autocomplete="off" />
+                           autocomplete="off"
+                           size ="15"
+                    />
                     
                     <div class="suggestionsBoxNames" id="suggestions_names" style="display: none;">
 									     <img src="./Immagini/upArrow.png" style="position: relative; top: -15px; left: 50px;" alt="" />
@@ -577,7 +579,9 @@ fieldset.cornice {
                            autocomplete="off"
                            onfocus="ResetCampo('txtBarCode','#FAF176');"
                            onblur="ControlloInput('txtBarCode',false);"
-                           onkeypress="RilevaTab(event,'txtBarCode');"/>
+                           onkeypress="RilevaTab(event,'txtBarCode');"
+                           size ="15"
+                    />
 	               </p> 
                 
                 <p class="ricerca" style="text-align:center">
