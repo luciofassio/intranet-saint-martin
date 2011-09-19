@@ -206,7 +206,7 @@ blockquote.divgruppi label.div_gruppi{
 #campi_ricerca {
   visibility: visible;
   position: absolute;
-  width: 60%;
+  width: 70%;
   height: 420px;
   top: 12%;
   left:160px;
@@ -227,9 +227,9 @@ fieldset.cornice {
 
 #fldStampe{
   border:1px dotted #FF8C00;
-  position:absolute;
+  /*position:absolute;
   top:0%;
-  left:46%;
+  left:46%;*/
   height:397px;
 }
 
@@ -526,7 +526,10 @@ fieldset.cornice {
             <input type="hidden" name="trovati" id="trovati" value="<?php echo ($_POST['trovati']);?>" />
             <input type="hidden" name="sezione" id="sezione" value="<?php echo ($_POST['sezione']);?>" />
             
-            <div id="left">
+            <table>
+            
+            <tr>
+                <td>
             <fieldset class="cornice"><legend>Cerca iscritto... &nbsp;</legend>
                 <blockquote class="ricerca_iscritti">
                 <div id="etichettacognome">
@@ -601,9 +604,9 @@ fieldset.cornice {
                   </p>
               </div>
           </fieldset>
-        </div> <!-- left --> 
+        </td> 
         
-        <div id="right">
+        <td>
         <fieldset class="cornice" id="fldStampe">
             <legend>Stampa... &nbsp;</legend>
             
@@ -662,7 +665,9 @@ fieldset.cornice {
                 />
             </p>
         </fieldset>
-       </div> <!-- right -->
+       </td>
+       </tr>
+       </table>
     </div>
  <!-- FINE SEZIONE CAMPI DI RICERCA ISCRITTI -->   
 
