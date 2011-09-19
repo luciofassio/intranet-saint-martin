@@ -161,7 +161,7 @@ blockquote.divgruppi label.div_gruppi{
 }
 
 #gruppo{
-  font-weight:bold;
+  /*font-weight:bold;*/
   width:150px;
 }
 
@@ -171,19 +171,19 @@ blockquote.divgruppi label.div_gruppi{
 
 .candidato {
   border:1px dotted orange;
-  font-weight:bold;
+  /*font-weight:bold;*/
   color: green;
  }
  
 .padrino {
   border:1px dotted orange;
-  font-weight:bold;
+  /*font-weight:bold;*/
   color: purple;
  }
  
 .altridati {
   border:1px dotted orange;
-  font-weight:bold;
+  /*font-weight:bold;*/
   color: brown;
 }
 
@@ -192,7 +192,7 @@ blockquote.divgruppi label.div_gruppi{
   height:130px;
   border:1px dotted orange;
   padding:5px;
-  font-family:Verdana;
+  font-family:Verdana,Arial;
   font-size:small;
 }
 /*********************** REGOLE IMPAGINAZIONE CAMPI DI RICERCA ISCRITTI ******************/
@@ -705,9 +705,10 @@ fieldset.cornice {
                       onfocus="ResetCampo('data_battesimo','#CCFF99');"
                       onblur="ControlloDataInserita(this.value,'data_battesimo','dn','green','white');"
                       onkeypress="RilevaTab(event);"
-                      value="<?php echo $_POST["data_battesimo"]?>" />
+                      value="<?php echo $_POST["data_battesimo"]?>"
+                      size="15" />
           </p>
-          <p">
+          <p>
               <label class="schedadati"><strong>Parrocchia Battesimo </strong></label>
               <input type="text"
                       name="parrocchia_battesimo" 
