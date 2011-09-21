@@ -563,7 +563,6 @@ function lookup_parrocchie(inputString,campo) {
         // Hide the suggestion box.
 				$('#suggestions_parrocchie').hide();
         $('#suggestions_parrocchie_padrino').hide();
-        document.getElementsByName("optBattesimo")[1].checked=true;
 			} else {
             if (campo!="parrocchia_padrino") {
                 $.post("rpparrocchie.php", {queryString: ""+inputString+""}, function(data){
