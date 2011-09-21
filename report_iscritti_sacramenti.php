@@ -62,7 +62,9 @@ h1 {
 
 h5 {
   margin-top:5px;
-  background:#C0C0C0;
+  border-top:1px dotted black;
+  border-bottom:1px dotted black;
+  /*background:#C0C0C0;*/
   /*color:white;*/
   padding:0.3em 0.4em 0.3em 0.3em;
   text-align:left;
@@ -136,7 +138,7 @@ em {
 }
 
 #nessuno_in_elenco{
-  width:40%;
+  width:500px;
   position:absolute;
   top:50px;
   left:50px;
@@ -376,7 +378,7 @@ function StampaIntestazione() {
 ?>
     <div id="intestazione">
         <div id="titolo">
-            <h5 style="background:white;color:black;font-size:9.5pt;padding:0;">Parrocchia di Saint-Martin de Corl&eacute;ans</h5>
+            <h5 style="background:white;color:black;font-size:9pt;padding:0;border:0px;">Parrocchia di Saint-Martin de Corl&eacute;ans</h5>
             <h1>Cresime <?php echo date('Y');?></h1>
             <h5>Verifica documenti</h5>
             <span style="font-size:x-small;color:black;"><?php echo "|".$nr_pagina."|"; ?></span>
@@ -385,7 +387,7 @@ function StampaIntestazione() {
         <div id="statistiche">
             <table>
                 <tr>
-                    <td colspan="2" style="text-align:center;background:#C0C0C0;color:black;font-weight:bold;padding-left:0.2em;padding-right:0.2em;">STATISTICHE</td>
+                    <td colspan="2" style="text-align:center;border-bottom:1px dotted black;border-top:1px dotted black;color:black;font-weight:bold;padding-left:0.2em;padding-right:0.2em;">STATISTICHE</td>
                 </tr>
                 <tr>
                     <td>Elenco stampato da: </td>

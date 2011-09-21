@@ -79,7 +79,7 @@ blockquote.ricerca_iscritti label.RicercaIscritti{
 
 blockquote.divgruppi label.div_gruppi{
   position:relative;
-  width:70px;
+  width:50px;
   left:-40px;
   display: block;
   float:left;
@@ -163,6 +163,7 @@ blockquote.divgruppi label.div_gruppi{
 #gruppo{
   /*font-weight:bold;*/
   width:150px;
+  background:white;
 }
 
 #data_iscrizione{
@@ -368,9 +369,9 @@ fieldset.cornice {
 #gruppi {
   visibility:hidden;
   position: absolute;
-  width: 50%;
+  width: 600px;
   height: 350px;
-  top: 13%;
+  top: 15%;
   left:200px;
   border:2px solid green;
   background:#CCCC99; 
@@ -385,20 +386,6 @@ fieldset.cornice {
   font-size:large;
   padding:0.2em;
   padding-bottom:0.4em;
-}
-
-#dati_gruppi{
-  position:relative;
-  top:0%;
-  left:1%;
-  width:50%;
-}
-
-#archivio_gruppi{
-  position:absolute;
-  top:0%;
-  left:102%;
-  width:280px;
 }
 
 #lista_gruppi {
@@ -421,14 +408,15 @@ fieldset.cornice {
   width:60%;
   font-weight:bold;
 }
+
 /* REGOLE PER IMPAGINARE LA FINESTRA SCEGLI IL GRUPPO DA STAMPARE*/
 #stampa_documenti {
   visibility:hidden;
   position: absolute;
-  width: 40%;
-  height: 100px;
-  top: 20%;
-  left:280px;
+  width: 260px;
+  height: 150px;
+  top: 30%;
+  left:380px;
   border:2px solid green;
   background:#CCCC99; 
   -moz-border-radius:7px;
@@ -791,7 +779,6 @@ fieldset.cornice {
                      onblur="FiltroStringa(this.value,'nome_padrino','purple');"
                      value="<?php echo $_POST["nome_padrino"]?>"
                      onBlur="FiltroStringa(this.value,'nome_padrino');"
-                     onkeypress="RilevaTab(event);"  
               />
           </p>
           <p>
@@ -804,7 +791,7 @@ fieldset.cornice {
                       onfocus="ResetCampo('parrocchia_padrino','#CCFF99');" 
                       onblur="fill_parrocchia_padrino();FiltroStringa(this.value,'parrocchia_padrino','purple');"
                       onkeyup="lookup_parrocchie(this.value,'parrocchia_padrino');"
-                      onkeypress="RilevaTab(event);" 
+                      onkeypress="RilevaTab(event);"  
                       value="<?php echo $_POST["parrocchia_padrino"]?>" />
           
               <div class="suggestionsBoxParrocchiePadrino" id="suggestions_parrocchie_padrino" style="display: none;">
@@ -906,11 +893,12 @@ fieldset.cornice {
     <div id="titolo_gruppi">
         Gruppi
     </div>
-    
-    <div id="dati_gruppi">
-         <fieldset>
-              <legend>Data & ora gruppo... &nbsp;</legend>
-              <blockquote class="divgruppi">
+   <table>
+      <tr>
+          <td valign="top"> 
+              <fieldset>
+                  <legend>Data &amp; ora gruppo... &nbsp;</legend>
+                  <blockquote class="divgruppi">
                   <p>
                       <label class="div_gruppi"><strong>Data</strong></label>
                       <input type="text"
@@ -936,35 +924,31 @@ fieldset.cornice {
                              maxlength="5"
                       />
                   </p>
-                  
-                  <p>
-                      &nbsp;
-                  </p>
-                  
-                  <p>
-                      &nbsp;
-                  </p>
               </blockquote>
          </fieldset>
+        </td>
         
-        <fieldset id="archivio_gruppi">
-            <legend>Gruppi in archivio...&nbsp; </legend>
-            <select id="lista_gruppi"
-                    name="lista_gruppi" 
-                    size="30"
-                    style="color:brown;font-weight:bold;"
-            >
+        <td rowspan="3" valign="top">
+            <fieldset>
+                <legend>Gruppi in archivio...&nbsp; </legend>
+                <select id="lista_gruppi"
+                        name="lista_gruppi" 
+                        size="30"
+                        style="color:brown;font-weight:bold;"
+                >
                 <?php 
                     GetDataSacramento('gruppi');
                 ?>
-            </select>
-        </fieldset>
+                </select>
+            </fieldset>
+        </td>
+        </tr>
         
-        <div id="pulsantiera_gruppi">
-            <p>
+        <tr>
+        <td valign="bottom" align="center">
             <input type="button"
                    id="agruppo"
-                   style="height:40px;width:140px"
+                   style="height:40px;width:130px"
                    value="Aggiungi"
                    onclick="ElaboraGruppi(this.value);" 
             />
@@ -972,29 +956,28 @@ fieldset.cornice {
             &nbsp;       
             <input type="button"
                    id="mgruppo"
-                   style="height:40px;width:140px"
+                   style="height:40px;width:130px"
                    value="Modifica"
                    onclick="ElaboraGruppi(this.value);" 
             />
-            </p>        
-            <p>            
+        <p>
             <input type="button"
                     id="rgruppo"
-                   style="height:40px;width:140px"
+                   style="height:40px;width:130px"
                    value="Rimuovi"
                    onclick="ElaboraGruppi(this.value);"
             />
                    
             &nbsp;
             <input type="button"
-                   style="height:40px;width:140px"
+                   style="height:40px;width:130px"
                    value="Chiudi" 
                    onclick="AzioniPulsanti('chiudi_gruppi');"
             />
-            </p>
-        </div>
-
-    </div>
+        </p>
+        </td>
+        </tr>
+        </table>
 </div>
 <!-- FINE GRUPPI -->
 <!-- FINSTRA SCEGLI GRUPPO PER STAMPE -->
@@ -1004,7 +987,7 @@ fieldset.cornice {
     </div>
     
     <div id="campi_stampa_documenti">
-        <label class="schedadati"><strong>Gruppo del </strong></label>
+        <label class="schedadati"><strong>Gruppo del&nbsp;&nbsp;</strong></label>
             <select class="altridati"
                     name="stampa_gruppo"
                     id="gruppo"
@@ -1012,7 +995,7 @@ fieldset.cornice {
                     onblur="FiltroStringa(this.value,'gruppo','brown');">
                     <?php GetDataSacramento('scheda'); ?>
             </select>
-            &nbsp;
+        <p style="margin-top:30px;text-align:center;">
             <input type="button" 
                     value="Ok"
                     style="height:40px;width:110px"
@@ -1024,6 +1007,7 @@ fieldset.cornice {
                     style="height:40px;width:110px"
                     onclick="AzioniPulsanti('chiudi_gruppi')";
             />
+        </p>
     </div>
 </div>
 
