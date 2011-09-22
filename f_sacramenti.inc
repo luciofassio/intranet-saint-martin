@@ -265,7 +265,7 @@ function SalvaScheda() {
             
             //nominativo padrino
             if ($_POST["nome_padrino"]!="" || $_POST["nome_padrino"]!=null) {
-                $fields.=",NominativoPadrinoMadrina='".$_POST['nome_padrino']."'";
+                $fields.=",NominativoPadrinoMadrina='".addslashes($_POST['nome_padrino'])."'";
             } else {
                 $fields.=",NominativoPadrinoMadrina=null";          
             }
