@@ -48,7 +48,6 @@ $row=null;
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 <style>
-@media screen,print {
 
 body {
   font-family: Verdana,Arial;
@@ -83,7 +82,7 @@ td {
 td.datielencosx {
   padding:2px;
   border-bottom:1px dotted black;
-  width:40%;
+  width:35%;
   font-weight:bold;
   color:#2F4F4F;
 }
@@ -95,7 +94,7 @@ td.datielencodx {
   text-align:justify;
 }
 
-th{
+th {
   padding-bottom:0.6em;
   padding-top:0.8em;
   text-align:left;
@@ -128,6 +127,7 @@ em {
   border:1px solid black;
   padding:0.5em;
   float:right;
+  width:280px;
 }
 
 #dati{
@@ -161,9 +161,6 @@ em {
   padding:0.2em;
   padding-bottom:0.4em
 }
-
-} /* fine dichiarazioni @media*/
-
 </style>
 
 </head>
@@ -174,12 +171,23 @@ em {
 $id_gruppo=$_GET["gp"]; // ottiene il gruppo da stampare
 $azione=$_POST["azione_stampa"]; // ottiene l'azione da svolgere
 $nr_elementi_pagina=2; // stabilisce quante schede può stampare per pagina
+$nr_righe=0;
 
 // controlla se deve evidenziare i documenti mancanti
 if (isset($_POST["chkEvidenzia"])){
     $evidenzia=true;
 } else {
     $evidenzia=false;
+}
+
+// controlla se deve stampare tutti i dati, anche quelli che il parroco non vuole (chissà perché!!!)
+// (contributo, iscrizione gratuita, data iscrizione) 
+if (isset($_POST["chkStampaTuttiDati"])) {
+    $stampa_tutti_dati=true;
+    $nr_righe=13;
+} else {
+    $stampa_tutti_dati=false;
+    $nr_righe=10;
 }
     
 // prepara la query da inviare a Mysql
@@ -319,13 +327,19 @@ if (isset($_POST["chkEvidenzia"])){
             </table>
         </ul>
         
-        <p>
-            <span style="font-size:small;text-align:left;">
+        <p style="text-align:left;margin-left:25px;">
+            <span style="font-size:small;">
                 <input type="checkbox" name="chkEvidenzia" />
-                Evidenzia i documenti mancanti
+                &nbsp;Evidenzia i documenti mancanti
             </span>
         </p>
+        <p style="text-align:left;margin-left:25px;">
+            <span style="font-size:small;">
+                <input type="checkbox" name="chkStampaTuttiDati" />
+                &nbsp;Stampa tutti i dati (contributo, iscr. gratuita, data iscr.)
+            </span>
         
+        </p>
         <p>
             <input type="submit"
                    name="btnstampa" 
@@ -438,6 +452,8 @@ function StampaDati($result) {
       global $nr_elementi_pagina;
       global $i;
       global $evidenzia;
+      global $stampa_tutti_dati;
+      global $nr_righe;
       $elementi=0;
       
       echo "<div id='dati'>\n";
@@ -447,7 +463,7 @@ function StampaDati($result) {
       $i++;
       
       echo "<tr>\n";
-      echo "<th valign='top' width='5%' rowspan=13><span style='padding:0.2em;background:#C0C0C0;'>".$i."</span></th>\n";
+      echo "<th valign='top' width='5%' rowspan='".$nr_righe."'><span style='padding:0.2em;background:#C0C0C0;border:2px dotted black;'>".$i."</span></th>\n";
       if ($row->Sesso=='M') {
           $natoa="Nato a ";
       } else {
@@ -585,37 +601,39 @@ function StampaDati($result) {
       }
       echo "</tr>\n";
       
-      echo "<tr>\n";
-      echo "<td class=\"datielencosx\">Contributo:</td>\n";
-      if ($row->ContributoVersato) {
-          echo "<td class=\"datielencodx\">Versato</td>\n";
-      } else {
-          if ($evidenzia) {
-              echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non versato</span></td>\n";
+      if ($stampa_tutti_dati) {
+          echo "<tr>\n";
+          echo "<td class=\"datielencosx\">Contributo:</td>\n";
+          if ($row->ContributoVersato) {
+              echo "<td class=\"datielencodx\">Versato</td>\n";
           } else {
-              echo "<td class=\"datielencodx\"\n>Non versato</td>";
+              if ($evidenzia) {
+                  echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non versato</span></td>\n";
+              } else {
+                  echo "<td class=\"datielencodx\"\n>Non versato</td>";
+              }
           }
+          echo "</tr>\n";
+      
+          echo "<tr>\n";
+          echo "<td class=\"datielencosx\">Iscrizione gratuita:</td>\n";
+          if ($row->IscrizioneGratuita) {
+              echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>S&igrave;</span></td>\n";
+          } else {
+              echo "<td class=\"datielencodx\">No</td>\n";
+          }
+          echo "</tr>\n";
+      
+          echo "<tr>\n";
+          echo "<td class=\"datielencosx\">Data iscrizione:</td>\n";
+          if ($row->DataIscrizione!="" || $row->DataIscrizione!=null) {
+              echo "<td class=\"datielencodx\">".ConvertiData($row->DataIscrizione)."</td>\n";
+          }
+          echo "</tr>\n";
       }
-      echo "</tr>\n";
       
       echo "<tr>\n";
-      echo "<td class=\"datielencosx\">Iscrizione gratuita:</td>\n";
-      if ($row->IscrizioneGratuita) {
-          echo "<td class=\"datielencodx\"><span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>S&igrave;</span></td>\n";
-      } else {
-          echo "<td class=\"datielencodx\">No</td>\n";
-      }
-      echo "</tr>\n";
-      
-      echo "<tr>\n";
-      echo "<td class=\"datielencosx\">Data iscrizione:</td>\n";
-      if ($row->DataIscrizione!="" || $row->DataIscrizione!=null) {
-          echo "<td class=\"datielencodx\">".ConvertiData($row->DataIscrizione)."</td>\n";
-      }
-      echo "</tr>\n";
-      
-      echo "<tr>\n";
-      echo "<td class=\"datielencosx\">Note:</td>\n";
+      echo "<td class=\"datielencosx\" style=\"height:50px;\" valign='top'>Note:</td>\n";
       if ($row->Note!="" || $row->Note!=null) {
           echo "<td class=\"datielencodx\">".$row->Note."</td>\n";
       } else {
