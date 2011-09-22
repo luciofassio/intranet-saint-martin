@@ -498,8 +498,11 @@ function AssegnaBattesimo(ctrl) {
    
    switch (ctrl) {
       case 'blur':
+          if (parrocchia=="") {
+              optCertificatoBattesimo[1].checked=true;
+          }
           if (parrocchia.indexOf('martin') <1 && parrocchia.indexOf('aosta') <1 && optCertificatoBattesimo[2].checked==true) {
-              optCertificatoBattesimo[1].checked=true
+              optCertificatoBattesimo[1].checked=true;
           }
       break;
       
@@ -507,14 +510,14 @@ function AssegnaBattesimo(ctrl) {
           if (parrocchia.indexOf('martin') >0 && parrocchia.indexOf('aosta') >0 || hdnIdParrocchia==1) {
               optCertificatoBattesimo[2].checked=true; //seleziona in automatico il campo in parrocchia
           } else {
-              optCertificatoBattesimo[1].checked=true
+              optCertificatoBattesimo[1].checked=true;
           }
       break;
       
       case 'opt':
           if ((parrocchia.indexOf('martin') ==0 && parrocchia.indexOf('aosta') ==0) || hdnIdParrocchia!=1 || parrocchia=="") {
               alert("Attenzione! Questa opzione e' selezionabile \n soltanto se il battesimo e' stato celebrato a Saint-Martin de Corleans"); //seleziona in automatico il campo in parrocchia
-              optCertificatoBattesimo[1].checked=true
+              optCertificatoBattesimo[1].checked=true;
           }
       break;
    }
