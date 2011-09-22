@@ -707,7 +707,7 @@ fieldset.cornice {
                       onkeyup="lookup_parrocchie(this.value);"
                       onblur="FiltroStringa(this.value,'parrocchia_battesimo','green');" 
                       onkeypress="RilevaTab(event);"
-                      value="<?php echo $_POST["parrocchia_battesimo"]?>" />
+                      value="<?php echo stripslashes($_POST["parrocchia_battesimo"])?>" />
               
               <div class="suggestionsBoxParrocchie" id="suggestions_parrocchie" style="display: none;">
                 <img src="./Immagini/upArrow.png" style="position: relative; top: -15px; left: 50px;" alt="" />
@@ -724,7 +724,7 @@ fieldset.cornice {
                      class="candidato" autocomplete="off"
                      onfocus="ResetCampo('indirizzo_parrocchia_battesimo','#CCFF99');"
                      onblur="FiltroStringa(this.value,'indirizzo_parrocchia_battesimo','green');"
-                     value="<?php echo $_POST["indirizzo_parrocchia_battesimo"]?>" />
+                     value="<?php echo stripslashes($_POST["indirizzo_parrocchia_battesimo"])?>" />
           </p>
           
           <p>
@@ -777,7 +777,7 @@ fieldset.cornice {
                      autocomplete="off"
                      onfocus="ResetCampo('nome_padrino','#CCFF99');"
                      onblur="FiltroStringa(this.value,'nome_padrino','purple');"
-                     value="<?php echo $_POST["nome_padrino"]?>"
+                     value="<?php echo stripslashes($_POST["nome_padrino"])?>"
                      onBlur="FiltroStringa(this.value,'nome_padrino');"
               />
           </p>
@@ -792,7 +792,7 @@ fieldset.cornice {
                       onblur="fill_parrocchia_padrino();FiltroStringa(this.value,'parrocchia_padrino','purple');"
                       onkeyup="lookup_parrocchie(this.value,'parrocchia_padrino');"
                       onkeypress="RilevaTab(event);"  
-                      value="<?php echo $_POST["parrocchia_padrino"]?>" />
+                      value="<?php echo stripslashes($_POST["parrocchia_padrino"]);?>" />
           
               <div class="suggestionsBoxParrocchiePadrino" id="suggestions_parrocchie_padrino" style="display: none;">
                <img src="./Immagini/leftArrow.png" style="position: relative; top: 310px; left:-12px;" alt="" /> 
@@ -862,7 +862,7 @@ fieldset.cornice {
          </blockquote>
           
           <strong>&nbsp;&nbsp;&nbsp;Note</strong>
-          <textarea name="note" id="note" onkeyup="ContaCaratteri('note',this.value,200);"><?php echo $_POST["note"];?></textarea>
+          <textarea name="note" id="note" onkeyup="ContaCaratteri('note',this.value,200);"><?php echo stripslashes($_POST["note"]);?></textarea>
         
         </fieldset>
     </div>
