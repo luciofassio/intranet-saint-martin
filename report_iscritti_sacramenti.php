@@ -82,9 +82,9 @@ td {
 td.datielencosx {
   padding:2px;
   border-bottom:1px dotted black;
-  width:35%;
+  width:40%;
   font-weight:bold;
-  color:#2F4F4F;
+  color:black; /*#2F4F4F;*/
 }
 
 td.datielencodx {
@@ -118,7 +118,7 @@ em {
 
 #titolo {
   position:relative;
-  width:40%;
+  width:50%;
   float:left;
 }
 
@@ -189,7 +189,21 @@ if (isset($_POST["chkStampaTuttiDati"])) {
     $stampa_tutti_dati=false;
     $nr_righe=10;
 }
-    
+
+// controlla se deve visualizzare la finestra stampa (scelta stampante, ecc.)
+if (isset($_POST["chkVisualizzaFinestraStampa"])){
+    $visualizza_finestra_stampa=true;
+} else {
+    $visualizza_finestra_stampa=false;
+}
+
+// controlla se deve stampare soltanto l'elenco alfabetico degli iscritti
+if (isset($_POST["chkStampaElencoAlfabetico"])) {
+  $stampa_elenco_alfabetico=true;
+} else {
+  $stampa_elenco_alfabetico=false;
+}
+
 // prepara la query da inviare a Mysql
   switch ($id_gruppo) {
       case 0: // per gli iscritti senza gruppo
@@ -329,17 +343,37 @@ if (isset($_POST["chkStampaTuttiDati"])) {
         
         <p style="text-align:left;margin-left:25px;">
             <span style="font-size:small;">
+                <input type="checkbox" name="chkStampaElencoAlfabetico" />
+                &nbsp;Stampa elenco alfabetico
+            </span>
+        </p>
+        
+        <p style="text-align:left;margin-left:25px;">
+            <span style="font-size:small;">
                 <input type="checkbox" name="chkEvidenzia" />
                 &nbsp;Evidenzia i documenti mancanti
             </span>
         </p>
-        <p style="text-align:left;margin-left:25px;">
+        
+        <p style="text-align:left;margin-left:25px;margin-top:-15px;">
             <span style="font-size:small;">
                 <input type="checkbox" name="chkStampaTuttiDati" />
                 &nbsp;Stampa tutti i dati (contributo, iscr. gratuita, data iscr.)
             </span>
         
         </p>
+        
+        <p style="text-align:left;margin-left:25px;margin-top:-15px;">
+            <span style="font-size:small;">
+                <input type="checkbox"
+                       name="chkVisualizzaFinestraStampa" 
+                       checked
+                />
+                &nbsp;Visualizza finestra stampa
+            </span>
+        
+        </p>
+        
         <p>
             <input type="submit"
                    name="btnstampa" 
@@ -361,20 +395,39 @@ if (isset($_POST["chkStampaTuttiDati"])) {
         break;
   
         case 1: // visualizza le pagine con i dati trovati
-            for ($nr_pagina=1;$nr_pagina<=$nr_pagine;$nr_pagina++) {
-                StampaIntestazione();
-                StampaDati($result);
+            if ($stampa_elenco_alfabetico) {
+                $datasacramento=GetGruppo($id_gruppo,$sacramento,'data');
+                $orasacramento=GetGruppo($id_gruppo,$sacramento,'ora');
+                
+                echo "<h2>Elenco partecipanti Cresime del ".$datasacramento."</h2>";
+                echo "<h3>Gruppo delle ".$orasacramento."</h3>";
+                echo "<br />";
+                echo "<table>";
+                while ($row=mysql_fetch_object($result)) {
+                    $prg++;
+                    echo "<tr>";
+                    echo "<td width=\"30\" height=\"40\" style=\"font-size:large;border-bottom:1px dotted black;\">".$prg.")</td>";
+                    echo "<td style=\"font-size:large;border-bottom:1px dotted black;\">".$row->Cognome." ".$row->Nome."</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else {
+                for ($nr_pagina=1;$nr_pagina<=$nr_pagine;$nr_pagina++) {
+                    StampaIntestazione();
+                    StampaDati($result);
 
-                // evita l'errore dell'ultimo salto pagina quando gli iscritti sono dispari 
-                if ($nr_pagina!=$nr_pagine) {
-                    echo "<p style='page-break-after:always;' />\n";         
-                } 
+                    // evita l'errore dell'ultimo salto pagina quando gli iscritti sono dispari 
+                    if ($nr_pagina!=$nr_pagine) {
+                        echo "<p style='page-break-after:always;' />\n";         
+                    } 
+                }
             }
-            
-            // dà il via libera alla stampante
-            echo "<script type= \"text/javascript\">";
-	          echo "window.print();\n";
-            echo "</script>";
+                // in base alle scelte dell'operatore visualizza o nasconde la finestra stampa (scelta stampante, ecc.)
+                if ($visualizza_finestra_stampa) {
+                    echo "<script type= \"text/javascript\">";
+	                 echo "window.print();\n";
+                    echo "</script>";
+                }
         break;
     } // chiude lo switch per l'azione ($azione)
 ?>
@@ -425,14 +478,19 @@ function StampaIntestazione() {
                   
                 <tr>
                     <td>Data celebrazione:</td>
-                    <td><strong><?php GetGruppo($id_gruppo,$sacramento,'data');?></strong>
+                    <td>
+                        <strong><?php $datasacramento=GetGruppo($id_gruppo,$sacramento,'data');
+                                      echo $datasacramento;
+                                  ?></strong>
                     </td>
                 </tr>
                 
                  <tr>
                     <td>Orario celebrazione:</td>
                     <td>
-                        <strong><?php GetGruppo($id_gruppo,$sacramento,'ora');?></strong>
+                        <strong><?php $orasacramento=GetGruppo($id_gruppo,$sacramento,'ora');
+                                      echo $orasacramento;
+                        ?></strong>
                     </td>
                 </tr>
                 
@@ -596,7 +654,7 @@ function StampaDati($result) {
               echo "<td class=\"datielencodx\">
               <span style='background:#2F4F4F;color:white;padding:0em 0.4em 0.2em 0.2em;'>Non consegnato</span></td>\n";
           } else {
-              echo "<td class=\"datielencodx\"\n>&nbsp;</td>";
+              echo "<td class=\"datielencodx\"\n>Non consegnato</td>";
           }
       }
       echo "</tr>\n";
@@ -673,23 +731,21 @@ function GetGruppo($id,$sacramento,$tempo) {
     switch ($tempo) {
         case 'data':
             if ($stringa !="" || $stringa!=null){
-                echo ConvertiData($stringa);
+                $stringa=ConvertiData($stringa);
             } else {
                 $stringa="**********";
-                return $stringa;
             }
         break;
         
         case 'ora':
             if ($stringa !="" || $stringa!=null){
-                echo substr($stringa,11,2).":".substr($stringa,14,2);
+                $stringa=substr($stringa,11,2).":".substr($stringa,14,2);
             } else {
                 $stringa="*****";
-                return $stringa;
             }
         break;
     }
-  return;
+  return $stringa;
 }
 //***********************************************************
 // Converte la data nei formati mysql-italiano e viceversa
