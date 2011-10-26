@@ -31,6 +31,7 @@ switch ($sacramento) {
     break;
 }
 ConnettiDB();
+
 // ottiene il nome dell'operatore
 $result=GetOperatore($idoperatore); 
 $row=mysql_fetch_object($result);
@@ -169,7 +170,13 @@ em {
 <?php 
  // variabili di servizio
 $id_gruppo=$_GET["gp"]; // ottiene il gruppo da stampare
-$azione=$_POST["azione_stampa"]; // ottiene l'azione da svolgere
+
+if ($_GET["sg"]==1) { // ottiene l'azione da svolgere
+  $azione=-1;
+} else {
+  $azione=$_POST["azione_stampa"]; 
+}
+
 $nr_elementi_pagina=2; // stabilisce quante schede può stampare per pagina
 $nr_righe=0;
 
@@ -206,6 +213,18 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
 
 // prepara la query da inviare a Mysql
   switch ($id_gruppo) {
+      case -1: // per stampare insieme tutti gli iscritti dei gruppi e in ordine alfabetico
+          $query="SELECT Catechismi.Nome,Catechismi.Cognome,Catechismi.Data_di_nascita,Catechismi.Luogo_di_nascita,Catechismi.Sesso, tblsacramenti.* 
+                  FROM tblsacramenti
+                  INNER JOIN Catechismi
+                  ON tblsacramenti.ID=Catechismi.ID
+                  WHERE YEAR(tblsacramenti.DataIscrizione)=".date('Y')." 
+                  AND tblsacramenti.IdGruppo > 0  
+                  AND tblsacramenti.SCR=".$sacramento."
+                  ORDER BY Catechismi.Cognome,Catechismi.Nome ASC 
+                  ";
+      break;
+      
       case 0: // per gli iscritti senza gruppo
           $query="SELECT Catechismi.Nome,Catechismi.Cognome,Catechismi.Data_di_nascita,Catechismi.Luogo_di_nascita,Catechismi.Sesso, tblsacramenti.* 
                   FROM tblsacramenti
@@ -303,6 +322,21 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
     $nr_pagine=(int)$nr_pagine;
 
     switch ($azione) {
+        case -1: // quando si è scelto di stampare in ordine alfabetico tutti gli iscritti alle cresime dei vari gruppi
+            echo "<h2 style='text-align:center;'>Elenco iscritti alle Cresime nell'anno ".date('Y')."</h2>";
+            echo "<p style='text-align:center;font-size:small;margin-top:-10px;'>Prospetto stampato il ".date('d/m/y')." alle ".date('G:i')." da ".$nome_operatore."</p>";
+            echo "<br />";
+            echo "<table>";
+            while ($row=mysql_fetch_object($result)) {
+                $prg++;
+                echo "<tr>";
+                echo "<td width=\"30\" height=\"40\" style=\"font-size:large;border-bottom:1px dotted black;\">".$prg.")</td>";
+                echo "<td style=\"font-size:large;border-bottom:1px dotted black;\">".$row->Cognome." ".$row->Nome."</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        break;
+        
         case 0: //visualizza statistiche risultati
 ?>              
 <form name="StatisticheIscritti" id ="StatisticheIscritti" method ="post" action="report_iscritti_sacramenti.php?scr=<?php echo $sacramento."&gp=".$id_gruppo;?>">

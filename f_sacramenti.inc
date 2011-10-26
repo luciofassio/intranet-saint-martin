@@ -34,7 +34,15 @@ switch ($_POST["azione"]) {
     case "elenco":
         $host  = $_SERVER['HTTP_HOST'];
         $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		    header("Location: http://$host$uri/report_iscritti_sacramenti.php?scr=".$sacramento."&gp=".$_POST["gruppo"]);
+		    
+        if (isset($_POST["chkUnisciGruppi"])) {
+            $_POST["gruppo"]=-1;
+            $stampa_elenco_alfabetico_gruppi="&sg=1";
+        } else {
+            $stampa_elenco_alfabetico_gruppi="&sg=0";
+        }
+        
+        header("Location: http://$host$uri/report_iscritti_sacramenti.php?scr=".$sacramento."&gp=".$_POST["gruppo"].$stampa_elenco_alfabetico_gruppi);
 		    exit();
     break;
     
