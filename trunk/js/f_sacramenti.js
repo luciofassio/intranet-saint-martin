@@ -6,6 +6,25 @@
 */
 
 
+
+//***************************************************************************************
+// disattiva la scelta del gruppo quando si vuole stampare in ordine alfabetico gli iscritti
+// di tutti i gruppi
+function DisattivaScegliGruppi() {
+    var stampa_elenco=document.getElementById("chkUnisciGruppi").checked;
+    var gruppo=document.getElementById("stampa_gruppo");
+
+    if (stampa_elenco) {
+        gruppo.options[0].selected=true;
+        gruppo.disabled=true;
+       
+    } else {
+        gruppo.disabled=false;
+    }
+    
+    return;
+}
+
 //***************************************************************************************
 // setta il fuoco all'apertura della pagina
 function CaricamentoPagina(sezione){
@@ -48,9 +67,6 @@ function CaricamentoPagina(sezione){
             campo.style.background="#FAF176";
         break;
     }
-    
-    
-    
     return;
 }
 
@@ -260,6 +276,10 @@ function AzioniPulsanti(comando) {
         break;
         
         case "elenco": // elenco documenti mancanti
+            azione="elenco";
+        break;
+        
+        case "elenco_totale": // elenco documenti mancanti
             azione="elenco";
         break;
     

@@ -413,10 +413,10 @@ fieldset.cornice {
 #stampa_documenti {
   visibility:hidden;
   position: absolute;
-  width: 260px;
-  height: 150px;
+  width: 400px;
+  height: 180px;
   top: 30%;
-  left:380px;
+  left:350px;
   border:2px solid green;
   background:#CCCC99; 
   -moz-border-radius:7px;
@@ -990,11 +990,23 @@ fieldset.cornice {
         <label class="schedadati"><strong>Gruppo del&nbsp;&nbsp;</strong></label>
             <select class="altridati"
                     name="stampa_gruppo"
-                    id="gruppo"
+                    id="stampa_gruppo"
                     onfocus="ResetCampo('gruppo','#CCFF99');"
                     onblur="FiltroStringa(this.value,'gruppo','brown');">
                     <?php GetDataSacramento('scheda'); ?>
             </select>
+        
+        <p>
+            <input type="checkbox" 
+                   name="chkUnisciGruppi" 
+                   id="chkUnisciGruppi"
+                   onclick="DisattivaScegliGruppi();"
+            />
+            <label class="schedadati" title="da spuntare se si vuole stampare insieme i cresimandi di tutti i gruppi in ordine alfabetico">
+                <strong>Stampa tutti i cresimandi in ordine alfabetico</strong>
+            </label>
+        </p>
+        
         <p style="margin-top:30px;text-align:center;">
             <input type="button" 
                     value="Ok"
@@ -1007,6 +1019,7 @@ fieldset.cornice {
                     style="height:40px;width:110px"
                     onclick="AzioniPulsanti('chiudi_gruppi')";
             />
+            
         </p>
     </div>
 </div>
