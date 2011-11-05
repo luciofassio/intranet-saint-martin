@@ -282,6 +282,10 @@ function AzioniPulsanti(comando) {
         case "elenco_totale": // elenco documenti mancanti
             azione="elenco";
         break;
+        
+        case "notifiche":
+            azione="notifiche";
+        break;
     
     }
 

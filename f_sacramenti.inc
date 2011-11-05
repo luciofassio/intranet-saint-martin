@@ -46,6 +46,14 @@ switch ($_POST["azione"]) {
 		    exit();
     break;
     
+    case "notifiche":
+        $host  = $_SERVER['HTTP_HOST'];
+        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+		    
+        header("Location: http://$host$uri/report_notifiche.php?scr=".$sacramento);
+		    exit();
+    break;
+    
     default:
         //controlla che l'operatore abbia scelto un candidato (presente in anagrafica...)
         if (!isset($_POST["hdnID"])) {
