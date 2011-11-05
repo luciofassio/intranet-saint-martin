@@ -416,7 +416,7 @@ fieldset.cornice {
   width: 400px;
   height: 180px;
   top: 30%;
-  left:350px;
+  left:330px;
   border:2px solid green;
   background:#CCCC99; 
   -moz-border-radius:7px;
@@ -638,6 +638,7 @@ fieldset.cornice {
                 <input type="button"
                        class="buttonCerca"
                        value ="Notifiche alle parrocchie"
+                       onclick="AzioniPulsanti('notifiche');"
                 />
             </p>
             
