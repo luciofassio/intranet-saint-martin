@@ -54,6 +54,20 @@ switch ($_POST["azione"]) {
 		    exit();
     break;
     
+    case "modulo_precompilato":
+        $host  = $_SERVER['HTTP_HOST'];
+        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+		    
+		    if (isset($_POST["chkUnisciGruppi"])) {
+            $_POST["gruppo"]=-1;
+            $stampa_elenco_alfabetico_gruppi="&sg=1";
+        } else {
+            $stampa_elenco_alfabetico_gruppi="&sg=0";
+        }
+        header("Location: http://$host$uri/report_modulo_sacramenti.php?scr=".$sacramento."&gp=".$_POST["gruppo"].$stampa_elenco_alfabetico_gruppi);
+		    exit();
+    break;
+    
     default:
         //controlla che l'operatore abbia scelto un candidato (presente in anagrafica...)
         if (!isset($_POST["hdnID"])) {
@@ -132,10 +146,11 @@ function GetDataSacramento($sezione){
   while ($row=mysql_fetch_object($result)){
       $data=(substr($row->GruppoSacramento,0,10));
       $ora=(substr($row->GruppoSacramento,11,5));
+      $data_restituzione=$row->DataRestituzione;
       if ($row->IDGruppoSacramento==$_POST["gruppo"]) {
-          echo "<option value='".$row->IDGruppoSacramento."' selected>".ConvertiData($data)."&nbsp;(".$ora.")</option>";
+          echo "<option value='".$row->IDGruppoSacramento."' selected>".ConvertiData($data)."&nbsp;(".$ora.") - ".ConvertiData($data_restituzione)."</option>";
       } else {
-          echo "<option value='".$row->IDGruppoSacramento."'>".ConvertiData($data)."&nbsp;(".$ora.")</option>";
+          echo "<option value='".$row->IDGruppoSacramento."'>".ConvertiData($data)."&nbsp;(".$ora.") - ".ConvertiData($data_restituzione)."</option>";
       }
   }
 }
@@ -381,6 +396,7 @@ function EliminaScheda($id,$scr) {
 //**************************************
 function ElaboraGruppi($azione,$sacramento) {
     $gruppo_sacramento=ConvertiData($_POST["data_gruppo"])." ".$_POST["ora_gruppo"].":00";
+    $data_restituzione=ConvertiData($_POST["data_restituzione"]);
     $id_gruppo=$_POST["lista_gruppi"];
     
     switch ($azione) {
@@ -400,9 +416,9 @@ function ElaboraGruppi($azione,$sacramento) {
             
             // non ho trovato nulla, procedo con la costruzione della nuova query di inserimento
             $query ="INSERT INTO tblgruppisacramenti 
-                    (SCR,GruppoSacramento)
+                    (SCR,GruppoSacramento,DataRestituzione)
                     VALUES 
-                    ($sacramento,'$gruppo_sacramento')";
+                    ($sacramento,'$gruppo_sacramento','$data_restituzione')";
         break;
         
         case 'aggiorna_gruppo':

@@ -59,7 +59,7 @@ h1 {
 }
 
 h3 {
-  font-family:Sans Serif;
+  font-family:Sans Serif,Times;
   font-weight:bold;
   text-align:center;
   margin-top:90px;
