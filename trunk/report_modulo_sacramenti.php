@@ -591,7 +591,7 @@ function StampaDati($result) {
       
       // trova il numero di telefono di casa e del cellulare dei genitori
       $query_telefoni="SELECT Prefisso,Numero,IDTipoTelefono
-                       FROM tbltelefoni 
+                       FROM tblTelefoni 
                        WHERE ID=".$row->ID."
                        AND (IDTipoTelefono=1 OR IDTipoTelefono=4 OR IDTipoTelefono=5)  
                        ORDER BY IDTipoTelefono ASC";
