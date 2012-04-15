@@ -85,6 +85,7 @@ td.datielencosx {
   border-bottom:1px dotted black;
   width:40%;
   font-weight:bold;
+  font-variant:small-caps;
   color:black; /*#2F4F4F;*/
 }
 
@@ -191,10 +192,14 @@ if (isset($_POST["chkEvidenzia"])){
 // (contributo, iscrizione gratuita, data iscrizione) 
 if (isset($_POST["chkStampaTuttiDati"])) {
     $stampa_tutti_dati=true;
-    $nr_righe=13;
+    $nr_righe=16;
 } else {
     $stampa_tutti_dati=false;
-    $nr_righe=10;
+    if ($sacramento ==1) {
+      $nr_righe=10;
+    } else {
+      $nr_righe=13;
+   }
 }
 
 // controlla se deve visualizzare la finestra stampa (scelta stampante, ecc.)
@@ -322,8 +327,8 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
     $nr_pagine=(int)$nr_pagine;
 
     switch ($azione) {
-        case -1: // quando si è scelto di stampare in ordine alfabetico tutti gli iscritti alle cresime dei vari gruppi
-            echo "<h2 style='text-align:center;'>Elenco iscritti alle Cresime nell'anno ".date('Y')."</h2>";
+        case -1: // quando si è scelto di stampare in ordine alfabetico tutti gli iscritti dei vari gruppi
+            echo "<h2 style='text-align:center;'>Elenco iscritti alle ".$title." nell'anno ".date('Y')."</h2>";
             echo "<p style='text-align:center;font-size:small;margin-top:-10px;'>Prospetto stampato il ".date('d/m/y')." alle ".date('G:i')." da ".$nome_operatore."</p>";
             echo "<br />";
             echo "<table>";
@@ -469,6 +474,7 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
 <?php
 //***********************************************************  
 function StampaIntestazione() {
+  global $title;
   global $nr_pagina;
   global $nr_pagine;
   global $nome_operatore;
@@ -480,7 +486,7 @@ function StampaIntestazione() {
     <div id="intestazione">
         <div id="titolo">
             <h5 style="background:white;color:black;font-size:9pt;padding:0;border:0px;">Parrocchia di Saint-Martin de Corl&eacute;ans</h5>
-            <h1>Cresime <?php echo date('Y');?></h1>
+            <h1><?php echo $title." ".date('Y');?></h1>
             <h5>Verifica documenti</h5>
             <span style="font-size:x-small;color:black;"><?php echo "|".$nr_pagina."|"; ?></span>
         </div> 
@@ -547,6 +553,7 @@ function StampaDati($result) {
       global $stampa_tutti_dati;
       global $nr_righe;
       $elementi=0;
+      global $sacramento;
       
       echo "<div id='dati'>\n";
       echo "<table width='100%'>\n";
@@ -561,8 +568,22 @@ function StampaDati($result) {
       } else {
           $natoa="Nata a ";
       }
-      echo "<th colspan='2'><span style='font-size:x-large;line-height:100%'>".$row->Cognome." ".$row->Nome.
-      "</span><br /><span style='font-variant:small-caps;font-size:small;line-height:165%;'>".$natoa.$row->Luogo_di_nascita." il ".ConvertiData($row->Data_di_nascita)."</span></th>\n";
+      echo "<th colspan='2'><span style='font-size:x-large;line-height:100%'>".$row->Cognome." ".$row->Nome."</span></th>\n";
+      //"<br /><span style='font-variant:small-caps;font-size:small;line-height:165%;'>".$natoa.$row->Luogo_di_nascita." il ".ConvertiData($row->Data_di_nascita)."</span></th>\n";
+      echo "</tr>\n";
+      
+      echo "<tr>\n";
+      echo "<td class=\"datielencosx\">Data di nascita:</td>\n";
+      echo "<td class=\"datielencodx\">".ConvertiData($row->Data_di_nascita)."</td>\n";
+      echo "</tr>\n";
+      
+      echo "<tr>\n";
+      echo "<td class=\"datielencosx\">".$natoa."</td>\n";
+      echo "<td class=\"datielencodx\">".$row->Luogo_di_nascita."</td>\n";
+      echo "</tr>\n";
+      
+      echo "<tr>\n";
+      echo "<td colspan='2' class=\"datielencosx\">&nbsp;</td>\n";
       echo "</tr>\n";
       
       echo "<tr>\n";
@@ -647,6 +668,7 @@ function StampaDati($result) {
       }
       echo "</tr>\n";
       
+      if ($sacramento==2) {
       echo "<tr>\n";
       echo "<td class=\"datielencosx\">Padrino/Madrina:</td>\n";
       if ($row->NominativoPadrinoMadrina!="" || $row->NominativoPadrinoMadrina!=null) {
@@ -692,6 +714,7 @@ function StampaDati($result) {
           }
       }
       echo "</tr>\n";
+      }
       
       if ($stampa_tutti_dati) {
           echo "<tr>\n";

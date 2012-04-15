@@ -409,6 +409,10 @@ fieldset.cornice {
   font-weight:bold;
 }
 
+#data_restituzione {
+  width:45%;
+  font-weight:bold;
+}
 /* REGOLE PER IMPAGINARE LA FINESTRA SCEGLI IL GRUPPO DA STAMPARE*/
 #stampa_documenti {
   visibility:hidden;
@@ -600,6 +604,7 @@ fieldset.cornice {
                 <input type="button"
                        class="buttonCerca"
                        value ="Modulo d'iscrizione precompilato"
+                       onclick="CaricamentoPagina('modulo_precompilato');"
                 />
             </p>
             
@@ -607,30 +612,19 @@ fieldset.cornice {
                 <input type="button" 
                        class="buttonCerca"
                        value ="Modulo d'iscrizione vuoto"
+                       
                 />
             </p>
             
              <p class="ricerca">
-                <strong>Data Restituzione</strong>
-                <input type="text" 
-                       style="border:1px dotted grey;"
-                       name="txtDataRestituzione"
-                       id="txtDataRestituzione"
-                       onfocus="ResetCampo('txtDataRestituzione','#FAF176');"
-                       onblur="ControlloInput('txtDataRestituzione',false);"
-                       size ="10"
-                />
-             </p>
-             
-             <p class="ricerca">
-                <hr>
+                <hr style="color:orange;">
              </p>
              
              <p class="ricerca"> 
                 <input type="button" 
                         class="buttonCerca" 
                         value ="Elenco candidati/documenti mancanti"
-                        onclick="CaricamentoPagina('elenco');"
+                        onclick="CaricamentoPagina('elenco_documenti');"
                 />
             </p>
              
@@ -639,11 +633,12 @@ fieldset.cornice {
                        class="buttonCerca"
                        value ="Notifiche alle parrocchie"
                        onclick="AzioniPulsanti('notifiche');"
+                       <?php if ($sacramento==1) { echo "disabled"; }?>
                 />
             </p>
             
             <p class="ricerca">
-                <hr>
+                <hr style="color:orange;">
              </p>
            
            <p class="ricerca">
@@ -682,7 +677,7 @@ fieldset.cornice {
     </div>
 
     <div id="dati_ragazzo">
-        <fieldset><legend>Dati cresimando... &nbsp;</legend>
+        <fieldset><legend>Dati Battesimo... &nbsp;</legend>
           <blockquote class="myscheda">
           <p>
               <label class="schedadati"><strong>Data Battesimo </strong></label>
@@ -767,10 +762,15 @@ fieldset.cornice {
     </div>
     
     <div id="dati_padrino">
-        <fieldset><legend>Dati padrino/madrina... &nbsp;</legend>
+        <?php 
+            if ($sacramento==1) {
+                $disabled="disabled";
+            }
+        ?>
+        <fieldset <?php echo $disabled;?>><legend>Dati padrino/madrina... &nbsp;</legend>
           <blockquote class="myscheda">
           <p>
-              <label class="schedadati"><strong>Nome & Cognome </strong></label>
+              <label class="schedadati"><strong>Nome & Cognome</strong></label>
               <input type="text"
                      name="nome_padrino"
                      id="nome_padrino"
@@ -783,7 +783,7 @@ fieldset.cornice {
               />
           </p>
           <p>
-              <label class="schedadati"><strong>Parrocchia </strong></label>
+              <label class="schedadati"><strong>Parrocchia</strong></label>
               <input type="text"
                       name="parrocchia_padrino"
                       id="parrocchia_padrino"
@@ -946,6 +946,25 @@ fieldset.cornice {
         </tr>
         
         <tr>
+        <td>
+            <fieldset>
+            <legend>Modulo d'iscrizione...&nbsp; </legend>
+            
+            <label class="div_gruppi"><strong>Data Restituzione</strong></label>
+            <input type="text"
+                    name="data_restituzione"
+                    id="data_restituzione"
+                    style="border:1px dotted orange;" 
+                    onfocus="ResetCampo('data_restituzione','#CCFF99');"
+                    onblur="ControlloDataInserita(this.value,'data_restituzione','dt','purple','white');"
+                    autocomplete="off"
+                    maxlength="10"
+            />
+            </fieldset>
+        </td>
+        </tr>
+        
+        <tr>
         <td valign="bottom" align="center">
             <input type="button"
                    id="agruppo"
@@ -990,6 +1009,7 @@ fieldset.cornice {
     <div id="campi_stampa_documenti">
         <label class="schedadati"><strong>Gruppo del&nbsp;&nbsp;</strong></label>
             <select class="altridati"
+                    title="data celebrazione / ora / data di restituzione modulo iscrizione"
                     name="stampa_gruppo"
                     id="stampa_gruppo"
                     onfocus="ResetCampo('gruppo','#CCFF99');"
@@ -1003,8 +1023,8 @@ fieldset.cornice {
                    id="chkUnisciGruppi"
                    onclick="DisattivaScegliGruppi();"
             />
-            <label class="schedadati" title="da spuntare se si vuole stampare insieme i cresimandi di tutti i gruppi in ordine alfabetico">
-                <strong>Stampa tutti i cresimandi in ordine alfabetico</strong>
+            <label class="schedadati" title="da spuntare se si vuole stampare insieme i candidati di tutti i gruppi in ordine alfabetico">
+                <strong>Stampa tutti i candidati in ordine alfabetico</strong>
             </label>
         </p>
         
@@ -1012,7 +1032,7 @@ fieldset.cornice {
             <input type="button" 
                     value="Ok"
                     style="height:40px;width:110px"
-                    onclick="AzioniPulsanti('elenco')";
+                    onclick="javascript:AzioniPulsanti(document.getElementById('azione').value);"
             />
             &nbsp;
             <input type="button" 

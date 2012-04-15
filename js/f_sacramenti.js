@@ -47,13 +47,22 @@ function CaricamentoPagina(sezione){
             document.getElementById("data_gruppo").focus();
         break;
         
-        case 'elenco': // finestra elenco documenti
+        case 'elenco_documenti': // finestra elenco documenti
             document.getElementById("campi_ricerca").style.visibility="hidden";
             document.getElementById("scheda").style.visibility="hidden";
             document.getElementById("gruppi").style.visibility="hidden";
             document.getElementById("stampa_documenti").style.visibility="visible";
             document.getElementById("sezione").value=sezione; //setta la sezione aperta
-            //document.getElementById("data_gruppo").focus();
+            document.getElementById("azione").value=sezione;
+        break;
+        
+        case 'modulo_precompilato': // finestra elenco documenti
+            document.getElementById("campi_ricerca").style.visibility="hidden";
+            document.getElementById("scheda").style.visibility="hidden";
+            document.getElementById("gruppi").style.visibility="hidden";
+            document.getElementById("stampa_documenti").style.visibility="visible";
+            document.getElementById("sezione").value=sezione; //setta la sezione aperta
+            document.getElementById("azione").value=sezione;
         break;
         
         default: // visualizza la sezione di ricerca e comandi
@@ -275,7 +284,7 @@ function AzioniPulsanti(comando) {
             azione="chiudi_gruppi";
         break;
         
-        case "elenco": // elenco documenti mancanti
+        case "elenco_documenti": // elenco documenti mancanti
             azione="elenco";
         break;
         
@@ -286,6 +295,11 @@ function AzioniPulsanti(comando) {
         case "notifiche":
             azione="notifiche";
         break;
+        
+        case "modulo_precompilato":
+            azione="modulo_precompilato";
+        break;
+        
     
     }
 
