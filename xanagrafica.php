@@ -323,13 +323,12 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                 </div>
                 
                 <div id="nomecognome">
-                    
                     <label for="cognome"><strong>Cognome</strong></label>
-                    <input type="text" name="cognome" id="cognome" onblur="ControlloCognome()" onfocus="FuocoCampoCognome()"  value="<?php print ($_POST["cognome"]); ?>" class="campoestratto" size="17"/>
+                    <input type="text" name="cognome" id="cognome" onblur="ControlloCognome()" onfocus="FuocoCampoCognome()"  value="<?php print ($_POST["cognome"]); ?>" class="campoestratto" />
                     &nbsp;&nbsp;
                     
                     <label for="nome"><strong>Nome</strong></label>
-                    <input type="text" name="nome" id="nome" onblur="ControlloNome()" onfocus="FuocoCampoNome()" value="<?php print ($_POST["nome"]); ?>" class="campoestratto" size="17" />
+                    <input type="text" name="nome" id="nome" onblur="ControlloNome()" onfocus="FuocoCampoNome()" value="<?php print ($_POST["nome"]); ?>" class="campoestratto" />
                     &nbsp;
                     
                     <strong>Sesso</strong> <strong>M</strong><input type="radio" name="sesso" id="sesso" value="M" 
@@ -343,19 +342,15 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                     if ($_POST["sesso"]=="F") {
                       echo("checked");
                     } ?> />
-                  
                   </div>                                                        
                    
                   <div id="datanascita">
-                      
                       <label for="data_nascita" id="dataNa"><strong>Data di nascita</strong></label>
-
                       <input type="text" name="data_nascita" id="dataN" onblur="ControlloDataNascita()" onfocus="FuocoCampoDataNascita()" value="<?php $data=$_POST["data_nascita"]; echo (ConvertiData($data)); ?>"  class="campoestratto" size="8" />
-                                           
                         &nbsp;
                         <label for="luogo" id="luogo"><strong>Nato/a a</strong></label>
                         <input type="text" name="natoa" id="natoa" size="35" onblur="ControlloNato()" onfocus="FuocoCampoNatoA()" value="<?php echo ($_POST["natoa"]); ?>" class="campoestratto" />
-                    </div>
+                  </div>
                     
                     <div id="imgdatanascita">
                     	<img src="./Immagini/peluche.png" alt="icona peluche" width="50" height="50" />                 	
@@ -374,7 +369,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                                 PopolaListaVie($via);
                             ?>
                         </select>
-                        <input type="text" name="indirizzo" id="indirizzo" size="38" onblur="ControlloIndirizzo()" onfocus="FuocoCampoIndirizzo()" value ="<?php print($_POST["indirizzo"]); ?>" class="campoestratto" />
+                        <input type="text" name="indirizzo" id="indirizzo" onblur="ControlloIndirizzo()" onfocus="FuocoCampoIndirizzo()" value ="<?php print($_POST["indirizzo"]); ?>" class="campoestratto" />
                         &nbsp;
                         
                         <label for="numero"><strong>Nr.</strong></label>
@@ -385,7 +380,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                         <input type="hidden" name="hdnIdcomunex" id="hdnIdcomune" value="<?php echo ($_POST["hdnIdcomune"]); ?>" />
                         <label for="comune" id="comune"><strong>Citt&agrave;/Comune</strong></label>
                        <input type="text" name="comune" id="miocomune" onkeyup="lookup_comuni(this.value);" onblur="fill_comuni();" onfocus="FuocoCampoComune()" onkeypress="RilevaTab(event);" class ="campoestratto" autocomplete="off" 
-                       value= "<?php echo ($_POST["comune"]); ?>" size="25" \>
+                       value= "<?php echo ($_POST["comune"]); ?>" \>
                        <div class="suggestionsBoxComuni" id="suggestions_comuni" style="display: none;">
         									<img src="./Immagini/upArrow.png" style="position: relative; top: -13px; left: 75px;" alt="" />
                           <div class="suggestionList" id="autoSuggestionsListComuni">
@@ -404,13 +399,13 @@ $idoperatore = $_SESSION['authenticated_user_id'];
 
                     <div id="email">
                         <label for="email"><strong>E-mail</strong></label>
-                        <input type="text" name="myemail" id="myemail" size="77" onblur="ControlloEmail()" onfocus="FuocoCampoEmail()" value ="<?php print($_POST["myemail"]); ?>" class="campoestratto"  />
+                        <input type="text" name="myemail" id="myemail" onblur="ControlloEmail()" onfocus="FuocoCampoEmail()" value ="<?php print($_POST["myemail"]); ?>" class="campoestratto"  />
                     </div>
                     
                     <div id="parrocchia">
                       <label for="parrocchia" id="idparrocchia"><strong>Parrocchia di provenienza</strong></label>
                       <input type="hidden" name="hdnIdParrocchia" id="hdnIdParrocchia" value="<?php echo ($_POST['hdnIdParrocchia']); ?>" />
-                      <input type="text" name="parrocchia" id="miaparrocchia" onkeyup="lookup_parrocchie(this.value);" onblur="fill_parrocchie();" onfocus="FuocoCampoParrocchia()" onkeypress="RilevaTab(event);" class ="campoestratto" autocomplete="off" value= "<?php GetNomeParrocchia(); ?>" size="57" \>
+                      <input type="text" name="parrocchia" id="miaparrocchia" onkeyup="lookup_parrocchie(this.value);" onblur="fill_parrocchie();" onfocus="FuocoCampoParrocchia()" onkeypress="RilevaTab(event);" class ="campoestratto" autocomplete="off" value= "<?php GetNomeParrocchia(); ?>" \>
                       <div class="suggestionsBoxParrocchie" id="suggestions_parrocchie" style="display: none;">
                           <img src="./Immagini/upArrow.png" style="position: relative; top: -13px; left: 50px;" alt="" />
         									<div class="suggestionList" id="autoSuggestionsListParrocchie">
@@ -472,7 +467,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
                   }
               ?>
           /> &nbsp;
-          <input type="button" value="Cancella Numeri" onClick="fncCancellaNumeroTelefono()" 
+          <input type="button" id="cancella_numeri" value="Cancella Numeri" onClick="fncCancellaNumeroTelefono()" 
               <?php
                   if (isset($_POST["hdnID"])) {
                       echo "enabled";
@@ -596,7 +591,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             
              <div id="quota_versata">
                 <label for="valore_quota" id="valore_quota" class="myfixedwidth"><strong>Quota versata</strong> </label>
-                <input type="text" name="quotaversata" id="myquotaversata" size="18" disabled value=<?php echo ($_POST["myaltraquota"]); ?> />
+                <input type="text" name="quotaversata" id="myquotaversata" disabled value=<?php echo ($_POST["myaltraquota"]); ?> />
                 <strong>&nbsp;&euro;</strong>
             </div>
             
@@ -685,10 +680,12 @@ $idoperatore = $_SESSION['authenticated_user_id'];
             </div>
             
             <div id="coro">
-                <input type="checkbox" name="chkCoro" id="chkCoro" value="1" <?php 
-                if ($_POST["chkCoro"]=="True") {
-                    echo("checked='checked'");
-                } ?> />
+                <input type="checkbox" name="chkCoro" id="chkCoro" value="1" 
+                <?php 
+                    if ($_POST["chkCoro"]=="True") {
+                        echo("checked='checked'");
+                    } 
+                ?> />
                 <label for="partecipacoro" id="partecipacoro"><strong>Coro</strong></label>
             </div>
 
@@ -820,7 +817,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
 
                 <div id="cognome_parente">
                     <label class="fixedwidth"><strong>Cognome e Nome parente:</strong></label>
-                    <input type="text" style="border: 1px dotted grey;" name="CognomeParente" id="CognomeParente" onkeyup="lookup_parentela(this.value);" onblur="fill_parentela();" onfocus="ResetCampoCognome()" onkeypress="RilevaTab(event);" autocomplete="off" size="41" value="<?php echo $_POST["CognomeParente"];?>" />
+                    <input type="text" style="border: 1px dotted grey;" name="CognomeParente" id="CognomeParente" onkeyup="lookup_parentela(this.value);" onblur="fill_parentela();" onfocus="ResetCampoCognome()" onkeypress="RilevaTab(event);" autocomplete="off" value="<?php echo $_POST["CognomeParente"];?>" />
                     &nbsp;
 								
                     <div class="suggestionsBoxParentela" id="suggestions_parentela" style="display: none;">
