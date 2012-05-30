@@ -219,12 +219,12 @@ function GetData($Data) {
         $scheda_sezione=$_POST["mysezione"];
         $scheda_partecipazione=$_POST["optPartecipa"];
         
-        if (isset($_POST["chkCoro"])) {
-            $scheda_coro="True";
+        if ($_POST["chkCoro"]) {
+            $scheda_coro='True';
         } else {
-            $scheda_coro="False";
+            $scheda_coro='False';
         }
-        
+       
         //$scheda_coro=$_POST["chkCoro"];
         //$scheda_ruolo=$_POST["myruolo"];
        
@@ -507,7 +507,7 @@ function GetData($Data) {
             
                 if ($scheda_coro !="") {
                   $insert.=",Coro";
-                  $value.=",'$scheda_coro'";
+                  $value.="',$scheda_coro'";
                 }  
                 
                 if ($scheda_ruolo > 0) {
@@ -643,7 +643,7 @@ function RicercaIscritti() {
           $_POST["chkCoro"]=($record->coro);
           $_POST['hdnIdParrocchia']=($record->parrocchia_provenienza);
     }
-
+        
     return;
 }
 
