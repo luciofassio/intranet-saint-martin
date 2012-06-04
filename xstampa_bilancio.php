@@ -52,19 +52,20 @@ function GetDatiSintetici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo, tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E'";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione),tblcontabilita.IdCapitolo, tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E'";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione
-                  HAVING tblcontabilita.Operazione='E'";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione),tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione
+                  HAVING tblcontabilita.Operazione='E' AND tblcontabilita.Contabilita='ER'";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita,
-            SUM(tblcontabilita.Importo) AS SubTotale,tblcapitolicontabilita.Capitolo,tblcapitolicontabilita.SiglaCapitolo
+            SUM(tblcontabilita.Importo) AS SubTotale,tblcapitolicontabilita.Capitolo,tblcapitolicontabilita.SiglaCapitolo,
+            tblcontabilita.DataOperazione 
             FROM tblcontabilita
             INNER JOIN tblcapitolicontabilita
             ON tblcontabilita.IdCapitolo=tblcapitolicontabilita.IdCapitolo".
             $filtro."
-            AND YEAR(tblcontabilita.DataOperazione)='".$_POST["annoBilancio"]."'
+            AND YEAR(tblcontabilita.DataOperazione)='".$_POST["annoBilancio"]."' 
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
     
     $result=mysql_query($query);
@@ -99,9 +100,10 @@ function GetDatiSintetici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U'";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione),tblcontabilita.IdCapitolo, tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U'";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U'";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione),tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione
+                  HAVING tblcontabilita.Operazione='U' AND tblcontabilita.Contabilita='ER'";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita, 
@@ -170,25 +172,29 @@ function GetDatiAnalitici(){
     // RECUPERA E VISUALIZZA LE ENTRATE
     // prepara il filtro
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' AND tblcontabilita.Contabilita='ER' ";
     }
     
     //ottiene il numero di voci per capitolo
-    $query="SELECT tblcontabilita.Operazione,tblcapitolicontabilita.SiglaCapitolo,Sum(tblcontabilita.Importo) as TotaleImportoVoci
+    $query="SELECT tblcontabilita.Operazione,tblcapitolicontabilita.SiglaCapitolo,Sum(tblcontabilita.Importo) as TotaleImportoVoci,
+            tblcontabilita.DataOperazione 
             FROM tblcontabilita
             INNER JOIN tblcapitolicontabilita
             ON tblcontabilita.IdCapitolo = tblcapitolicontabilita.IdCapitolo".
             $filtro."
+            AND Year(tblcontabilita.DataOperazione)=".$_POST['annoBilancio']." 
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
       
     $result=mysql_query($query);
     
-    // popola l'array con chiave la sigla del capitolo e valore il numero delle voci calcolate da mysql
-    while ($row=mysql_fetch_object($result)) {
-        $nrvoci[$row->SiglaCapitolo] = ($row->TotaleImportoVoci);
-    }      
+    if ($result) {
+        // popola l'array con chiave la sigla del capitolo e valore il numero delle voci calcolate da mysql
+        while ($row=mysql_fetch_object($result)) {
+            $nrvoci[$row->SiglaCapitolo] = ($row->TotaleImportoVoci);
+        }      
+    }
     
     echo "<table id=\"tblDatiAnaliticiEntrate\">";
     echo "<tr>";
@@ -196,9 +202,9 @@ function GetDatiAnalitici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdVoce,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdVoce,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='E' AND tblcontabilita.Contabilita='ER' ";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita,
@@ -261,27 +267,32 @@ function GetDatiAnalitici(){
     
      //RECUPERA E VISUALIZZA LE USCITE
     // prepara il filtro
+    // prepara il filtro
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdCapitolo,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdCapitolo,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' AND tblcontabilita.Contabilita='ER' ";
     }
     
     //ottiene il numero di voci per capitolo
-    $query="SELECT tblcontabilita.Operazione,tblcapitolicontabilita.SiglaCapitolo,Sum(tblcontabilita.Importo) as TotaleImportoVoci
+    $query="SELECT tblcontabilita.Operazione,tblcapitolicontabilita.SiglaCapitolo,Sum(tblcontabilita.Importo) as TotaleImportoVoci,
+            tblcontabilita.DataOperazione 
             FROM tblcontabilita
             INNER JOIN tblcapitolicontabilita
             ON tblcontabilita.IdCapitolo = tblcapitolicontabilita.IdCapitolo".
             $filtro."
+            AND Year(tblcontabilita.DataOperazione)=".$_POST['annoBilancio']." 
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
       
     $result=mysql_query($query);
     
-    // popola l'array con chiave la sigla del capitolo e valore il numero delle voci calcolate da mysql
-    while ($row=mysql_fetch_object($result)) {
-        $nrvoci[$row->SiglaCapitolo] = ($row->TotaleImportoVoci)*-1;
-    }      
-    
+    if ($result) {
+        // popola l'array con chiave la sigla del capitolo e valore il numero delle voci calcolate da mysql
+        while ($row=mysql_fetch_object($result)) {
+            $nrvoci[$row->SiglaCapitolo] = ($row->TotaleImportoVoci)*-1;
+        }      
+    }
+      
     echo str_repeat("<br />",3);
     echo "<table id=\"tblDatiAnaliticiUscite\">";
     echo "<tr>";
@@ -289,9 +300,9 @@ function GetDatiAnalitici(){
     echo "</tr>";
     
     if ($_POST["typeContabilita"]==1) {
-        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdVoce,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' ";
     } else {
-        $filtro=" GROUP BY tblcontabilita.IdVoce,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Contabilita='ER' AND tblcontabilita.Operazione='U' ";
+        $filtro=" GROUP BY Year(tblcontabilita.DataOperazione), tblcontabilita.IdVoce,tblcontabilita.Contabilita,tblcontabilita.Operazione HAVING tblcontabilita.Operazione='U' AND tblcontabilita.Contabilita='ER' ";
     }
     
     $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Operazione,tblcontabilita.Contabilita,
@@ -381,9 +392,9 @@ function GetDatiAnalitici(){
 function StampaMovimentiCassa(){
 
 if ($_POST["typeContabilita"]==1) {
-        $filtro="";
+        $filtro="WHERE Year(DataOperazione)=".$_POST['annoBilancio']." ";
     } else {
-        $filtro=" WHERE tblcontabilita.Contabilita='ER' ";
+        $filtro=" WHERE tblcontabilita.Contabilita='ER' AND Year(DataOperazione)=".$_POST['annoBilancio']." ";
     }
 
 $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Contabilita,tblcontabilita.IdCapitolo,tblcontabilita.IdVoce,

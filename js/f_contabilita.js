@@ -585,6 +585,7 @@ function VisualizzaDivVoci(stringa){
   
   switch (stringa) {
     case 'apri':
+        document.getElementById("EstrattoConto").style.visibility="hidden";
         document.getElementById("voci_capitoli").style.visibility="visible";
         
         // abilita l'apertura del div voci capitoli al caricamento di una nuova pagina
@@ -615,7 +616,8 @@ function VisualizzaDivVoci(stringa){
     
     case 'chiudi':
         document.getElementById("voci_capitoli").style.visibility="hidden";
-        
+        document.getElementById("EstrattoConto").style.visibility="visible";
+         
         // abilita i comandi della barra comandi
         var contabilita=document.getElementById("tipo_contabilita").disabled=false;
         var operazione=document.getElementsByName("optOperazione");

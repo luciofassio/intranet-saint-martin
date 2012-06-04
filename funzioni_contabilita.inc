@@ -235,34 +235,35 @@ function FiltraData ($mydata,$conversione) {
 //*************************************************************************************
 // funzione per costruire la tabella delle operazioni di contabilità
 function CostruisciEC ($TipoContabilita) {
-    // filtra la contabilita in base al tipo (ER/OR)
+    // filtra la contabilita in base al tipo (ER/OR) per calcolare il saldo
     if ($TipoContabilita=="ER") {
-        $filtro="HAVING Contabilita='".$TipoContabilita."' ";
+        $filtro="HAVING Contabilita='".$TipoContabilita."' AND Year(DataOperazione)=".date('Y')." ";
     } else {
-        $filtro="";
+        $filtro="HAVING Year(DataOperazione)=".date('Y')." ";
     }    
     
     // ottiene il saldo dell'estratto conto
     $query="SELECT Sum(Importo) AS Saldo
             FROM tblcontabilita
-            GROUP BY Contabilita ".$filtro;
-    
+            GROUP BY Contabilita,DataOperazione ".$filtro;
     
     $result=mysql_query($query);
     
-    // somma assieme i saldi delle due famiglie di contabilità (OR e ER)
-    while ($row=mysql_fetch_object($result)) {
-        $saldo+=($row->Saldo);
+    if ($result) { // per evitare un fastidioso warning/errore controlla che ci siano dei saldi da sommare
+        // somma assieme i saldi delle due famiglie di contabilità (OR e ER)
+        while ($row=mysql_fetch_object($result)) {
+            $saldo+=($row->Saldo);
+        }
     }
-    
+ 
     // per una migliore lettura formatta la cifra recuperata
-   $saldo=FormattaValuta($saldo);
-    
+        $saldo=FormattaValuta($saldo);
+ 
     // filtra la contabilita in base al tipo (ER/OR)
     if ($TipoContabilita=="ER") {
-        $filtro="WHERE Contabilita='".$TipoContabilita."' ";
+        $filtro="WHERE Contabilita='".$TipoContabilita."' AND Year(DataOperazione)=".date('Y')." ";
     } else {
-        $filtro="";
+        $filtro="WHERE Year(DataOperazione)=".date('Y')." ";
     }    
     
     // ottiene i dati dal database (dati per tabella) filtrati per contabilità
