@@ -507,7 +507,7 @@ function GetData($Data) {
             
                 if ($scheda_coro !="") {
                   $insert.=",Coro";
-                  $value.="',$scheda_coro'";
+                  $value.=",'$scheda_coro'";
                 }  
                 
                 if ($scheda_ruolo > 0) {
