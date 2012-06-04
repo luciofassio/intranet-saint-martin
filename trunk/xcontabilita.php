@@ -221,7 +221,7 @@ table.ec td.layoutECusc {
 #EstrattoConto {
       visibility: visible;
       position:absolute;
-      left: 28%;
+      left: 350px;
       top: 12%;
       width:625px;
       height:420px;
@@ -233,7 +233,7 @@ table.ec td.layoutECusc {
  /********************************************************************************/
   #voci_capitoli{
       position:absolute;
-      left: 28%;
+      left: 360px;
       top: 12%;
       width:625px;
       height:420px;
@@ -394,7 +394,7 @@ table.ec td.layoutECusc {
     
 <!-- SEZIONE BARRA DI NAVIGAZIONE -->
     <?php
-        $barra_di_navigazione="| <a href='homepage.php'>home page</a> |";
+        $barra_di_navigazione="| <a href='homepage.php'>menu principale</a> |";
         
         /*if ($_SESSION['access_level'] >2) {
             $barra_di_navigazione.=" <a href='xcestino.php'>visualizza cestino</a> |";
@@ -733,7 +733,21 @@ if ($_SESSION['access_level'] >3) {
         <span style="font-weight:bold;">Anno&nbsp;</span>
         
         <select name="annoBilancio" id="annoBilancio">
-            <option name="yearBilancio" id="yearBilancio" value="2011">2011</option>
+            <?php 
+                // ottiene gli anni archiviati per elaborare il bilancio
+                $query="SELECT Year(DataOperazione) AS Anno
+                        FROM tblcontabilita
+                        GROUP BY Year(DataOperazione)  
+                        ORDER BY Year(DataOperazione) DESC";
+                        
+                $anni=mysql_query($query);
+                
+                if ($anni) {
+                    while ($row=mysql_fetch_object($anni)) {
+                        echo "<option name=\"yearBilancio\" id=\"yearBilancio\" value=\"".$row->Anno."\">".$row->Anno."</option>";
+                    }
+                }
+            ?>
         </select>
         
         <p>
