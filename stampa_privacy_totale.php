@@ -105,6 +105,10 @@ ul {
   float: right;
 }
 
+#anagrafica{
+  
+}
+
 #pagina {
 	text-align: left;
 }
@@ -143,7 +147,7 @@ td.larghezzacella {
 }
 
 .tabella_anagrafica {
-  margin-top: -80px;
+  /*margin-top: -80px;*/
   border: 1px dotted grey;
   border-spacing: 0.5em 1em;
 }
@@ -397,6 +401,7 @@ global $modulo;
               ?> 
         </div>
         
+        <div id="anagrafica">
         <table class="tabella_anagrafica" border=0>
             <tr>
 				        <td>
@@ -592,9 +597,9 @@ global $modulo;
               </td>
           </tr>
       </table>
-      
+      </div>
             
-      
+      <div id="informativa">
       <p><h3>INFORMATIVA</h3></p>
 			
 			<p class="interlinea">In conformit&agrave; alla Legge
