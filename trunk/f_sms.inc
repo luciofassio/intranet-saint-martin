@@ -399,7 +399,7 @@ function PopolaClassi () {
     $colore[5]="black";
     $colore[6]="green";
     
-    $query="SELECT * FROM tblclassi";
+    $query="SELECT * FROM tblClassi";
     
     $result =mysql_query($query);
 
