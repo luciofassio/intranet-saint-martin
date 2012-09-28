@@ -93,14 +93,17 @@ switch ($_POST['azione']) {
 function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) {
     global $lista_totale; // è il numero di quanti sono stati trovati dalla ricerca parametrica
     
+    
     //calcola quando scade la tessera
-   // Ricordarsi che l'anno nuovo per l'oratorio inizia il 1° settembre.
+    $anno_scadenza_tessera=date("Y");
+  
+    /* Ricordarsi che l'anno nuovo per l'oratorio inizia il 1° settembre. 
     if (date("m")<9){ // se siamo prima di settembre
         $anno_scadenza_tessera=date("Y");
     } else { // se siamo dopo settembre
-        $anno_scadenza_tessera=date("Y")+1;
-    }
-    
+        //$anno_scadenza_tessera=date("Y")+1;
+    }*/
+
     /********************************************************************************************************
      * ho dovuto fare in due tempi la ricerca in base ai metodi stabiliti:
      * per classi, gruppi, ruoli, tesseramenti, partecipazione alle attività e al coro.
@@ -206,16 +209,16 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
         $campi++;
         if ($campi==1){
             if ($tesseramenti[0]=="1") {
-                $query.="WHERE (YEAR(Catechismi.DataScadenzaTessera)=".$anno_scadenza_tessera;
-                $query_ruoli.=" AND (YEAR(Catechismi.DataScadenzaTessera)=".$anno_scadenza_tessera;
+                $query.="WHERE (YEAR(Catechismi.DataScadenzaTessera)>=".$anno_scadenza_tessera;
+                $query_ruoli.=" AND (YEAR(Catechismi.DataScadenzaTessera)>=".$anno_scadenza_tessera;
             } else {
                 $query.="WHERE (ISNULL(YEAR(Catechismi.DataScadenzaTessera)) OR YEAR(Catechismi.DataScadenzaTessera)<".$anno_scadenza_tessera;
                 $query_ruoli.=" AND (ISNULL(YEAR(Catechismi.DataScadenzaTessera)) OR YEAR(Catechismi.DataScadenzaTessera)<".$anno_scadenza_tessera;
             }
         } else {
             if ($tesseramenti[0]=="1") {
-                $query.=" AND (YEAR(Catechismi.DataScadenzaTessera)=".$anno_scadenza_tessera;
-                $query_ruoli.=" AND (YEAR(Catechismi.DataScadenzaTessera)=".$anno_scadenza_tessera;
+                $query.=" AND (YEAR(Catechismi.DataScadenzaTessera)>=".$anno_scadenza_tessera;
+                $query_ruoli.=" AND (YEAR(Catechismi.DataScadenzaTessera)>=".$anno_scadenza_tessera;
             } else {
                 $query.=" AND (ISNULL(YEAR(Catechismi.DataScadenzaTessera)) OR YEAR(Catechismi.DataScadenzaTessera)<".$anno_scadenza_tessera;
                 $query_ruoli.=" AND (ISNULL(YEAR(Catechismi.DataScadenzaTessera)) OR YEAR(Catechismi.DataScadenzaTessera)<".$anno_scadenza_tessera;
