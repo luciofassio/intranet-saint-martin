@@ -131,14 +131,14 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
                           tblTelefoni.Prefisso,tblTelefoni.Numero
                           FROM Catechismi 
                           INNER JOIN tblTelefoni ON Catechismi.ID=tblTelefoni.ID  
-                          INNER JOIN tblanimatori ON Catechismi.ID=tblAnimatori.ID 
+                          INNER JOIN tblanimatori ON Catechismi.ID=tblanimatori.ID 
                           INNER JOIN tblruolioratorio ON tblanimatori.IDRuolo=tblruolioratorio.IdRuoloOratorio ";
                           
         for ($i=0;$i<sizeof($ruoli);$i++) {
             if ($i==0) {
-                $query_ruoli.="WHERE (tblAnimatori.IDRuolo=".$ruoli[$i];
+                $query_ruoli.="WHERE (tblanimatori.IDRuolo=".$ruoli[$i];
             } else {
-                $query_ruoli.=" OR tblAnimatori.IDRuolo=".$ruoli[$i];
+                $query_ruoli.=" OR tblanimatori.IDRuolo=".$ruoli[$i];
             }
         }
         $query_ruoli.=")";
@@ -146,9 +146,9 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
         if (sizeof($classi)>0){
           for ($i=0;$i<sizeof($classi);$i++) {
               if ($i==0) {
-                  $query_ruoli.=" AND (tblAnimatori.IDClasse=".$classi[$i];
+                  $query_ruoli.=" AND (tblanimatori.IDClasse=".$classi[$i];
               } else {
-                  $query_ruoli.=" OR tblAnimatori.IDClasse=".$classi[$i];
+                  $query_ruoli.=" OR tblanimatori.IDClasse=".$classi[$i];
               }
           }
           
