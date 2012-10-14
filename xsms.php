@@ -180,6 +180,16 @@ legend {
   height:410px;
   background: white;
 }
+
+/***************** REGOLE PER ATTESA DISPONIBILITA' SMS **************/
+#attesa_risposta_server_sms {
+  position:absolute;
+  color: violet;
+  top: 90px;
+  left:50%;
+  margin-left:-200px;
+  width:400px;
+}
 /******************* REGOLE PER MENU SMS    *******************/
 #menu_sms {
   visibility:hidden;
@@ -483,6 +493,10 @@ option {
     switch ($_GET['s']) {
         case 0: // menu principale dell'utility sms
             ?>
+            <div id="attesa_risposta_server_sms">
+                Attendi prego, sto verificando la disponibilit&agrave; di sms...
+            </div>
+            
             <div id="menu_sms">
                 <table class="scegli_tipo_invio_SMS" cellpadding="10">
                     <tr>
@@ -1090,11 +1104,15 @@ option {
               </td>
               <td class="esito"> 
                   <?php
+                    
+                      
                       // verifica se ci sono stati errori nel prendere in carico la spedizione
                       if (substr($result,0,2)=='OK') {
-                          echo "<span style='background:green;color:white;padding:2px;-moz-border-radius:7px;'>&nbsp;Presa in carico correttamente&nbsp;</span>";
+                          echo $result;
+                          //echo "<span style='background:green;color:white;padding:2px;-moz-border-radius:7px;'>&nbsp;Presa in carico correttamente&nbsp;</span>";
                       } else {
-                          echo "<span style='background:red;color:white;padding:2px;-moz-border-radius:7px;'>&nbsp;Non presa in carico per un errore durante il trasferimento dei dati&nbsp;</span>";
+                          echo $result;
+                          //echo "<span style='background:red;color:white;padding:2px;-moz-border-radius:7px;'>&nbsp;Non presa in carico per un errore durante il trasferimento dei dati&nbsp;</span>";
                     }
                 ?>
               </td>

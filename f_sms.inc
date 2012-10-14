@@ -38,6 +38,10 @@ switch ($_POST['azione']) {
           $ListaDestinatari=explode("|",$_POST['hdnListaDestinatari']);
       }
       
+      for ($i=0;$i<sizeof($ListaDestinatari);$i++) {
+          $rcpt["R".substr($ListaDestinatari[$i],3,strlen($ListaDestinatari[$i]))]=$ListaDestinatari[$i];
+      }
+            
       // ottiene il nome del mittente
       $from=$_POST['from'];
 
@@ -80,9 +84,12 @@ switch ($_POST['azione']) {
       } elseif (sizeof($ListaDestinatari)<2){
          // si invia soltanto il valore del primo elemento dell'array $ListaDestinatari
          $result = $sms->sendSms($ListaDestinatari[0], $_POST['sms_text2']);
+
       } else {
          // si invia tutto l'array $ListaDestinatari
-         $result = $sms->sendMultiSms($ListaDestinatari, $_POST['sms_text2']);
+         //$result = $sms->sendMultiSms($ListaDestinatari, $_POST['sms_text2']);
+         $result = $sms->sendMultiSms($rcpt, $_POST['sms_text2']);
+
       }
   break;
 }
@@ -155,7 +162,7 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
           $query_ruoli.=")";
         }
     }
-   
+    
     // controlla che ci siano gli elementi da poter filtrare e setta la variabile di serivizio $campi per indicare
     // che l'utente ha scelto di filtrare i dati in base alla classe
     if (sizeof($classi)>0){
@@ -185,23 +192,23 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
             if ($campi==1){
                 if ($i==0) {
                     $query.="WHERE (Catechismi.Sezione=".$gruppi[$i];
-                    $query_ruoli.=" AND (Catechismi.Sezione=".$gruppi[$i];
+                    $query_ruoli.=" AND (tblanimatori.IDSezione=".$gruppi[$i];
                 } else {
                     $query.=" OR Catechismi.Sezione=".$gruppi[$i];
-                    $query_ruoli.=" OR (Catechismi.Sezione=".$gruppi[$i];
+                    $query_ruoli.=" OR tblanimatori.IDSezione=".$gruppi[$i];
                 }
             } else {
                 if ($i==0) {
                     $query.=" AND (Catechismi.Sezione=".$gruppi[$i];
-                    $query_ruoli.=" AND (Catechismi.Sezione=".$gruppi[$i];
+                    $query_ruoli.=" AND (tblanimatori.IDSezione=".$gruppi[$i];
                 } else {
                     $query.=" OR Catechismi.Sezione=".$gruppi[$i];
-                    $query_ruoli.=" OR (Catechismi.Sezione=".$gruppi[$i];
+                    $query_ruoli.=" OR tblanimatori.IDSezione=".$gruppi[$i];
                 }
             }
         }
         $query.=")";
-         $query_ruoli.=")";
+        $query_ruoli.=")";
     }
     
     // controlla se l'utente vuole filtrare i dati anche con il campo tesseramenti
