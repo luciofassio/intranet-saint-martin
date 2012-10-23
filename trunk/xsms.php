@@ -184,11 +184,26 @@ legend {
 /***************** REGOLE PER ATTESA DISPONIBILITA' SMS **************/
 #attesa_risposta_server_sms {
   position:absolute;
-  color: violet;
-  top: 90px;
+  color: purple;
+  top: 180px;
   left:50%;
-  margin-left:-200px;
+  margin-left:-280px;
   width:400px;
+  height:50px;
+  border:1px dotted green;
+  text-align:center;
+  padding-top:25px;
+  font-weight:bold;
+}
+
+#termometro{
+  position:relative;
+  top:10px;
+  background-color:orange;
+  border-radius:7px;
+  height:10px;
+  width:30px;
+  margin-left:10px;
 }
 /******************* REGOLE PER MENU SMS    *******************/
 #menu_sms {
@@ -424,6 +439,23 @@ option {
 </head>
 
 <body>
+<?php 
+  // non sempre la risposta del server di Mobyt è veloce
+  // utile visualizare un messaggio di attesa
+  if (!isset($_POST["azione"]) || $_POST["azione"]=="menu") {
+    echo "<div id='attesa_risposta_server_sms'>\n";
+    echo "Verifica disponibilit&agrave; in corso...\n";
+    echo "<div id='termometro'></div>";
+    echo "</div>\n";
+    echo "<script>\n";
+    echo "var posizione=0;\n";
+    echo "var limite=365;\n";
+    echo "var inverti=false;\n";
+    echo "var p=setInterval('posizione=Termometro()',35)\n";
+    echo "</script>\n";
+  }
+
+?>
 <!-- SEZIONE INTESTAZIONE PAGINA. CONTIENE STRUTTURA PAGINA -->
         <div id="barratop">
             &nbsp;
@@ -489,14 +521,11 @@ option {
   <input type="hidden" name="azione" id="azione" value="<?php echo $_POST['azione'];?>" />
   <input type="hidden" name="hdnListaDestinatari" id="hdnListaDestinatari" value="<?php echo $_POST['hdnListaDestinatari'];?>" />
   <input type="hidden" name="hdnCreditoMessaggi" id="hdnCreditoMessaggi" value="<?php echo $_POST['hdnCreditoMessaggi'];?>" />
+
  <?php 
     switch ($_GET['s']) {
         case 0: // menu principale dell'utility sms
             ?>
-            <div id="attesa_risposta_server_sms">
-                Attendi prego, sto verificando la disponibilit&agrave; di sms...
-            </div>
-            
             <div id="menu_sms">
                 <table class="scegli_tipo_invio_SMS" cellpadding="10">
                     <tr>
@@ -653,6 +682,7 @@ option {
             </div>
             <?php
                 echo "<script>";
+                echo "document.getElementById('attesa_risposta_server_sms').setAttribute('style','visibility:hidden');\n";
                 echo "document.getElementById('menu_sms').setAttribute('style','visibility:visible');\n";
                 echo "</script>";
         break;
@@ -1104,8 +1134,6 @@ option {
               </td>
               <td class="esito"> 
                   <?php
-                    
-                      
                       // verifica se ci sono stati errori nel prendere in carico la spedizione
                       if (substr($result,0,2)=='OK') {
                           echo $result;

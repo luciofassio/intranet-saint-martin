@@ -92,6 +92,14 @@ switch ($_POST['azione']) {
 
       }
   break;
+  
+  default:
+      // non sempre la risposta del server di Mobyt è veloce
+     // utile visualizare un messaggio di attesa
+    /*echo "<div id='attesa_risposta_server_sms'>";
+    echo "Attendi prego, verifica disponibilit&agrave; in corso...";
+    echo "</div>";*/
+  break;
 }
 
 //*******************************************************************************************

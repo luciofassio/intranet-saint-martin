@@ -484,8 +484,6 @@ function ModificaTesto() {
     return;
 }
 
-
-
 //******************************************************
 //serve per fare il giochetto delle scritte lampeggianti...
 function CambiaColore(selezionati) {
@@ -497,4 +495,29 @@ function CambiaColore(selezionati) {
             testo.style.color="white";  
         }
 return;
+}
+
+//******************************************************
+//serve per fare il giochetto del cursore che vaga per lo schermo
+function Termometro (){
+var gauge=document.getElementById("termometro");
+
+// calcola la posizione per muovere il cursorino
+if (inverti) { // movimento indietro
+    if (posizione==0) {
+      inverti=false;
+    } else {
+        posizione-=5;
+    }
+} else { // movimento in avanti
+    if (posizione>limite) {
+        inverti=true;
+    } else {
+        posizione+=5;
+    }
+}
+
+gauge.setAttribute("style","margin-left:"+posizione+"px");
+
+return posizione;
 }
