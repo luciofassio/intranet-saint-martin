@@ -9,8 +9,8 @@ if (isset($_POST['hdnIDxTel'])) {
     $tipo_telefono=$_POST['tipo_phone'];
     
     $query="DELETE FROM tblTelefoni WHERE id=".$id_utente." AND idtipotelefono=".$tipo_telefono;
-    $result=mysql_query($query);
-    if (mysql_affected_rows()>0) {
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])>0) {
         echo ("<script type=\"text/javascript\">\n");
         echo ("alert(\"Il numero di telefono e\' stato cancellato dalla rubrica.\");\n");
         echo ("history.back();\n");

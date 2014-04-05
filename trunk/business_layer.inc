@@ -9,7 +9,7 @@ function CaricaEventi($evento, $arrEventiPersona) {
 	$rstEventi = GetEventi();
 	if (isset($rstEventi)) {
 		$eventi = "";
-		while ($rowEventi = mysql_fetch_object($rstEventi)) {
+		while ($rowEventi = mysqli_fetch_object($rstEventi)) {
 			$eventi .= "<option value=\"".$rowEventi->IDEvento."\"";
 			if (isset($arrEventiPersona)) {
 				// evidenzio gli eventi già prenotati
@@ -33,7 +33,7 @@ function CaricaEventi($evento, $arrEventiPersona) {
 function CaricaRuoli($ruolo) {
 	$rstRuoli = GetRuoli();
 	if ($rstRuoli) {
-		$rowRuoli = mysql_fetch_object($rstRuoli);
+		$rowRuoli = mysqli_fetch_object($rstRuoli);
 		$ruoli = "";
 		while ($rowRuoli) {
 			$ruoli .= "<option value=\"".$rowRuoli->IDRuolo."\"";
@@ -41,7 +41,7 @@ function CaricaRuoli($ruolo) {
 				$ruoli .= " selected ";
 			}
 			$ruoli .= ">".$rowRuoli->Ruolo."</option>";
-			$rowRuoli = mysql_fetch_object($rstRuoli);
+			$rowRuoli = mysqli_fetch_object($rstRuoli);
 		}
 	}
 	return $ruoli;
@@ -51,7 +51,7 @@ function CaricaRuoli($ruolo) {
 function CaricaClassi($classe) {
 	$rstClassi = GetClassi();
 	if ($rstClassi) {
-		$rowClassi = mysql_fetch_object($rstClassi);
+		$rowClassi = mysqli_fetch_object($rstClassi);
 		$Classi = "";
 		while ($rowClassi) {
 			$Classi .= "<option value=\"".$rowClassi->IDClasse."\"";
@@ -59,7 +59,7 @@ function CaricaClassi($classe) {
 				$Classi .= " selected ";
 			}
 			$Classi .= ">".$rowClassi->Classe."</option>";
-			$rowClassi = mysql_fetch_object($rstClassi);
+			$rowClassi = mysqli_fetch_object($rstClassi);
 		}
 	}
 	return $Classi;
@@ -69,7 +69,7 @@ function CaricaClassi($classe) {
 function CaricaGruppi($gruppo) {
 	$rstGruppi = GetGruppi();
 	if ($rstGruppi) {
-		$rowGruppi = mysql_fetch_object($rstGruppi);
+		$rowGruppi = mysqli_fetch_object($rstGruppi);
 		$Gruppi = "";
 		while ($rowGruppi) {
 			$Gruppi .= "<option value=\"".$rowGruppi->IDGruppo."\"";
@@ -77,7 +77,7 @@ function CaricaGruppi($gruppo) {
 				$Gruppi .= " selected=\"selected\" ";
 			}
 			$Gruppi .= ">".$rowGruppi->Gruppo."</option>";
-			$rowGruppi = mysql_fetch_object($rstGruppi);
+			$rowGruppi = mysqli_fetch_object($rstGruppi);
 		}
 	}
 	return $Gruppi;
@@ -86,7 +86,7 @@ function CaricaGruppi($gruppo) {
 function CaricaListino($IDRuolo, $IDEvento) {
 	$rstListino = GetListinoByRuoloER($IDRuolo, $IDEvento);
 	if($rstListino) {
-		$rowListino = mysql_fetch_object($rstListino);
+		$rowListino = mysqli_fetch_object($rstListino);
 		$listino = "";
 		while ($rowListino) {
 			$listino .= "<span id=\"prezzoIscrizione\" style=\"float:right\" >".number_format($rowListino->Iscrizione, 2, ',', '.')."</span><br/>";
@@ -97,7 +97,7 @@ function CaricaListino($IDRuolo, $IDEvento) {
 			$listino .= "<span id=\"prezzoAbbCena\" style=\"float:right\" >".number_format($rowListino->AbbonamentoCena, 2, ',', '.')."</span><br/>";
 			$listino .= "<span id=\"prezzoAbbPranzoCena\" style=\"float:right\" >".number_format($rowListino->AbbonamentoPranzoCena, 2, ',', '.')."</span><br/>";
 			$listino .= "<span id=\"prezzoEventoSpecialeER\" style=\"float:right\" >".number_format($rowListino->EventoSpecialeER, 2, ',', '.')."</span><br/>";
-			$rowListino = mysql_fetch_object($rstListino);
+			$rowListino = mysqli_fetch_object($rstListino);
 		}
 	}
 	return $listino;

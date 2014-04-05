@@ -25,7 +25,7 @@ if (isset($_POST['hdnIDxTel'])) {
           // La pone a false su tutti i numeri di telefono per impedire che ci sia più di un numero abilitato)
           if ($change_sms=="true") {
             $query="UPDATE tblTelefoni SET telsms=0 WHERE id=".$id_utente;
-            $result=mysql_query($query);
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
           }
          
          // aggiorna il numero di telefono dell'utente selezionato
@@ -35,9 +35,9 @@ if (isset($_POST['hdnIDxTel'])) {
             $query="UPDATE tblTelefoni SET prefisso='".$prefisso_nazionale."', numero='".$numero_phone."', telsms=".$sms.", idtipotelefono=".$change_tipo_value." WHERE id=".$id_utente." AND idtipotelefono=".$tipo_telefono;
         }
         
-        $result=mysql_query($query);
+        $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
         // controlla che l'aggiornamento sia avvenuto con successo
-        if (mysql_affected_rows() > 0) {
+        if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) > 0) {
             echo ("<script type=\"text/javascript\">\n");
             echo ("alert(\"L\'aggiornamento del numero di telefono è avvenuto con successo.\");\n");
             echo ("history.back();\n");
@@ -53,9 +53,9 @@ if (isset($_POST['hdnIDxTel'])) {
     
     //controlla che il numero di telefono non sia già inserito in archivio
     $query="SELECT idtelefono, id, prefisso, numero, idtipotelefono,telsms FROM tblTelefoni WHERE id=".$id_utente." AND prefisso=".$prefisso_nazionale." AND numero=".$numero_phone;
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    if (mysql_num_rows($result)>0) {
+    if (mysqli_num_rows($result)>0) {
       echo ("<script type=\"text/javascript\">\n");
       echo ("alert(\"Attenzione! Il numero che stai cercando di inserire e\' gia\' presente in rubrica.\");\n");
       echo ("history.back();\n");
@@ -65,12 +65,12 @@ if (isset($_POST['hdnIDxTel'])) {
           // per impedire che ci sia più di un numero abilitato)
           if ($change_sms=="true") {
             $query="UPDATE tblTelefoni SET telsms=0 WHERE id=".$id_utente;
-            $result=mysql_query($query);
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
           }
           // salva (finalmente) il numero di telefono in archivio
           $query="INSERT INTO tblTelefoni (id,prefisso,numero,idtipotelefono,telsms) VALUES (".$id_utente.",'".$prefisso_nazionale."','".$numero_phone."',".$tipo_telefono.",".$sms.")";
-	        $result=mysql_query($query);
-	        if (mysql_affected_rows()>0) {
+	        $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+	        if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])>0) {
             /* echo ("<script type=\"text/javascript\">\n");
             echo ("alert(\"Il numero di telefono e\' stato inserito in rubrica.\");\n");
             echo ("history.back();\n");

@@ -501,7 +501,7 @@ option {
 <!-- SEZIONE OPERATORE CONNESSO -->
      <?php
         $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-        $row = mysql_fetch_object($result);
+        $row = mysqli_fetch_object($result);
         $operatore=htmlentities($row->Nome).' '.htmlentities($row->Cognome);
      ?>
      <div id="myoperatore">

@@ -68,12 +68,12 @@ function GetDatiSintetici(){
             AND YEAR(tblcontabilita.DataOperazione)='".$_POST["annoBilancio"]."' 
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
      
     if ($result) {
-        $righe=mysql_num_rows($result);
+        $righe=mysqli_num_rows($result);
         if ($righe >0) {
-            while ($row=mysql_fetch_object($result)) {
+            while ($row=mysqli_fetch_object($result)) {
                 $grantotale_entrate+=$row->SubTotale;
                 echo "<tr>";
                 echo "<td class=\"sx\">".htmlentities($row->SiglaCapitolo)."</td>";
@@ -115,12 +115,12 @@ function GetDatiSintetici(){
             AND YEAR(tblcontabilita.DataOperazione)='".$_POST["annoBilancio"]."'
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
      
     if ($result) {
-        $righe=mysql_num_rows($result);
+        $righe=mysqli_num_rows($result);
         if ($righe >0) {
-            while ($row=mysql_fetch_object($result)) {
+            while ($row=mysqli_fetch_object($result)) {
                 $grantotale_uscite+=($row->SubTotale)*-1;
                 echo "<tr>";
                 echo "<td class=\"sx\">".htmlentities($row->SiglaCapitolo)."</td>";
@@ -187,11 +187,11 @@ function GetDatiAnalitici(){
             AND Year(tblcontabilita.DataOperazione)=".$_POST['annoBilancio']." 
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
       
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) {
         // popola l'array con chiave la sigla del capitolo e valore il numero delle voci calcolate da mysql
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             $nrvoci[$row->SiglaCapitolo] = ($row->TotaleImportoVoci);
         }      
     }
@@ -219,15 +219,15 @@ function GetDatiAnalitici(){
             AND YEAR(tblcontabilita.DataOperazione)='".$_POST["annoBilancio"]."'
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
       
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
       
       if ($result) {
-          $righe=mysql_num_rows($result);
+          $righe=mysqli_num_rows($result);
           if ($righe>0) {
               $voci=0;
               $current_chapter="";
               
-              while ($row=mysql_fetch_object($result)) {
+              while ($row=mysqli_fetch_object($result)) {
                   $grantotale_entrate+=($row->SubTotale);
                   $voci++;
                   
@@ -284,11 +284,11 @@ function GetDatiAnalitici(){
             AND Year(tblcontabilita.DataOperazione)=".$_POST['annoBilancio']." 
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
       
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) {
         // popola l'array con chiave la sigla del capitolo e valore il numero delle voci calcolate da mysql
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             $nrvoci[$row->SiglaCapitolo] = ($row->TotaleImportoVoci)*-1;
         }      
     }
@@ -317,15 +317,15 @@ function GetDatiAnalitici(){
             AND YEAR(tblcontabilita.DataOperazione)='".$_POST["annoBilancio"]."'
             ORDER BY tblcapitolicontabilita.SiglaCapitolo";
       
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
       
       if ($result) {
-          $righe=mysql_num_rows($result);
+          $righe=mysqli_num_rows($result);
           if ($righe>0) {
               $voci=0;
               $current_chapter="";
               
-              while ($row=mysql_fetch_object($result)) {
+              while ($row=mysqli_fetch_object($result)) {
                   $grantotale_uscite+=($row->SubTotale)*-1;
                   $voci++;
                   
@@ -407,7 +407,7 @@ $query="SELECT tblcontabilita.DataOperazione,tblcontabilita.Contabilita,tblconta
         $filtro
         ORDER BY tblcontabilita.DataOperazione DESC,tblcapitolicontabilita.SiglaCapitolo";
         
-$result=mysql_query($query);
+$result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
 if (result) {
     echo "<table id=\"table_movimentazione_cassa\">";
@@ -420,7 +420,7 @@ if (result) {
     print "<th width=\"17%\">USCITA</th>";
     print "</tr>";
   
-  while ($row=mysql_fetch_object($result)) {
+  while ($row=mysqli_fetch_object($result)) {
       echo "<tr>";
       echo "<td class=\"sx\" width=\"18%\">".FiltraData($row->DataOperazione,"DaMysql")."</td>";
       echo "<td class=\"sx\" width=\"2%\">".$row->Contabilita."</td>";

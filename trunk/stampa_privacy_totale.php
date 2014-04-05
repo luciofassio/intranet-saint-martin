@@ -243,13 +243,13 @@ if ($copie > 0) {
   		$rstTesserati = GetTesserati($_POST["anno"], $_POST["gruppi"]);
   	}
 	if($rstTesserati) {
-		if(mysql_num_rows($rstTesserati) > 0) {
-      while ($rowTesserati = mysql_fetch_object($rstTesserati)){
+		if(mysqli_num_rows($rstTesserati) > 0) {
+      while ($rowTesserati = mysqli_fetch_object($rstTesserati)){
         $idPersona = $rowTesserati->ID;
 				$rstPersona = GetPersonaPrivacy($idPersona);
 				if($rstPersona) {
-					if(mysql_num_rows($rstPersona) > 0) {
-						$row = mysql_fetch_object($rstPersona);
+					if(mysqli_num_rows($rstPersona) > 0) {
+						$row = mysqli_fetch_object($rstPersona);
 						$nome = htmlentities($row->Nome);
 						$cognome = htmlentities($row->Cognome);
 						if (htmlentities($row->Tipo_via) =="" || htmlentities($row->Via) == "") {
@@ -289,8 +289,8 @@ if ($copie > 0) {
 				$cellulare_ragazzo="";
         $rstCellularePersonaleID = GetCellularePersonaleID($idPersona,3);
 				if($rstCellularePersonaleID) {
-					if(mysql_num_rows($rstCellularePersonaleID) > 0) {
-						$row = mysql_fetch_object($rstCellularePersonaleID);
+					if(mysqli_num_rows($rstCellularePersonaleID) > 0) {
+						$row = mysqli_fetch_object($rstCellularePersonaleID);
 						if (($row->Prefisso).($row->Numero)!="") {
               $cellulare_ragazzo = htmlentities($row->Prefisso."/".$row->Numero);
 					  } 
@@ -301,8 +301,8 @@ if ($copie > 0) {
 				$cellulare_mamma="";
 				$rstCellularePersonaleID = GetCellularePersonaleID($idPersona,4);
 				if($rstCellularePersonaleID) {
-					if(mysql_num_rows($rstCellularePersonaleID) > 0) {
-						$row = mysql_fetch_object($rstCellularePersonaleID);
+					if(mysqli_num_rows($rstCellularePersonaleID) > 0) {
+						$row = mysqli_fetch_object($rstCellularePersonaleID);
             if (($row->Prefisso).($row->Numero)!="") {
               $cellulare_mamma = htmlentities($row->Prefisso."/".$row->Numero);
 					  } 
@@ -313,8 +313,8 @@ if ($copie > 0) {
 				$cellulare_padre="";
         $rstCellularePersonaleID = GetCellularePersonaleID($idPersona,5);
 				if($rstCellularePersonaleID) {
-					if(mysql_num_rows($rstCellularePersonaleID) > 0) {
-						$row = mysql_fetch_object($rstCellularePersonaleID);
+					if(mysqli_num_rows($rstCellularePersonaleID) > 0) {
+						$row = mysqli_fetch_object($rstCellularePersonaleID);
 						if (($row->Prefisso).($row->Numero)!="") {
               $cellulare_padre = htmlentities($row->Prefisso."/".$row->Numero);
 					  } 
@@ -744,9 +744,9 @@ function GetTesserati($anno, $gruppo)
 	$sql .= "ORDER BY Classe,Cognome,Nome";
 	$sql = sprintf($sql, $anno, $gruppo);
 	
-	$result = mysql_query($sql);
-  if (mysql_errno() <> 0) {
-		throw new Exception("GetTesserati: ".mysql_errno().":".mysql_error());
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+  if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("GetTesserati: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 		exit();
 	}  
     return $result;
@@ -756,9 +756,9 @@ function GetTesseratiByID($ID)
 	$sql = "SELECT ID FROM Catechismi WHERE ID=%1\$s AND Cancellato=false";
 	$sql = sprintf($sql, $ID);
 	
-	$result = mysql_query($sql);
-	if (mysql_errno() <> 0) {
-		throw new Exception("GetTesseratiByID: ".mysql_errno().":".mysql_error());
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("GetTesseratiByID: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 		exit();
 	}  
     return $result;
@@ -776,10 +776,10 @@ function GetParentela($ID) {
           AND IdGradoParentela>2 
           ORDER BY Catechismi.Nome";
 
-    $result_parentela=mysql_query($query) or die("Ops! Problemi con questa query <br><br>".$query);
+    $result_parentela=mysqli_query($GLOBALS["___mysqli_ston"], $query) or die("Ops! Problemi con questa query <br><br>".$query);
     
     if ($result_parentela) {
-        while ($row=mysql_fetch_object($result_parentela)) {
+        while ($row=mysqli_fetch_object($result_parentela)) {
             if ($row->IdFamigliare!=$ID) {
                 $parentela.=htmlentities($row->Nome)." (".$row->Sigla.") ";
             }

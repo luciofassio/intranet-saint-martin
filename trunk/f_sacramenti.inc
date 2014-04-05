@@ -87,9 +87,9 @@ function RicercaIscritti($ID,$sacramento) {
             WHERE ID=".$ID;
      
             
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    $row=mysql_fetch_object($result);
+    $row=mysqli_fetch_object($result);
     $_POST["txtCognome"]=htmlentities($row->Cognome);
     $_POST["txtNome"]=htmlentities($row->Nome);
     
@@ -100,10 +100,10 @@ function RicercaIscritti($ID,$sacramento) {
             AND tblsacramenti.SCR=".$sacramento;
     
     // il risultato
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) {
-        $row=mysql_fetch_object($result);
+        $row=mysqli_fetch_object($result);
         $_POST["data_battesimo"]=ConvertiData($row->DataBattesimo);
         $_POST["parrocchia_battesimo"]=htmlentities($row->ParrocchiaBattesimo);
         //$_POST["hdnIdParrocchia"]=$row->IDParrocchiaBattesimo;
@@ -123,7 +123,7 @@ function RicercaIscritti($ID,$sacramento) {
         $_POST["data_iscrizione"]=ConvertiData($row->DataIscrizione);
         $_POST["note"]=htmlentities($row->Note);
         
-        $trovati=mysql_num_rows($result);
+        $trovati=mysqli_num_rows($result);
     } else {
         $trovati=0;
     }
@@ -138,12 +138,12 @@ function GetDataSacramento($sezione){
   global $sacramento;
   $query="SELECT * FROM tblgruppisacramenti WHERE YEAR(GruppoSacramento)=".date("Y")." AND SCR=".$sacramento; //.$_GET["scr"];
   
-  $result=mysql_query($query);
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   if ($sezione=="scheda") {
       echo "<option value='0'>******************</option>";
   }
 
-  while ($row=mysql_fetch_object($result)){
+  while ($row=mysqli_fetch_object($result)){
       $data=(substr($row->GruppoSacramento,0,10));
       $ora=(substr($row->GruppoSacramento,11,5));
       $data_restituzione=$row->DataRestituzione;
@@ -355,9 +355,9 @@ function SalvaScheda() {
     } 
     
     // manda la query costruita a Mysql (della serie io speriamo che me la cavo...)
-    mysql_query("START TRANSACTION");
-    $result=mysql_query($query) || die("Ops! Ho avuto un problema con questa query -> ".$query);
-    mysql_query("COMMIT");
+    mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die("Ops! Ho avuto un problema con questa query -> ".$query);
+    mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
 
     return;
 }
@@ -386,9 +386,9 @@ function EliminaScheda($id,$scr) {
   
   $query="DELETE FROM tblsacramenti WHERE ID=".$id." AND SCR=".$scr;
   
-  mysql_query("START TRANSACTION");
-  $result=mysql_query($query);
-  mysql_query("COMMIT");
+  mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+  mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
   
   return;
 }
@@ -406,9 +406,9 @@ function ElaboraGruppi($azione,$sacramento) {
                     WHERE GruppoSacramento='".$gruppo_sacramento."' 
                     AND SCR=".$sacramento;
             
-            $result=mysql_query($query);
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-            if (mysql_num_rows($result)>0){
+            if (mysqli_num_rows($result)>0){
                 unset ($_POST["ora_gruppo"]);
                 unset ($_POST["data_gruppo"]);
                 return;
@@ -438,16 +438,16 @@ function ElaboraGruppi($azione,$sacramento) {
         break;
     }
     
-    mysql_query("START TRANSACTION");
+    mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
     
     // aggiorna il campo gruppo a chi appartiene al gruppo che viene cancellato
     if ($azione=="rimuovi_gruppo") {
-        $result=mysql_query($query_tblsacramenti);
+        $result=mysqli_query($GLOBALS["___mysqli_ston"], $query_tblsacramenti);
     }
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
         
-     mysql_query("COMMIT");
+     mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
     return; 
 }
 ?>

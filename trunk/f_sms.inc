@@ -287,13 +287,13 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
     $query_ruoli.="  AND (tblTelefoni.TelSMS=1) ORDER BY Catechismi.Classe,Catechismi.Cognome,Catechismi.Nome";
     
     if (sizeof($ruoli)>0) {
-        $result_ruoli=mysql_query($query_ruoli);
+        $result_ruoli=mysqli_query($GLOBALS["___mysqli_ston"], $query_ruoli);
         
         if ($result_ruoli) {
-            $lista_totale=mysql_num_rows($result_ruoli);
+            $lista_totale=mysqli_num_rows($result_ruoli);
         }
         
-        while ($row_ruoli=mysql_fetch_object($result_ruoli)) {
+        while ($row_ruoli=mysqli_fetch_object($result_ruoli)) {
             if ($row_ruoli->PrefissoInt==null || $row_ruoli->PrefissoInt=="") {
                 $prefisso_internazionale="+39";
             } else {
@@ -314,13 +314,13 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
         }
         // controlla se l'utente vuole soltanto i ruoli di una determinata classe
         if (!$_POST['chkDellaClasse'] && sizeof($classi)!=0) {
-            $result=mysql_query($query);
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
             
             if ($result) {
-                $lista_totale+=mysql_num_rows($result);
+                $lista_totale+=mysqli_num_rows($result);
             }
             
-            while ($row=mysql_fetch_object($result)) {
+            while ($row=mysqli_fetch_object($result)) {
                 if ($row_ruoli->PrefissoInt==null || $row_ruoli->PrefissoInt=="") {
                 $prefisso_internazionale="+39";
                 } else {
@@ -341,13 +341,13 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
         }
         
     } else {
-          $result=mysql_query($query);
+          $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
            
            if ($result) {
-                $lista_totale+=mysql_num_rows($result);
+                $lista_totale+=mysqli_num_rows($result);
             }
           
-          while ($row=mysql_fetch_object($result)) {
+          while ($row=mysqli_fetch_object($result)) {
              if ($row_ruoli->PrefissoInt==null || $row_ruoli->PrefissoInt=="") {
                 $prefisso_internazionale="+39";
                 } else {
@@ -376,11 +376,11 @@ function FiltraDati($classi,$gruppi,$ruoli,$tesseramenti,$partecipazione,$coro) 
 function PopolaRuoli() {
     $query="SELECT * FROM tblruolioratorio";
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) {
         echo "<table id=\"tblRuoli\" border=0>\n";
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             if ($row->IdRuoloOratorio!=1) {
                 echo "<tr>";
                 echo "<td>";
@@ -419,7 +419,7 @@ function PopolaClassi () {
     
     $query="SELECT * FROM tblClassi";
     
-    $result =mysql_query($query);
+    $result =mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
     if ($result) {
         echo "<table id=\"tblClassi\" border=0>\n";
@@ -427,7 +427,7 @@ function PopolaClassi () {
         // popola l'array classi con i valori salvati nel db. Ha la chiave (indice)
         // con l'id della classe e il valore con il nome della classe.
         // Tutto questo per impaginare su due colonne i valori della tabella tblClassi
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
           $classi[$row->IDClasse]=$row->Classe;
         }  
         
@@ -543,9 +543,9 @@ function TrovaClasse($classi) {
           }
       }
 
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
-      while ($row=mysql_fetch_object($result)) {
+      while ($row=mysqli_fetch_object($result)) {
           $classe.=$row->Sigla."&nbsp;";
       }
  } else {
@@ -566,9 +566,9 @@ function TrovaGruppo($gruppi) {
           }
       }
 
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
-      while ($row=mysql_fetch_object($result)) {
+      while ($row=mysqli_fetch_object($result)) {
           $gruppo.="&nbsp;".substr(strtoupper($row->Sezione),0,3);
       }
  } 
@@ -587,9 +587,9 @@ function TrovaRuolo($ruoli) {
           }
       }
 
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
-      while ($row=mysql_fetch_object($result)) {
+      while ($row=mysqli_fetch_object($result)) {
           $ruolo.=$row->Sigla."&nbsp;";
       }
  } 

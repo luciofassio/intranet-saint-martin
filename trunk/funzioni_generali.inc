@@ -290,7 +290,7 @@ function SelectCSS($nomeCSS) {
 // resultset		resultset MySql
 function ResultSet2Array($resultset) {
 	if(isset($resultset)) {
-		while ($row = mysql_fetch_array($resultset)) {
+		while ($row = mysqli_fetch_array($resultset)) {
 		       $fields[] = $row;
 		}
 		return $fields;

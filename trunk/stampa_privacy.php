@@ -8,8 +8,8 @@ if ($_GET["id"] != "") {
 	ConnettiDB();
 	$rstPersona = GetPersonaPrivacy($_GET["id"]);
 	if($rstPersona) {
-		if(mysql_num_rows($rstPersona) > 0) {
-			$row = mysql_fetch_object($rstPersona);
+		if(mysqli_num_rows($rstPersona) > 0) {
+			$row = mysqli_fetch_object($rstPersona);
 			$nome = htmlentities($row->Nome);
 			$cognome = htmlentities($row->Cognome);
 			$indirizzo = htmlentities($row->Tipo_via)." ".htmlentities($row->Via).", ".htmlentities($row->numero_civico)." ".htmlentities($row->CAP)." ".htmlentities($row->Citt)." (".htmlentities($row->Provincia).")";
@@ -29,8 +29,8 @@ if ($_GET["id"] != "") {
 	}
 	$rstCellulareSMS = GetCellulareSMSByID($_GET["id"]);
 	if($rstCellulareSMS) {
-		if(mysql_num_rows($rstCellulareSMS) > 0) {
-			$row = mysql_fetch_object($rstCellulareSMS);
+		if(mysqli_num_rows($rstCellulareSMS) > 0) {
+			$row = mysqli_fetch_object($rstCellulareSMS);
 			$cellulare = htmlentities($row->Prefisso."/".$row->Numero);
 		}
 	}

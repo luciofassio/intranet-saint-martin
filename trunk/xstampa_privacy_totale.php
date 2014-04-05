@@ -81,13 +81,13 @@ table {
 
 <?php
 if($rstTesserati) {
-	if(mysql_num_rows($rstTesserati) > 0) {
-		while ($rowTesserati = mysql_fetch_object($rstTesserati)){
+	if(mysqli_num_rows($rstTesserati) > 0) {
+		while ($rowTesserati = mysqli_fetch_object($rstTesserati)){
 			$idPersona = $rowTesserati->ID;
 			$rstPersona = GetPersonaPrivacy($idPersona);
 			if($rstPersona) {
-				if(mysql_num_rows($rstPersona) > 0) {
-					$row = mysql_fetch_object($rstPersona);
+				if(mysqli_num_rows($rstPersona) > 0) {
+					$row = mysqli_fetch_object($rstPersona);
 					
 					$nome = htmlentities($row->Nome);
 					
@@ -124,8 +124,8 @@ if($rstTesserati) {
 			
 			$rstCellularePersonaleID = GetCellularePersonaleID($idPersona);
 			if($rstCellularePersonaleID) {
-				if(mysql_num_rows($rstCellularePersonaleID) > 0) {
-					$row = mysql_fetch_object($rstCellularePersonaleID);
+				if(mysqli_num_rows($rstCellularePersonaleID) > 0) {
+					$row = mysqli_fetch_object($rstCellularePersonaleID);
 					$cellulare_personale = htmlentities($row->Prefisso."/".$row->Numero);
 				}
 			}			
@@ -133,8 +133,8 @@ if($rstTesserati) {
 			
 			$rstCellulareSMS = GetCellulareSMSByID($idPersona);
 			if($rstCellulareSMS) {
-				if(mysql_num_rows($rstCellulareSMS) > 0) {
-					$row = mysql_fetch_object($rstCellulareSMS);
+				if(mysqli_num_rows($rstCellulareSMS) > 0) {
+					$row = mysqli_fetch_object($rstCellulareSMS);
 					$cellulare = htmlentities($row->Prefisso."/".$row->Numero);
 				}
 			}
@@ -288,9 +288,9 @@ function GetTesserati($anno)
 	$sql = "SELECT ID FROM Catechismi WHERE YEAR(DataTesseramento) = %1\$s AND Classe > 14 ORDER BY Classe,Cognome,Nome";
 	$sql = sprintf($sql, $anno);
 	
-	$result = mysql_query($sql);
-	if (mysql_errno() <> 0) {
-		throw new Exception("GetTesserati: ".mysql_errno().":".mysql_error());
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("GetTesserati: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 		exit();
 	}  
     return $result;

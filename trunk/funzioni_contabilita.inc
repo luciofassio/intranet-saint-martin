@@ -47,7 +47,7 @@ function EliminaOperazione() {
     
     foreach ($movimentazione as $valore) {
         $query="DELETE FROM tblcontabilita WHERE IdContabilita=".$valore;  
-        mysql_query($query) || die ($query);
+        mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
     }
     ResetVociCapitoli();
     return;
@@ -57,9 +57,9 @@ function EliminaOperazione() {
 function ModificaOperazione() {
     $query="SELECT * FROM tblcontabilita WHERE IdContabilita=".$_POST["mymodificaoperazione"];
 
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    $row=mysql_fetch_object($result);
+    $row=mysqli_fetch_object($result);
     
     $_POST["tipo_contabilita"]=$row->Contabilita;
     $_POST["optOperazione"]=$row->Operazione;
@@ -97,8 +97,8 @@ function SalvaOperazione($azione) {
   
   // ottiene l'Id del capitolo in base alla voce da salvare in contabilita 
   $query="SELECT IdCapitolo FROM tblvocicontabilita WHERE IdVoci=".$IdVoce;
-  $result =mysql_query($query);
-  $row=mysql_fetch_object($result);
+  $result =mysqli_query($GLOBALS["___mysqli_ston"], $query);
+  $row=mysqli_fetch_object($result);
   $IdCapitolo=$row->IdCapitolo;
   
   // ottiene l'operazione da compiere
@@ -139,11 +139,11 @@ function SalvaOperazione($azione) {
   
   
   
-  mysql_query("START TRANSACTION");
+  mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
   
-  $result=mysql_query($query) || die($query);
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die($query);
   
-  mysql_query("COMMIT");
+  mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
  
   ResetVociCapitoli();
   return;
@@ -247,11 +247,11 @@ function CostruisciEC ($TipoContabilita) {
             FROM tblcontabilita
             GROUP BY Contabilita,DataOperazione ".$filtro;
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) { // per evitare un fastidioso warning/errore controlla che ci siano dei saldi da sommare
         // somma assieme i saldi delle due famiglie di contabilità (OR e ER)
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             $saldo+=($row->Saldo);
         }
     }
@@ -273,7 +273,7 @@ function CostruisciEC ($TipoContabilita) {
             INNER JOIN tblvocicontabilita
             ON tblcontabilita.IdVoce = tblvocicontabilita.IdVoci ".$filtro."
             ORDER BY tblcontabilita.DataOperazione DESC,tblcontabilita.IdCapitolo";
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     // stampa la tabella
     print "<tr>";
@@ -304,7 +304,7 @@ function CostruisciEC ($TipoContabilita) {
     
     // CALCOLA E VISUALIZZA IL NUMERO DELLE PAGINE IN BASE AL NUMERO DELLE OPERAZIONI VISUALIZZATE
     $nrelementi_pagina=11; // setta il numero massimo di elementi da visualizzare per "pagina" di tabella
-    $righe_da_visualizzare=mysql_num_rows($result);
+    $righe_da_visualizzare=mysqli_num_rows($result);
     
     $valore=($righe_da_visualizzare/$nrelementi_pagina); // trova il numero "grezzo" di pagine da visualizzare 
         
@@ -337,13 +337,13 @@ function CostruisciEC ($TipoContabilita) {
 
             $posizione=($_POST["nrpagina"]-1)*$nrelementi_pagina;
             
-            mysql_data_seek($result,$posizione);
+            mysqli_data_seek($result, $posizione);
         }
         
         $indice=0; // inizializza la variabile di controllo per il numero degli elementi da pubblicare per pagina
 
     // stampa la tabella con i dati trovati
-    while ($row=mysql_fetch_object($result)) {
+    while ($row=mysqli_fetch_object($result)) {
         // controlla che nella costruzione della tabella non venga superato il numero degli elementi consentiti
         $indice++;
         if ($indice > $nrelementi_pagina) {
@@ -417,17 +417,17 @@ function CancellaCapitoloVoce() {
    if (isset($_POST["addCapitoli"])) {
       // cancella il capitolo selezionato
       $query="DELETE FROM tblcapitolicontabilita WHERE IdCapitolo=".$_POST["addCapitoli"];
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
       
       // cancella le voci collegate al capitolo selezionato
       $query="DELETE FROM tblvocicontabilita WHERE IdCapitolo=".$_POST["addCapitoli"];
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
     } else {
         if (isset($_POST["addVoci"])) {
             // cancella la voce selezionata
             $query="DELETE FROM tblvocicontabilita WHERE IdVoci=".$_POST["addVoci"];
-            $result=mysql_query($query);
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
         }
     }
    
@@ -460,7 +460,7 @@ function ModificaCapitolo() {
         $query="UPDATE tblcapitolicontabilita SET SiglaCapitolo='".$_POST["txtSigla"]
         ."', Capitolo='".$_POST["txtCapitolo"]."' "
         ."WHERE IdCapitolo=".$_POST["addCapitoli"];
-        $result = mysql_query($query);
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
     
     ResetVociCapitoli();
@@ -471,7 +471,7 @@ function ModificaCapitolo() {
 function RecuperaCapitolo() {
     if (isset($_POST["addCapitoli"])) {
             $query="SELECT * FROM tblcapitolicontabilita WHERE IdCapitolo=".$_POST["addCapitoli"];
-            $result = mysql_query($query);
+            $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
     return $result;
 }
@@ -482,7 +482,7 @@ function ModificaVoce() {
         $query="UPDATE tblvocicontabilita SET Voce='".$_POST["txtVoce"]
         ."', IdCapitolo=".$_POST["addCapitoli"].", Movimentazione='".$_POST["chkOperazione"]."' "
         ."WHERE IdVoci=".$_POST["addVoci"];
-        $result = mysql_query($query);
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
     
     ResetVociCapitoli();
@@ -493,7 +493,7 @@ function ModificaVoce() {
 function RecuperaVoce() {
     if (isset($_POST["addVoci"])) {
             $query="SELECT * FROM tblvocicontabilita WHERE IdVoci=".$_POST["addVoci"];
-            $result = mysql_query($query);
+            $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
     return $result;
 }
@@ -528,9 +528,9 @@ function AddVoceCapitolo() {
         $query="INSERT INTO tblvocicontabilita (Voce,IdCapitolo,Movimentazione) VALUES ('$voce',$addCapitolo,'$movimentazione')";
     }
     
-    mysql_query("START TRANSACTION");
-    $result=mysql_query($query);
-    mysql_query("COMMIT");
+    mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+    mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
     ResetVociCapitoli();
     return;
 }
@@ -566,9 +566,9 @@ function PopolaVoci($stringa){
         break;
     }
     
-    $result = mysql_query($query);
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    while ($row=mysql_fetch_object($result)) {
+    while ($row=mysqli_fetch_object($result)) {
         $spazi=str_repeat("&nbsp;",3);
         
         if ($_POST["addVoci"]!=$row->IdVoci){
@@ -602,8 +602,8 @@ function PopolaCapitoli($stringa){
                 ON tblvocicontabilita.IdCapitolo = tblcapitolicontabilita.IdCapitolo
                 WHERE tblvocicontabilita.IdVoci=".$_POST["addVoci"];
        
-          $result_voci=mysql_query($query);
-          $row_voce=mysql_fetch_object($result_voci);
+          $result_voci=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+          $row_voce=mysqli_fetch_object($result_voci);
                 
           $indice=$row_voce->IdCapitolo;
     }
@@ -614,9 +614,9 @@ function PopolaCapitoli($stringa){
         $indice=$_POST["addCapitoli"];
     }
     
-    $result = mysql_query($query);
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    while ($row=mysql_fetch_object($result)) {
+    while ($row=mysqli_fetch_object($result)) {
         switch ($stringa) {
             case "EC":
                 if ($_POST["filtra_capitolo"]!=$row->IdCapitolo){

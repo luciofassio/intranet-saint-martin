@@ -25,7 +25,7 @@
 	$idoperatore = $_SESSION['authenticated_user_id'];
 	ConnettiDB();
 	$rstOperatore = GetOperatore($idoperatore);
-	$rowOperatore = mysql_fetch_object($rstOperatore);
+	$rowOperatore = mysqli_fetch_object($rstOperatore);
 
       // Crea l'array $giorni per il calcolo della data
       $giorni=array(
@@ -179,9 +179,9 @@
         } else {
             // prima di salvare controlla se c'è una omonimia sui campi cognome, nome, sesso e data di nascita
             $query="SELECT Cognome,Nome,Sesso,Data_di_nascita FROM Catechismi WHERE Cognome='".$scheda_cognome."' and Nome='".$scheda_nome."' and Sesso='".$scheda_sesso."'";
-            $result=mysql_query($query);
-            if (mysql_num_rows($result)>0) { // se trova un'omonimia la confronta con le date di nascita
-                while ($row=mysql_fetch_array($result))
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+            if (mysqli_num_rows($result)>0) { // se trova un'omonimia la confronta con le date di nascita
+                while ($row=mysqli_fetch_array($result))
                 {
                   if (substr($row["Data_di_nascita"],0,10)==$scheda_dataN) {
                       echo ("<script type=\"text/javascript\">\n");
@@ -298,8 +298,8 @@
       }
 
     // va a salvare (finalmente) nel database  
-    $result=mysql_query($query) || die($query);
-    if (mysql_affected_rows() < 0) {
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die($query);
+    if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) < 0) {
         echo '<script type="text/javascript">';
         echo 'alert("Acc..! Qualcosa è andato storto durante le operazioni di salvataggio dei dati. Riprovare, se il problema persiste contattare gli amministratori del sistema.");';
         echo '</script>';
@@ -339,7 +339,7 @@
               }
               
               //die($query);
-			  $rstRicerca=mysql_query($query);
+			  $rstRicerca=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
               /* controlla che l'estrazione dei dati richiesti al database sia andata a buon fine
                  e popola i vari arrays con i dati estratti. 
@@ -347,7 +347,7 @@
                 (recordcount in VB...) */
               
               $indice=0;
-              while ($record=mysql_fetch_array($rstRicerca))
+              while ($record=mysqli_fetch_array($rstRicerca))
               {
                   $indice++;
                   $a_id_anagrafica[$indice]=$record["id"];
@@ -409,9 +409,9 @@
 
           // in base all'id della parrocchia trova il nome della parrocchia
           if ($a_parrocchia_provenienza[$indice]>0) {
-              $parrocchia_provenienza=mysql_query("SELECT * FROM tblparrocchie WHERE idparrocchia=".$a_parrocchia_provenienza[$indice]);
-              if (mysql_num_rows($parrocchia_provenienza)>0) {
-                  $parrocchia=mysql_fetch_array($parrocchia_provenienza);
+              $parrocchia_provenienza=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM tblparrocchie WHERE idparrocchia=".$a_parrocchia_provenienza[$indice]);
+              if (mysqli_num_rows($parrocchia_provenienza)>0) {
+                  $parrocchia=mysqli_fetch_array($parrocchia_provenienza);
                   $nome_parrocchia=htmlentities($parrocchia["Parrocchia"]);
               }
           } else {
@@ -430,8 +430,8 @@ if (isset($_POST['delete_phone'])) {
         $tipo_telefono=$_POST['tipo_phone'];
     
         $query="DELETE FROM tblTelefoni WHERE id=".$id_utente." AND idtipotelefono=".$tipo_telefono;
-        $result=mysql_query($query);
-        if (mysql_affected_rows()==0) {
+        $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])==0) {
 	          echo ("<script type=\"text/javascript\">\n");
             echo ("alert(\"Qualcosa è andato storto. Il numero di telefono non è stato eliminato.\");\n");
             echo ("history.back();\n");
@@ -464,7 +464,7 @@ if ($_POST['delete_phone']=="false") {
               // La pone a false su tutti i numeri di telefono per impedire che ci sia più di un numero abilitato)
               if ($change_sms=="true") {
                   $query="UPDATE tblTelefoni SET telsms=0 WHERE id=".$id_utente;
-                  $result=mysql_query($query);
+                  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               }
               
               // aggiorna il numero di telefono dell'utente selezionato
@@ -474,10 +474,10 @@ if ($_POST['delete_phone']=="false") {
                   $query="UPDATE tblTelefoni SET prefisso='".$prefisso_nazionale."', numero='".$numero_phone."', telsms=".$sms.", idtipotelefono=".$change_tipo_value." WHERE id=".$id_utente." AND idtipotelefono=".$tipo_telefono;
               }
         
-              $result=mysql_query($query);
+              $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
               // controlla che l'aggiornamento sia avvenuto con successo
-              if (mysql_affected_rows() == 0) {
+              if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) == 0) {
                   if (!$change_sms=="true") {
                       echo ("<script type=\"text/javascript\">\n");
                       echo ("alert(\"Attenzione! L\'aggiornamento del numero è fallito. Qualcosa è andato storto. Riprovare, se il problema persiste contattare gli amministratori del sistema.\");\n");
@@ -487,9 +487,9 @@ if ($_POST['delete_phone']=="false") {
         } else {
             //controlla che il numero di telefono non sia già inserito in archivio
             $query="SELECT idtelefono, id, prefisso, numero, idtipotelefono,telsms FROM tblTelefoni WHERE id=".$id_utente." AND prefisso=".$prefisso_nazionale." AND numero=".$numero_phone;
-            $result=mysql_query($query);
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-            if (mysql_num_rows($result)>0) {
+            if (mysqli_num_rows($result)>0) {
                 echo ("<script type=\"text/javascript\">\n");
                 echo ("alert(\"Attenzione! Il numero che stai cercando di inserire e\' gia\' presente in rubrica.\");\n");
                 echo ("history.back();\n");
@@ -499,14 +499,14 @@ if ($_POST['delete_phone']=="false") {
                 // per impedire che ci sia più di un numero abilitato)
                 if ($change_sms=="true") {
                     $query="UPDATE tblTelefoni SET telsms=0 WHERE id=".$id_utente;
-                    $result=mysql_query($query);
+                    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
                 }
                 
                 // salva (finalmente) il numero di telefono in archivio
                 $query="INSERT INTO tblTelefoni (id,prefisso,numero,idtipotelefono,telsms) VALUES (".$id_utente.",'".$prefisso_nazionale."','".$numero_phone."',".$tipo_telefono.",".$sms.")";
-	              $result=mysql_query($query);
+	              $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 	               
-                if (mysql_affected_rows()==0) {
+                if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])==0) {
                     echo ("<script type=\"text/javascript\">\n");
                     echo ("alert(\"Qualcosa e\' andato storto! Il numero di telefono non e\' stato inserito in rubrica.\");\n");
                     echo ("history.back();\n");
@@ -530,10 +530,10 @@ if ($_POST['delete_phone']=="false") {
               ConnettiDB();
               // setta la stringa $query e estrae i dati dei tipi di via
               $query="SELECT idstradario,tipo FROM tblstradario";
-              $rstVie=mysql_query($query);
+              $rstVie=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
               // popola la lista con i dati estratti dal database
-              while ($vie=mysql_fetch_array($rstVie))
+              while ($vie=mysqli_fetch_array($rstVie))
               {
                   if ($vie["tipo"]==$via) {
                       echo ("<option value='".$vie["tipo"]."' selected>".htmlentities($vie["tipo"])."</option>\n");
@@ -551,10 +551,10 @@ if ($_POST['delete_phone']=="false") {
               ConnettiDB();
               // setta la stringa $query e estrae i dati dei tipi di via
               $query="SELECT idclasse,classe FROM tblClassi";
-              $rstClassi=mysql_query($query);
+              $rstClassi=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
               // popola la lista con i dati estratti dal database
-              while ($classi=mysql_fetch_array($rstClassi))
+              while ($classi=mysqli_fetch_array($rstClassi))
               {
                   if ($classi["idclasse"]==$classe) {
                       echo ("<option value='".$classi["idclasse"]."' selected>".htmlentities($classi["classe"])."</option>\n");
@@ -572,10 +572,10 @@ if ($_POST['delete_phone']=="false") {
               ConnettiDB();
               // setta la stringa $query e estrae i dati dei tipi di via
               $query="SELECT idsezione,sezione FROM tblSezioni";
-              $rstSezioni=mysql_query($query);
+              $rstSezioni=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
               // popola la lista con i dati estratti dal database
-              while ($sezioni=mysql_fetch_array($rstSezioni))
+              while ($sezioni=mysqli_fetch_array($rstSezioni))
               {
 				  if ($sezioni["idsezione"]==$sezione) {
                       echo ("<option value='".$sezioni["idsezione"]."' selected>".htmlentities($sezioni["sezione"])."</option>\n");
@@ -593,13 +593,13 @@ if ($_POST['delete_phone']=="false") {
               ConnettiDB();
               // setta la stringa $query e estrae i dati dei tipi di telefono
               $query="SELECT idtipotelefono,tipotelefono FROM tbltipitelefono";
-              $rstTipo=mysql_query($query);
+              $rstTipo=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
               
               $query_telefono="SELECT idtelefono,idtipotelefono,id,prefisso,numero,telsms FROM tbltelefoni WHERE id='".$_POST['hdnID']."' ORDER BY idtipotelefono ASC";
-              $rstTelefono=mysql_query($query_telefono);
+              $rstTelefono=mysqli_query($GLOBALS["___mysqli_ston"], $query_telefono);
               $i=0;
-              while ($telefono=mysql_fetch_array($rstTelefono))
+              while ($telefono=mysqli_fetch_array($rstTelefono))
               {
                 if ($telefono["telsms"]==1) {
                   $telsms[$telefono["idtipotelefono"]]=1;
@@ -609,7 +609,7 @@ if ($_POST['delete_phone']=="false") {
               
               // popola la lista con i dati estratti dal database
               $i=0;
-              while ($tipo=mysql_fetch_array($rstTipo))
+              while ($tipo=mysqli_fetch_array($rstTipo))
               {
                   $i++;
                   if ($tel[$i]!="") {

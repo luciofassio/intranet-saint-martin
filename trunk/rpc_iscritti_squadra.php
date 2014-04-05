@@ -5,8 +5,8 @@ ConnettiDB();
 // controllo di avere una stringa da cercare
 if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento'])) {
 	// contro sql injection
-	$IDEvento = mysql_real_escape_string($_POST['IDEvento']);
-	$IDSquadra = mysql_real_escape_string($_POST['IDSquadra']);
+	$IDEvento = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_POST['IDEvento']) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+	$IDSquadra = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_POST['IDSquadra']) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
 	//$IDSquadra = mysql_real_escape_string($_GET['IDSquadra']);
 	//$IDEvento = mysql_real_escape_string($_GET['IDEvento']);
 	// mando il  numero totale degli iscritti e i nominativi
@@ -17,13 +17,13 @@ if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento'])) {
 				WHERE tblIscrizioni.IdEvento= %1\$s AND tblIscrizioni.IDSquadra = %2\$s 
 				ORDER BY Cognome, Nome;";
 		$sql = sprintf($sql, $IDEvento, $IDSquadra);
-		$query = mysql_query($sql);
-		if (mysql_errno() == 0) {
-			if (! mysql_num_rows($query)) {
+		$query = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+		if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) == 0) {
+			if (! mysqli_num_rows($query)) {
 				echo "0|";	
 			} else {
-				echo mysql_num_rows($query)."|";
-				while ($row = mysql_fetch_object($query)) {
+				echo mysqli_num_rows($query)."|";
+				while ($row = mysqli_fetch_object($query)) {
 					$nome = htmlentities($row->Cognome)." ".htmlentities($row->Nome);
 					$nome .= str_pad($row->SiglaRuolo,29 - strlen($nome),".",STR_PAD_LEFT);
 					$nome = str_replace(".", "&nbsp;", $nome);
@@ -32,7 +32,7 @@ if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento'])) {
 				}
 			}
 		} else {
-			echo("rpc_iscritti_squadra: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+			echo("rpc_iscritti_squadra: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))."<br/><br/>".$sql);
 			exit();
 		}  
 		// adesso mando il numero degli iscritti suddivisi per ruolo
@@ -42,15 +42,15 @@ if(isset($_POST['IDSquadra']) && isset($_POST['IDEvento'])) {
                 WHERE tbliscrizioni.IDEvento = %1\$s AND tbliscrizioni.IDSquadra = %2\$s
                 GROUP BY tbliscrizioni.IDRuolo";
 		$sql = sprintf($sql, $IDEvento, $IDSquadra);
-		$query = mysql_query($sql);
-		if (mysql_errno() == 0) {
-				while ($row = mysql_fetch_object($query)) {
+		$query = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+		if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) == 0) {
+				while ($row = mysqli_fetch_object($query)) {
 					$ruoli .= $row->Ruolo.":<br/>";
 					$iscritti .= $row->NumIscritti."<br/>";
 				}
 				echo "|".$ruoli."|".$iscritti;
 		} else {
-			echo("rpc_iscritti_squadra: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+			echo("rpc_iscritti_squadra: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))."<br/><br/>".$sql);
 			exit();
 		}  
 	} // nessun dato in input

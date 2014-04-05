@@ -100,7 +100,7 @@ function GetData($Data) {
      <?php
         ConnettiDb();
         $result = GetOperatore($IDOperatore); // legge nome e cognome dell'operatore in base al suo ID
-        $row = mysql_fetch_object($result);
+        $row = mysqli_fetch_object($result);
      ?>
     <div id="myoperatore">
           | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 

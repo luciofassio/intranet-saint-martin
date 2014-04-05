@@ -181,7 +181,7 @@ function ReleaseCredits(myaction) {
 <!-- SEZIONE OPERATORE CONNESSO -->
      <?php
         $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-        $row = mysql_fetch_object($result);
+        $row = mysqli_fetch_object($result);
      ?>
      <div id="myoperatore">
           | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 
@@ -196,13 +196,13 @@ function ReleaseCredits(myaction) {
     <?php
         $result = GetApplicazioni($idoperatore,$menu_padre);
         // controlla se l'utente tenta di accedere a un sottomenù senza essere configurato dagli amministratori del sistema
-        if (mysql_num_rows($result)==0){
+        if (mysqli_num_rows($result)==0){
             $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
             header("Location: http://$host$uri/homepage.php");
 		        exit();
         }
         
-        $row = mysql_fetch_array($result);
+        $row = mysqli_fetch_array($result);
         while($row){
     ?>
     
@@ -211,7 +211,7 @@ function ReleaseCredits(myaction) {
             <td class="celladescrizione"><a href="<?php echo htmlentities($row['url']);?>"><strong><?php echo htmlentities($row['nome']);?></strong></a></td>
 
         <?php
-	         $row = mysql_fetch_array($result);
+	         $row = mysqli_fetch_array($result);
 	         if (!$row) {
 		          break;	
         ?>
@@ -227,7 +227,7 @@ function ReleaseCredits(myaction) {
         </tr>
     
         <?php
-	         $row = mysql_fetch_array($result);
+	         $row = mysqli_fetch_array($result);
            }
         ?>              	
     </table>

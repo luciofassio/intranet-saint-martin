@@ -17,7 +17,7 @@ ConnettiDB();
 // il post viene fatto da Jquery
 if(isset($_GET['idevcorr'])) {
 	// contro sql injection
-	$IDEvento = mysql_real_escape_string($_GET['idevcorr']);
+	$IDEvento = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_GET['idevcorr']) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
 } else {
 	echo "<strong>ERRORE: ID evento non valido</strong>";
 	exit();
@@ -50,7 +50,7 @@ if(isset($_GET['idevcorr'])) {
 <?php
 $rstListino = GetListino($IDEvento);
 if ($rstListino) {
-	while ($rowListino = mysql_fetch_row($rstListino)) {
+	while ($rowListino = mysqli_fetch_row($rstListino)) {
 		echo "<tr>";
 		echo "<th class=\"ruoli\">".strtoupper($rowListino[0])."</th>";
 		for ($i = 1;$i < count($rowListino);$i++) {

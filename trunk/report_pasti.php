@@ -79,14 +79,14 @@ tr.totale {
 $r = 1;
 $rstAbbonamentiCeneFinali = GetAbbonamentiCeneFinali();
 if($rstAbbonamentiCeneFinali) {
-	if(mysql_num_rows($rstAbbonamentiCeneFinali) > 0) {
-		$rowAbbonamentiCeneFinali = mysql_fetch_object($rstAbbonamentiCeneFinali);
+	if(mysqli_num_rows($rstAbbonamentiCeneFinali) > 0) {
+		$rowAbbonamentiCeneFinali = mysqli_fetch_object($rstAbbonamentiCeneFinali);
 	}
 }
 $rstPasti = GetReportPasti();
 if($rstPasti) {
-	if(mysql_num_rows($rstPasti) > 0) {
-		while ($rowPasti = mysql_fetch_object($rstPasti)){
+	if(mysqli_num_rows($rstPasti) > 0) {
+		while ($rowPasti = mysqli_fetch_object($rstPasti)){
 			if ($r == 1) {
 				echo "<tr>";	
 				echo "<th style=text-align:center>Data</th>";
@@ -170,9 +170,9 @@ if($rstPasti) {
 }
 function GetReportPasti() {
 	$sql = "SELECT Data, TotMattina,TotPomeriggio,TotSera,IFNULL(TotPomeriggio,0) as TotMerende,TotPranzo,TotPranzoGratis,TotCena,TotCenaGratis,IFNULL(TotPranzo,0)+IFNULL(TotCena,0)+IFNULL(TotPranzoGratis,0)+IFNULL(TotCenaGratis,0) as TotPasti FROM (SELECT tblPrenotazioni.Data,SUM(tblPrenotazioni.Mattina) as TotMattina, SUM(tblPrenotazioni.Pomeriggio) as TotPomeriggio, SUM(tblPrenotazioni.Sera) as TotSera, SUM(tblPrenotazioni.Pranzo) as TotPranzo, SUM(tblPrenotazioni.Cena) as TotCena, SUM(tblPrenotazioni.PranzoGratis) as TotPranzoGratis, SUM(tblPrenotazioni.CenaGratis) as TotCenaGratis FROM saint_martin_db.tblPrenotazioni tblPrenotazioni GROUP BY tblPrenotazioni.Data) totali where data between (select data from tblEventi where IDEvento=(select EventoCorrente from tblParametri)) and (select DATE_ADD(data, INTERVAL durata DAY) from tblEventi where IDEvento=(select EventoCorrente from tblParametri))";
-	$result = mysql_query($sql);
-	if (mysql_errno() <> 0) {
-		throw new Exception("GetReportPasti: ".mysql_errno().":".mysql_error());
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("GetReportPasti: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 		exit();
 	}  
     return $result;
@@ -180,9 +180,9 @@ function GetReportPasti() {
 
 function GetAbbonamentiCeneFinali() {
 	$sql = "SELECT totAbbonamentiPranzo, totAbbonamentiCena, totCenaFinale, totCenaFinaleOspiti, totCenaFinale + totCenaFinaleOspiti AS totCeneFinali FROM (SELECT SUM(AbbonamentoPranzo) AS totAbbonamentiPranzo, SUM(AbbonamentoCena) AS totAbbonamentiCena, SUM(CenaFinale) AS totCenaFinale, SUM(CenaFinaleOspiti) AS totCenaFinaleOspiti FROM tblIscrizioni WHERE IDEvento = (SELECT EventoCorrente FROM tblParametri)) cenefinali";
-	$result = mysql_query($sql);
-	if (mysql_errno() <> 0) {
-		throw new Exception("GetCeneFinali: ".mysql_errno().":".mysql_error());
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("GetCeneFinali: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 		exit();
 	}  
     return $result;

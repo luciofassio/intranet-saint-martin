@@ -120,14 +120,14 @@ else {
 	$IDEventoCorrente = $_POST['hdnEventoCorrente'];
 }
 $rstIscritto = GetIscrizioneER($ID, $IDEventoCorrente);
-if (mysql_num_rows($rstIscritto) > 0) {
-	$rowIscritto = mysql_fetch_object($rstIscritto);
+if (mysqli_num_rows($rstIscritto) > 0) {
+	$rowIscritto = mysqli_fetch_object($rstIscritto);
 	$sqCorrente = $rowIscritto->IDSquadra;
 }
 switch ($_REQUEST['btnAzione']) {
 	case "aggiungi alla squadra":
 		try {
-			if (mysql_num_rows($rstIscritto) > 0) {
+			if (mysqli_num_rows($rstIscritto) > 0) {
 				UpdateIscrizioneSquadra($rowIscritto->IDIscrizione, $_POST["hdnSquadraCorrente"]);
 			}
 			else {
@@ -141,7 +141,7 @@ switch ($_REQUEST['btnAzione']) {
 				// non si verifica più perchè controllo l'esistenza della iscrizione 
 				case "1062":
 					$rstSquadra = getSquadraByID($_POST['hdnID'], $IDEventoCorrente);
-					$rowSquadra = mysql_fetch_object($rstSquadra);
+					$rowSquadra = mysqli_fetch_object($rstSquadra);
 					$error_message = "La persona è già presente nella squadra: ".$rowSquadra->NomeSquadra;
 					break;
 				default:
@@ -174,7 +174,7 @@ switch ($_REQUEST['btnAzione']) {
 		break;
 }
 $result = GetSquadre($IDEventoCorrente);
-while ($row = mysql_fetch_array($result)) {
+while ($row = mysqli_fetch_array($result)) {
 	if ($row['IDSquadra'] == $sqCorrente) {
 		$selez = "selected=\"selected\"";
 	} 

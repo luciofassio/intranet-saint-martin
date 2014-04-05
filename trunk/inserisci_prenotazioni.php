@@ -72,8 +72,8 @@ if ($postback){
 	if ($hdnID == '') {
 		$rstEventoCorrente = GetEventoCorrente();
 	}
-	if (mysql_num_rows($rstEventoCorrente) > 0) {
-		$rowEventoCorrente = mysql_fetch_object($rstEventoCorrente);
+	if (mysqli_num_rows($rstEventoCorrente) > 0) {
+		$rowEventoCorrente = mysqli_fetch_object($rstEventoCorrente);
 	}
 	if ($hdnID == '') {
 		// nessuna persona selezionata, imposto l'evento corrente predefinito
@@ -102,8 +102,8 @@ if ($postback){
 } else {
 	// leggo i dati dell'evento in corso per posizionare la griglia sul calendario
 	$rstEventoCorrente = GetEventoCorrente();
-	if (mysql_num_rows($rstEventoCorrente) > 0) {
-		$rowEventoCorrente = mysql_fetch_object($rstEventoCorrente);
+	if (mysqli_num_rows($rstEventoCorrente) > 0) {
+		$rowEventoCorrente = mysqli_fetch_object($rstEventoCorrente);
 	}
 	if ($hdnID == '') {
 		// nessuna persona selezionata, imposto l'evento corrente predefinito
@@ -188,7 +188,7 @@ if ($postback){
       <!-- ********************** sezione nome della pagina, operatore e data ********************-->
 <?php
 $result = GetOperatore($idoperatore);
-$row = mysql_fetch_object($result);
+$row = mysqli_fetch_object($result);
 // preparo il link alla stampa della privacy
 if ($hdnID != null) {
 	$stampa_privacy = "<a href=stampa_privacy_totale.php?id=".$hdnID." target=_blank >stampa privacy</a>";
@@ -218,10 +218,10 @@ switch (strtolower($_REQUEST["salvaprenotazioni"])) {
 	case "carica":		
 	case "salva iscr./prenot.":		
 		$dateEvento = CalcolaDateEvento(strtotime($rowEventoCorrente->Data), $durata);
-		mysql_query("START TRANSACTION");
+		mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
 		AggiornaPrenotazioni();
 		AggiornaIscrizione();
-		mysql_query("COMMIT");
+		mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
 		break;
 	default:
 }
@@ -501,7 +501,7 @@ function CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, $dataGi
 			$ruoli = CaricaRuoli($_POST["RuoloIscritto"]);
 			// carico il listino del ruolo dell'utente
 			$rstListino = GetListinoByRuoloER($_POST["RuoloIscritto"], $_POST['Evento']);
-			$rowListino = mysql_fetch_object($rstListino);
+			$rowListino = mysqli_fetch_object($rstListino);
 			$prezzoIscrizione = $rowListino->Iscrizione;
 			$prezzoPranzo = $rowListino->Pranzo;
 			$prezzoCena = $rowListino->Cena;
@@ -522,8 +522,8 @@ function CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, $dataGi
 			LeggiIscrizione();
 			// carico i dati delle prenotazioni
 			$rstPrenotazione = GetPrenotazione($hdnID, $_POST['Evento']);
-			if (mysql_num_rows($rstPrenotazione) == 0) {		
-				mysql_free_result($rstPrenotazione);
+			if (mysqli_num_rows($rstPrenotazione) == 0) {		
+				((mysqli_free_result($rstPrenotazione) || (is_object($rstPrenotazione) && (get_class($rstPrenotazione) == "mysqli_result"))) ? true : false);
 			}
 			$data_loaded = true;
 		}
@@ -615,7 +615,7 @@ function CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, $dataGi
 						if ($intestazione[$contarighe]!="Pranzo" && $intestazione[$contarighe]!="Cena"){ // compone le righe dei checkbox delle attività
 							// la routine deve avvisare l'utente che ha scelto di selezionare un'attività di un giorno già trascorso
 							if (IsResultSet($rstPrenotazione)) {
-								$rowPrenotazione = mysql_fetch_array($rstPrenotazione);
+								$rowPrenotazione = mysqli_fetch_array($rstPrenotazione);
 								if ($rowPrenotazione[$chkCampoAttivita[$contarighe]] == 1) {
 									$prenotaz = "checked";
 								} else {
@@ -647,7 +647,7 @@ function CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, $dataGi
 							
 							if (IsResultSet($rstPrenotazione)) {
 								// sto caricando i dati dal db
-								$rowPrenotazione = mysql_fetch_array($rstPrenotazione);
+								$rowPrenotazione = mysqli_fetch_array($rstPrenotazione);
 								if ($rowPrenotazione[$chkCampoAttivita[$contarighe]."Gratis"] == 0) {
 									$statoCheckGratis = "";
 								} else {
@@ -699,7 +699,7 @@ function CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, $dataGi
 		$contagiorno = $giornosettimana;	
 		// se sto leggendo dal db riporto il reesultset all'inizio
 		if (IsResultSet($rstPrenotazione)) {
-			mysql_data_seek($rstPrenotazione, 0);
+			mysqli_data_seek($rstPrenotazione,  0);
 		}
 	} // fine primo ciclo for 
 	echo ("</table>");
@@ -723,8 +723,8 @@ function LeggiIscritto() {
 	
 	$rstPersona = GetPersona($hdnID);
 	if($rstPersona) {
-		if(mysql_num_rows($rstPersona) > 0) {
-			$row = mysql_fetch_object($rstPersona);
+		if(mysqli_num_rows($rstPersona) > 0) {
+			$row = mysqli_fetch_object($rstPersona);
 			$cognome = htmlentities($row->Cognome);
 			$nome = htmlentities($row->Nome);
 			$hdnIDClasse = $row->Classe;
@@ -776,13 +776,13 @@ function LeggiIscrizione() {
 	$iscrizione = "";
 	$btnsquadra = "disabled=\"disabled\"";
 	if($rstIscrizioneER) {
-		$rowIscrizioneER = mysql_fetch_object($rstIscrizioneER);
-		if (mysql_num_rows($rstIscrizioneER) > 0) {
+		$rowIscrizioneER = mysqli_fetch_object($rstIscrizioneER);
+		if (mysqli_num_rows($rstIscrizioneER) > 0) {
 			// carico i dati della iscrizione
 			$iscrizione = "checked";
 			$btnsquadra = "";				// abilito il bottone Squadra
 			$rstSquadra = getSquadraByID($hdnID, $_POST['Evento']);
-			$rowSquadra = mysql_fetch_object($rstSquadra);
+			$rowSquadra = mysqli_fetch_object($rstSquadra);
 			$squadra = $rowSquadra->NomeSquadra;
 			$note = $rowIscrizioneER->Note;
 			$ruoli = CaricaRuoli($rowIscrizioneER->IDRuolo);
@@ -798,7 +798,7 @@ function LeggiIscrizione() {
 			// se l'iscrizione è stata fatta senza impostare il ruolo non carico il listino
 			if ($rowIscrizioneER->IDRuolo != "") {
 				$rstListino = GetListinoByRuoloER($rowIscrizioneER->IDRuolo, $_POST['Evento']);
-				$rowListino = mysql_fetch_object($rstListino);
+				$rowListino = mysqli_fetch_object($rstListino);
 				$prezzoIscrizione = $rowListino->Iscrizione;
 				$prezzoPranzo = $rowListino->Pranzo;
 				$prezzoCena = $rowListino->Cena;
@@ -883,13 +883,13 @@ function AggiornaIscrizione() {
 		$rstIscrizioneER = GetIscrizioneER($hdnID, $_POST['Evento']);
 		$rowIscrizioneER = null;
 		if($rstIscrizioneER) {
-			$rowIscrizioneER = mysql_fetch_object($rstIscrizioneER);
+			$rowIscrizioneER = mysqli_fetch_object($rstIscrizioneER);
 		}
 	}
 	// c'è l'iscrizione sulla form?
 	if ($_POST["chkIscrizione"]) {
 		// c'è l'iscrizione nel db?
-		if (mysql_num_rows($rstIscrizioneER) > 0) {
+		if (mysqli_num_rows($rstIscrizioneER) > 0) {
 			// sì, aggiorno
 			try {
 				UpdateIscrizioneER($rowIscrizioneER->IDIscrizione, $_POST["RuoloIscritto"], $_POST["note"], postCheckValue("AbbonamentoPranzo", "Pranzo"), postCheckValue("AbbonamentoCena", "Cena"), $_POST["CostoTotaleEuro"], postCheckValue("CenaFinale", "CenaFinale"), $_POST["NrOspiti"], postCheckValue("EventoSpecialeER", "EventoSpecialeER"), $_POST["Pagamento"]);
@@ -899,7 +899,7 @@ function AggiornaIscrizione() {
 					default:
 						ob_clean();
 						echo $e->getMessage();
-						mysql_query("ROLLBACK");
+						mysqli_query($GLOBALS["___mysqli_ston"], "ROLLBACK");
 						exit();
 				}
 			}
@@ -917,7 +917,7 @@ function AggiornaIscrizione() {
 					default:
 						ob_clean();
 						echo $e->getMessage();
-						mysql_query("ROLLBACK");
+						mysqli_query($GLOBALS["___mysqli_ston"], "ROLLBACK");
 						exit();
 				}
 			}
@@ -926,7 +926,7 @@ function AggiornaIscrizione() {
 	}
 	else {
 		// c'è l'iscrizione nel db?
-		if (mysql_num_rows($rstIscrizioneER) > 0) {
+		if (mysqli_num_rows($rstIscrizioneER) > 0) {
 			// sì, elimino
 			try {
 				DeleteIscrizioneER($rowIscrizioneER->IDIscrizione);
@@ -949,7 +949,7 @@ function AggiornaIscrizione() {
 					default:
 						ob_clean();
 						echo $e->getMessage();
-						mysql_query("ROLLBACK");
+						mysqli_query($GLOBALS["___mysqli_ston"], "ROLLBACK");
 						exit();
 				}
 			}

@@ -78,8 +78,8 @@ ConnettiDB();
 <?php
 $result = GetOperatore($idoperatore);
 if (IsResultSet($result)) {
-	if (mysql_num_rows($result) > 0) {
-		$row = mysql_fetch_object($result);
+	if (mysqli_num_rows($result) > 0) {
+		$row = mysqli_fetch_object($result);
 		$operatore = htmlentities($row->Nome).' '.htmlentities($row->Cognome);
 	}
 }
@@ -99,14 +99,14 @@ if (IsResultSet($result)) {
 <?php
 $rstEventoCorrente = GetIDEventoCorrente();
 if (IsResultSet($rstEventoCorrente)) {
-	if (mysql_num_rows($rstEventoCorrente) > 0) {
-		$rowEventoCorrente = mysql_fetch_object($rstEventoCorrente);
+	if (mysqli_num_rows($rstEventoCorrente) > 0) {
+		$rowEventoCorrente = mysqli_fetch_object($rstEventoCorrente);
 		$EventoCorrente = $rowEventoCorrente->EventoCorrente;
 	}
 }
 $rstEventi = GetEventi();
 if (IsResultSet($rstEventi)) {
-	if (mysql_num_rows($rstEventi) > 0) {
+	if (mysqli_num_rows($rstEventi) > 0) {
 		echo "<table style=\"margin:60px auto;width:80%\" border=0>";
 			echo "<tr>";
 			echo "<th style=\"text-align:left;width:90%\">Evento</th>";
@@ -114,7 +114,7 @@ if (IsResultSet($rstEventi)) {
 			echo "<th style=\"text-align:right;width:2%\">Durata</th>";
 			echo "<th style=\"text-align:center;width:10%\">Corrente</th>";
 			echo "</tr>";
-		while ($rowEventi = mysql_fetch_object($rstEventi)){
+		while ($rowEventi = mysqli_fetch_object($rstEventi)){
 			echo "<tr>";
 			echo "<td style=\"text-align:left\"><input type=\"text\" name=\"NomeEvento[]\" value=\"".htmlentities($rowEventi->NomeEvento)."\" maxlength=\"40\" size=\"86\" /></td>";
 			echo "<td style=\"text-align:center\"><input type=\"text\" name=\"DataEvento[]\" value=\"".date("d/m/Y", strtotime($rowEventi->Data))."\" maxlength=\"10\" size=\"10\" /></td>";
@@ -141,9 +141,9 @@ switch (strtolower($_REQUEST["salva"])) {
 		if ($_POST["postback"]) {
 			if (isset($_POST["cod_evento"])) {
 				if (count($_POST["cod_evento"]) > 0 && count($_POST["cod_evento"]) <= 1) {
-					mysql_query("START TRANSACTION");
+					mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
 					SetEventoCorrente($_POST["cod_evento"][0]);
-					mysql_query("COMMIT");
+					mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
 				} elseif (count($_POST["cod_evento"]) > 1) {
 					echo "<p style=\"font-weight:bold\">Deve essere selezionato un solo evento</p>";
 				}
