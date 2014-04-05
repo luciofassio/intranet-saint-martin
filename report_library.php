@@ -157,7 +157,7 @@ function morepagestable($lineheight=8) {
     // Now let's start to write the table 
 	// scorro le righe
     $row = 0; 
-    while($data=mysql_fetch_row($this->results)) { 
+    while($data=mysqli_fetch_row($this->results)) { 
         // write the horizontal borders 
 		//$this->SetDrawColor(0,0,255);
         $this->Line($l,$h,$fullwidth+$l,$h); 
@@ -206,10 +206,10 @@ function morepagestable($lineheight=8) {
 				$this->SetXY($l,$h); 
 				
 				// formatto i numeri in modo europeo
-				switch (mysql_field_type($this->results,$i)){ 
+				switch (((is_object($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)) && !is_null($___mysqli_tmp = $___mysqli_tmp->type)) ? ((($___mysqli_tmp = (string)(substr(( (($___mysqli_tmp == MYSQLI_TYPE_STRING) || ($___mysqli_tmp == MYSQLI_TYPE_VAR_STRING) ) ? "string " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG, MYSQLI_TYPE_INT24))) ? "int " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_FLOAT, MYSQLI_TYPE_DOUBLE, MYSQLI_TYPE_DECIMAL, ((defined("MYSQLI_TYPE_NEWDECIMAL")) ? constant("MYSQLI_TYPE_NEWDECIMAL") : -1)))) ? "real " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIMESTAMP) ? "timestamp " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_YEAR) ? "year " : "" ) . ( (($___mysqli_tmp == MYSQLI_TYPE_DATE) || ($___mysqli_tmp == MYSQLI_TYPE_NEWDATE) ) ? "date " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIME) ? "time " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_SET) ? "set " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_ENUM) ? "enum " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_GEOMETRY) ? "geometry " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_DATETIME) ? "datetime " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY_BLOB, MYSQLI_TYPE_BLOB, MYSQLI_TYPE_MEDIUM_BLOB, MYSQLI_TYPE_LONG_BLOB))) ? "blob " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_NULL) ? "null " : "" ), 0, -1))) == "") ? "unknown" : $___mysqli_tmp) : false)){ 
 					case "int":
 					case "tinyint":
-						if(mysql_field_name($this->results,$i) == 'Num.') {
+						if(((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false) == 'Num.') {
 							$txt = number_format($row + 1, 0);
 						} else {
 							$txt = number_format($txt, 0);
@@ -220,7 +220,7 @@ function morepagestable($lineheight=8) {
 						$txt = number_format($txt, 2, ',', '.'); 
 						break; 
 					case "string":
-						if (mysql_field_len($this->results,$i) == 4000) {
+						if (((($___mysqli_tmp = mysqli_fetch_fields($this->results)) && (isset($___mysqli_tmp[0]))) ? $___mysqli_tmp[0]->length : false) == 4000) {
 							$txt = utf8_decode($txt);
 						}
 						break;
@@ -367,19 +367,19 @@ function morepagestable($lineheight=8) {
 // on another server. 
 function connect($host='localhost',$username='',$passwd='',$db='') 
 { 
-    $this->conn = mysql_connect($host,$username,$passwd) or die( mysql_error() ); 
-    mysql_select_db($db,$this->conn) or die( mysql_error() ); 
+    $this->conn = ($GLOBALS["___mysqli_ston"] = mysqli_connect($host, $username, $passwd)) or die( ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) ); 
+    ((bool)mysqli_query($this->conn, "USE $db")) or die( ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) ); 
     return true; 
 } 
 
 function query($query){ 
-    $this->results = mysql_query($query,$this->conn); 
-    if(mysql_num_rows($this->results) == 0)  {
+    $this->results = mysqli_query($this->conn, $query); 
+    if(mysqli_num_rows($this->results) == 0)  {
 		echo "Non ci sono dati per la stampa.";
    	exit(); 
     }
 
-    $this->numFields = mysql_num_fields($this->results); 
+    $this->numFields = (($___mysqli_tmp = mysqli_num_fields($this->results)) ? $___mysqli_tmp : false); 
 } 
 
 function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){ 
@@ -413,13 +413,13 @@ function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){
 		// if a col title is less than the starting col width / reduce that column size 
 		for($i=0;$i<$this->numFields;$i++){ 
 			if ($this->tablegroupby[$i] == 0) {
-				$stringWidth = $this->getstringwidth(mysql_field_name($this->results,$i)) + 6 ; 
+				$stringWidth = $this->getstringwidth(((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false)) + 6 ; 
 				if( ($stringWidth) < $this->sColWidth){ 
 					$colFits[$i] = $stringWidth ; 
 					// set any column titles less than the start width to the column title width 
 				} 
 				//echo mysql_field_type($this->results,$i)."<br/>";
-				switch (mysql_field_type($this->results,$i)){ 
+				switch (((is_object($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)) && !is_null($___mysqli_tmp = $___mysqli_tmp->type)) ? ((($___mysqli_tmp = (string)(substr(( (($___mysqli_tmp == MYSQLI_TYPE_STRING) || ($___mysqli_tmp == MYSQLI_TYPE_VAR_STRING) ) ? "string " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG, MYSQLI_TYPE_INT24))) ? "int " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_FLOAT, MYSQLI_TYPE_DOUBLE, MYSQLI_TYPE_DECIMAL, ((defined("MYSQLI_TYPE_NEWDECIMAL")) ? constant("MYSQLI_TYPE_NEWDECIMAL") : -1)))) ? "real " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIMESTAMP) ? "timestamp " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_YEAR) ? "year " : "" ) . ( (($___mysqli_tmp == MYSQLI_TYPE_DATE) || ($___mysqli_tmp == MYSQLI_TYPE_NEWDATE) ) ? "date " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIME) ? "time " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_SET) ? "set " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_ENUM) ? "enum " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_GEOMETRY) ? "geometry " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_DATETIME) ? "datetime " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY_BLOB, MYSQLI_TYPE_BLOB, MYSQLI_TYPE_MEDIUM_BLOB, MYSQLI_TYPE_LONG_BLOB))) ? "blob " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_NULL) ? "null " : "" ), 0, -1))) == "") ? "unknown" : $___mysqli_tmp) : false)){ 
 					case "int":
 					case "float":
 					case "real":
@@ -429,12 +429,12 @@ function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){
 						$this->colAlign[$i] = 'L'; 
 				} 
 			}
-			$this->colTitles[$i] = mysql_field_name($this->results,$i) ; 
+			$this->colTitles[$i] = ((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false) ; 
 		} 
 
 		// loop through the data, any column whose contents is bigger that the col size is 
 		// resized 
-		while($row=mysql_fetch_row($this->results)){ 
+		while($row=mysqli_fetch_row($this->results)){ 
 			foreach($colFits as $key=>$val){ 
 				$stringWidth = $this->getstringwidth($row[$key]) + 6 ; 
 				if( ($stringWidth) > $this->sColWidth ){ 
@@ -472,8 +472,8 @@ function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){
 		if($dump){ 
 			Header('Content-type: text/plain'); 
 			for($i=0;$i<$this->numFields;$i++){ 
-				if(strlen(mysql_field_name($this->results,$i))>$flength){ 
-					$flength = strlen(mysql_field_name($this->results,$i)); 
+				if(strlen(((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false))>$flength){ 
+					$flength = strlen(((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false)); 
 				} 
 			} 
 			switch($this->k){ 
@@ -492,16 +492,16 @@ function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){
 			print "All measurements in $unit\n\n"; 
 			for($i=0;$i<$this->numFields;$i++){ 
 				printf("%-{$flength}s : %-10s : %10f\n", 
-					mysql_field_name($this->results,$i), 
-					mysql_field_type($this->results,$i), 
+					((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false), 
+					((is_object($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)) && !is_null($___mysqli_tmp = $___mysqli_tmp->type)) ? ((($___mysqli_tmp = (string)(substr(( (($___mysqli_tmp == MYSQLI_TYPE_STRING) || ($___mysqli_tmp == MYSQLI_TYPE_VAR_STRING) ) ? "string " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG, MYSQLI_TYPE_INT24))) ? "int " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_FLOAT, MYSQLI_TYPE_DOUBLE, MYSQLI_TYPE_DECIMAL, ((defined("MYSQLI_TYPE_NEWDECIMAL")) ? constant("MYSQLI_TYPE_NEWDECIMAL") : -1)))) ? "real " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIMESTAMP) ? "timestamp " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_YEAR) ? "year " : "" ) . ( (($___mysqli_tmp == MYSQLI_TYPE_DATE) || ($___mysqli_tmp == MYSQLI_TYPE_NEWDATE) ) ? "date " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIME) ? "time " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_SET) ? "set " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_ENUM) ? "enum " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_GEOMETRY) ? "geometry " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_DATETIME) ? "datetime " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY_BLOB, MYSQLI_TYPE_BLOB, MYSQLI_TYPE_MEDIUM_BLOB, MYSQLI_TYPE_LONG_BLOB))) ? "blob " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_NULL) ? "null " : "" ), 0, -1))) == "") ? "unknown" : $___mysqli_tmp) : false), 
 					$this->tablewidths[$i] ); 
 			} 
 			print "\n\n"; 
 			print "\$pdf->tablewidths=\n\tarray(\n\t\t"; 
 			for($i=0;$i<$this->numFields;$i++){ 
 				($i<($this->numFields-1)) ? 
-				print $this->tablewidths[$i].", /* ".mysql_field_name($this->results,$i)." */ \n\t\t": 
-				print $this->tablewidths[$i]." /* ".mysql_field_name($this->results,$i)." */\n\t\t"; 
+				print $this->tablewidths[$i].", /* ".((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false)." */ \n\t\t": 
+				print $this->tablewidths[$i]." /* ".((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false)." */\n\t\t"; 
 			} 
 			print "\n\t);\n"; 
 			echo "tablewidths<br>";
@@ -517,8 +517,8 @@ function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){
     } else { // end of if tablewidths not defined 
 
         for($i=0;$i<$this->numFields;$i++){ 
-			$this->colTitles[$i] = mysql_field_name($this->results,$i) ; 
-			switch (mysql_field_type($this->results,$i)){ 
+			$this->colTitles[$i] = ((($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)->name) && (!is_null($___mysqli_tmp))) ? $___mysqli_tmp : false) ; 
+			switch (((is_object($___mysqli_tmp = mysqli_fetch_field_direct($this->results, 0)) && !is_null($___mysqli_tmp = $___mysqli_tmp->type)) ? ((($___mysqli_tmp = (string)(substr(( (($___mysqli_tmp == MYSQLI_TYPE_STRING) || ($___mysqli_tmp == MYSQLI_TYPE_VAR_STRING) ) ? "string " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG, MYSQLI_TYPE_INT24))) ? "int " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_FLOAT, MYSQLI_TYPE_DOUBLE, MYSQLI_TYPE_DECIMAL, ((defined("MYSQLI_TYPE_NEWDECIMAL")) ? constant("MYSQLI_TYPE_NEWDECIMAL") : -1)))) ? "real " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIMESTAMP) ? "timestamp " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_YEAR) ? "year " : "" ) . ( (($___mysqli_tmp == MYSQLI_TYPE_DATE) || ($___mysqli_tmp == MYSQLI_TYPE_NEWDATE) ) ? "date " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_TIME) ? "time " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_SET) ? "set " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_ENUM) ? "enum " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_GEOMETRY) ? "geometry " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_DATETIME) ? "datetime " : "" ) . ( (in_array($___mysqli_tmp, array(MYSQLI_TYPE_TINY_BLOB, MYSQLI_TYPE_BLOB, MYSQLI_TYPE_MEDIUM_BLOB, MYSQLI_TYPE_LONG_BLOB))) ? "blob " : "" ) . ( ($___mysqli_tmp == MYSQLI_TYPE_NULL) ? "null " : "" ), 0, -1))) == "") ? "unknown" : $___mysqli_tmp) : false)){ 
 				case "int":
 				case "float":
 				case "real":
@@ -530,7 +530,7 @@ function mysql_report($query, $dump=false, $attr=array(), $totalize, $groupby){
         } 
     } 
 
-    mysql_data_seek($this->results,0); 
+    mysqli_data_seek($this->results, 0); 
     $this->Open(); 
     $this->setY($this->tMargin); 
     $this->AddPage(); 

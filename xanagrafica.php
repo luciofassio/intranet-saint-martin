@@ -76,7 +76,7 @@ $idoperatore = $_SESSION['authenticated_user_id'];
       <div id="myoperatore">
         <?php
             $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-            $row = mysql_fetch_object($result);
+            $row = mysqli_fetch_object($result);
             $_POST["login"]= htmlentities($row->login);
         ?>
         | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 

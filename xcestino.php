@@ -72,7 +72,7 @@ function RecuperaCancellati(){
 
     foreach ($id as $valore) {
       $query="UPDATE Catechismi SET Cancellato=False, DataCancellazione=null, OperatoreCancellazione=null WHERE ID=".$valore;
-      mysql_query($query);
+      mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
     
     return;
@@ -89,9 +89,9 @@ function GetDeleted($abilita_pulsante) {
     // statement sql da mandare a mysql
     $query ="SELECT ID,Cognome,Nome,Cancellato,DataCancellazione,OperatoreCancellazione FROM Catechismi WHERE Cancellato=true ORDER BY DataCancellazione DESC, Cognome,Nome";
 
-    $result =mysql_query($query); // estrae gli iscritti cancellati dal database
+    $result =mysqli_query($GLOBALS["___mysqli_ston"], $query); // estrae gli iscritti cancellati dal database
     
-    $nrcestinati =mysql_num_rows($result); // trova il numero degli iscritti cestinati
+    $nrcestinati =mysqli_num_rows($result); // trova il numero degli iscritti cestinati
     
     
     // CALCOLA E VISUALIZZA IL NUMERO DELLE PAGINE IN BASE AL NUMERO DEGLI ISCRITTI CANCELLATI TROVATI
@@ -158,12 +158,12 @@ function GetDeleted($abilita_pulsante) {
 
             $posizione=($_POST["nrpagina"]-1)*$nrelementi_pagina;
             
-            mysql_data_seek($result,$posizione);
+            mysqli_data_seek($result, $posizione);
         }
         
         $indice=0; // inizializza la variabile di controllo per il numero degli elementi da pubblicare per pagina
         
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             
             // controlla che nella costruzione della tabella non venga superato il numero degli elementi consentiti
             $indice++;
@@ -328,7 +328,7 @@ img {
       <div id="myoperatore">
         <?php
             $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-            $row = mysql_fetch_object($result);
+            $row = mysqli_fetch_object($result);
         ?>
         | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 
     </div> 

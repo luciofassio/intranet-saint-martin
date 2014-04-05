@@ -34,7 +34,7 @@ ConnettiDB();
 
 // ottiene il nome dell'operatore
 $result=GetOperatore($idoperatore); 
-$row=mysql_fetch_object($result);
+$row=mysqli_fetch_object($result);
 $nome_operatore=$row->Nome;
 $result=null;
 $row=null;
@@ -255,11 +255,11 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
   }
   
   // invia la query a Mysql
-  $result=mysql_query($query);
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
   // trova il numero di iscritti al turno di cresima
   if ($result) {
-    $nr_iscritti=mysql_num_rows($result);
+    $nr_iscritti=mysqli_num_rows($result);
   } else {
     $nr_iscritti=0;
   }
@@ -332,7 +332,7 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
             echo "<p style='text-align:center;font-size:small;margin-top:-10px;'>Prospetto stampato il ".date('d/m/y')." alle ".date('G:i')." da ".$nome_operatore."</p>";
             echo "<br />";
             echo "<table>";
-            while ($row=mysql_fetch_object($result)) {
+            while ($row=mysqli_fetch_object($result)) {
                 $prg++;
                 echo "<tr>";
                 echo "<td width=\"30\" height=\"40\" style=\"font-size:large;border-bottom:1px dotted black;\">".$prg.")</td>";
@@ -442,7 +442,7 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
                 echo "<h3>Gruppo delle ".$orasacramento."</h3>";
                 echo "<br />";
                 echo "<table>";
-                while ($row=mysql_fetch_object($result)) {
+                while ($row=mysqli_fetch_object($result)) {
                     $prg++;
                     echo "<tr>";
                     echo "<td width=\"30\" height=\"40\" style=\"font-size:large;border-bottom:1px dotted black;\">".$prg.")</td>";
@@ -558,7 +558,7 @@ function StampaDati($result) {
       echo "<div id='dati'>\n";
       echo "<table width='100%'>\n";
       
-      while($row=mysql_fetch_object($result)) {
+      while($row=mysqli_fetch_object($result)) {
       $i++;
       
       echo "<tr>\n";
@@ -779,9 +779,9 @@ function GetGruppo($id,$sacramento,$tempo) {
     }
     
     $query="SELECT * FROM tblgruppisacramenti WHERE IDGruppoSacramento=".$id." AND SCR=".$sacramento;
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    $row=mysql_fetch_object($result);
+    $row=mysqli_fetch_object($result);
     
     $stringa=$row->GruppoSacramento;
     

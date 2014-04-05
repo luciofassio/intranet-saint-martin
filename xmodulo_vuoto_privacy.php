@@ -288,9 +288,9 @@ function GetTesserati($anno)
 	$sql = "SELECT ID FROM Catechismi WHERE YEAR(DataTesseramento) = %1\$s AND Classe > 1 AND Classe < 10 ORDER BY Classe,Cognome,Nome";
 	$sql = sprintf($sql, $anno);
 	
-	$result = mysql_query($sql);
-	if (mysql_errno() <> 0) {
-		throw new Exception("GetTesserati: ".mysql_errno().":".mysql_error());
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("GetTesserati: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 		exit();
 	}  
     return $result;

@@ -68,8 +68,8 @@ ConnettiDB();
 <?php
 $result = GetOperatore($idoperatore);
 if (IsResultSet($result)) {
-	if (mysql_num_rows($result) > 0) {
-		$row = mysql_fetch_object($result);
+	if (mysqli_num_rows($result) > 0) {
+		$row = mysqli_fetch_object($result);
 		$operatore = htmlentities($row->Nome).' '.htmlentities($row->Cognome);
 	}
 }

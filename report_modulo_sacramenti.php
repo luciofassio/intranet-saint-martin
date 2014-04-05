@@ -34,7 +34,7 @@ ConnettiDB();
 
 // ottiene il nome dell'operatore
 $result=GetOperatore($idoperatore); 
-$row=mysql_fetch_object($result);
+$row=mysqli_fetch_object($result);
 $nome_operatore=$row->Nome;
 $result=null;
 $row=null;
@@ -269,11 +269,11 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
   }
   
   // invia la query a Mysql
-  $result=mysql_query($query);
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
   // trova il numero di iscritti al turno del sacramento
   if ($result) {
-    $nr_iscritti=mysql_num_rows($result);
+    $nr_iscritti=mysqli_num_rows($result);
   } else {
     $nr_iscritti=0;
   }
@@ -353,7 +353,7 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
             <td style=\"font-size:small;font-variant:small-caps;border-bottom:1px dotted black;\">Indirizzo</td>";
             echo "</tr>";
             
-            while ($row=mysql_fetch_object($result)) {
+            while ($row=mysqli_fetch_object($result)) {
                 $prg++;
                 echo "<tr>";
                 echo "<td width=\"30\" height=\"40\" style=\"font-size:large;border-bottom:1px dotted black;\">".$prg.")</td>";
@@ -470,7 +470,7 @@ if (isset($_POST["chkStampaElencoAlfabetico"])) {
                       <td style=\"font-size:small;font-variant:small-caps;border-bottom:1px dotted black;\">Indirizzo</td>";
                 echo "</tr>";
                 
-                while ($row=mysql_fetch_object($result)) {
+                while ($row=mysqli_fetch_object($result)) {
                     $prg++;
                     echo "<tr>";
                     echo "<td width=\"30\" height=\"40\" style=\"font-size:large;border-bottom:1px dotted black;\">".$prg.")</td>";
@@ -586,7 +586,7 @@ function StampaDati($result) {
       echo "<td colspan='2'>Controllare e compilare i campi sottostanti</td>";
       echo "</tr>";
       
-      while($row=mysql_fetch_object($result)) {
+      while($row=mysqli_fetch_object($result)) {
       $i++;
       
       // trova il numero di telefono di casa e del cellulare dei genitori
@@ -596,10 +596,10 @@ function StampaDati($result) {
                        AND (IDTipoTelefono=1 OR IDTipoTelefono=4 OR IDTipoTelefono=5)  
                        ORDER BY IDTipoTelefono ASC";
       
-      $result_telefoni=mysql_query($query_telefoni);
+      $result_telefoni=mysqli_query($GLOBALS["___mysqli_ston"], $query_telefoni);
       
-      if (mysql_num_rows($result_telefoni)!=0) {
-          while ($tel_rows=mysql_fetch_object($result_telefoni)) {
+      if (mysqli_num_rows($result_telefoni)!=0) {
+          while ($tel_rows=mysqli_fetch_object($result_telefoni)) {
             if ($tel_rows->IDTipoTelefono==1) {
                 $tel_casa=$tel_rows->Prefisso." ".$tel_rows->Numero;
             } elseif ($tel_rows->IDTipoTelefono==4) {
@@ -831,9 +831,9 @@ function GetGruppo($id,$sacramento,$tempo) {
     }
     
     $query="SELECT * FROM tblgruppisacramenti WHERE IDGruppoSacramento=".$id." AND SCR=".$sacramento;
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    $row=mysql_fetch_object($result);
+    $row=mysqli_fetch_object($result);
     
     $stringa=$row->GruppoSacramento;
     

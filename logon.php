@@ -15,9 +15,9 @@ if ($postback == true) {
 	ConnettiDB();
 	if ($_POST['txtNomeUtente'] != "") {
 		$result = GetUtente($_POST['txtNomeUtente'], $_POST['txtPassword']);
-		if (mysql_num_rows($result) > 0)	{
+		if (mysqli_num_rows($result) > 0)	{
 			$_SESSION['authenticated_user'] = true;
-			$row = mysql_fetch_array($result);
+			$row = mysqli_fetch_array($result);
 			$_SESSION['authenticated_user_id'] = $row['idoperatore'];
 			$_SESSION['access_level']=$row['livello'];
 			$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');

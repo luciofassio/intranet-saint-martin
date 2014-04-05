@@ -390,9 +390,9 @@ function GetData($Data) {
         } else {
             // prima di salvare controlla se c'è una omonimia sui campi cognome, nome, sesso e data di nascita
             $query="SELECT Cognome,Nome,Sesso,Data_di_nascita FROM Catechismi WHERE Cognome='".$scheda_cognome."' and Nome='".$scheda_nome."' and Sesso='".$scheda_sesso."'";
-            $result=mysql_query($query);
-            if (mysql_num_rows($result)>0) { // se trova un'omonimia la confronta con le date di nascita
-                while ($row=mysql_fetch_array($result))
+            $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+            if (mysqli_num_rows($result)>0) { // se trova un'omonimia la confronta con le date di nascita
+                while ($row=mysqli_fetch_array($result))
                 {
                   if (substr($row["Data_di_nascita"],0,10)==$scheda_dataN) {
                       echo ("<script type=\"text/javascript\">\n");
@@ -520,8 +520,8 @@ function GetData($Data) {
       }
    
     // va a salvare (finalmente) nel database  
-    $result=mysql_query($query) || die($query);
-    if (mysql_affected_rows() < 0) {
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die($query);
+    if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) < 0) {
         echo '<script type="text/javascript">';
         echo 'alert("Acc..! Qualcosa è andato storto durante le operazioni di salvataggio dei dati. Riprovare, se il problema persiste contattare gli amministratori del sistema.");';
         echo '</script>';
@@ -563,7 +563,7 @@ function DeleteDatiScheda() {
     $data_cancellazione=date('Y-m-d'); // setta la data di cancellazione
     
     $query="UPDATE Catechismi SET Cancellato=True,DataCancellazione='$data_cancellazione',OperatoreCancellazione='$operatore' WHERE ID=".$_POST["hdnID"];
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
     $errore=1;
     $messaggio="I dati di ".$_POST["cognome"]." ". $_POST["nome"]." sono stati cestinati!";
@@ -604,21 +604,21 @@ function RicercaIscritti() {
     }
     
     // invia la query a MySql
-    $rstRicerca=mysql_query($query);
+    $rstRicerca=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
     // verifica quante corrispondenze ha trovato
-    if (mysql_num_rows($rstRicerca)<1) { // nessuna corrispondenza trovata
+    if (mysqli_num_rows($rstRicerca)<1) { // nessuna corrispondenza trovata
         $errore=1;
         $icona=2;
         $messaggio="Nessuna corrispondenza &egrave; stata trovata con la parola chiave '".$parola_chiave."'";
         unset ($_POST["hdnID"]);
-    } elseif (mysql_num_rows($rstRicerca)>1) { // più di una corrispondenza trovata
+    } elseif (mysqli_num_rows($rstRicerca)>1) { // più di una corrispondenza trovata
           $errore=1;
           $icona=2;
-          $messaggio="Sono state trovate ".mysql_num_rows($rstRicerca)." corrispondenze con la parola chiave '".$parola_chiave."'";
+          $messaggio="Sono state trovate ".mysqli_num_rows($rstRicerca)." corrispondenze con la parola chiave '".$parola_chiave."'";
           unset ($_POST["hdnID"]);
     } else {
-          $record=mysql_fetch_object($rstRicerca);
+          $record=mysqli_fetch_object($rstRicerca);
           
           $_POST["hdnID"]=($record->ID);
           $_POST["cognome"]=htmlentities($record->cognome);
@@ -681,10 +681,10 @@ return;
 function GetRuoliOratorio() {
   // setta la stringa $query e estrae i dati
   $query="SELECT IdRuoloOratorio,RuoloOratorio FROM tblruolioratorio";
-  $rstRuoli=mysql_query($query);
+  $rstRuoli=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
   // popola la lista con i dati estratti dal database
-  while ($ruoli=mysql_fetch_array($rstRuoli)) {
+  while ($ruoli=mysqli_fetch_array($rstRuoli)) {
       if ($ruoli["IdRuoloOratorio"]==$ruolo) {
           echo ("<option value='".$ruoli["IdRuoloOratorio"]."' selected>".htmlentities($ruoli["RuoloOratorio"])."</option>\n");
       } else {
@@ -701,10 +701,10 @@ function GetQuota ($scheda_tipo_quota) {
     //recupera le quota dal database
     $query="SELECT * FROM tblquoteoratorio WHERE IdQuota=".$scheda_tipo_quota;
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) {
-        $quota=mysql_fetch_object($result);
+        $quota=mysqli_fetch_object($result);
         $myquota=htmlentities($quota->Quota);
     }
 
@@ -728,10 +728,10 @@ function GetQuoteOratorio() {
     //recupera le quote predefinite nel database
     $query="SELECT * FROM tblquoteoratorio";
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     if ($result) {
-        while ($quote=mysql_fetch_object($result)) {
+        while ($quote=mysqli_fetch_object($result)) {
             echo("<tr>");
             
             //tiene selezionato l'opzione relativa al tipo di quota pagata
@@ -831,10 +831,10 @@ function GetNomeParrocchia() {
     
     $query="SELECT * FROM tblparrocchie WHERE IdParrocchia=".$_POST['hdnIdParrocchia'];
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    if (mysql_num_rows($result)>0) {
-        $record=mysql_fetch_object($result);
+    if (mysqli_num_rows($result)>0) {
+        $record=mysqli_fetch_object($result);
         $nome_parrocchia=htmlentities($record->Parrocchia);
     } else {
           $nome_parrocchia="**********";
@@ -890,9 +890,9 @@ function SalvaDatiRubrica() {
         // prepara la query per la ricerca del telefono da salvare
         // controlla se il numero è nuovo e quindi da salvare o è semplicemente da aggiornare
         $query="SELECT IDTipoTelefono,ID FROM tblTelefoni WHERE IDTipoTElefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
-        $result=mysql_query($query);
+        $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
         
-        if (mysql_num_rows($result)>0) {
+        if (mysqli_num_rows($result)>0) {
             $query="UPDATE tblTelefoni SET Prefisso='".$valore["Prefisso"]."', Numero='".$valore["Numero"]."', TelSMS=".$valore["TelSMS"].", PrefissoInt='".$valore["PrefissoInt"]."' ";
             $query.="WHERE IDTipoTelefono=".$valore["IDTipoTelefono"]." AND ID=".$_POST["hdnID"];
         } else {
@@ -900,8 +900,8 @@ function SalvaDatiRubrica() {
         } 
       
         // invia la query al db
-        $rstAggiornamento=mysql_query($query) || die ($query);
-        if (mysql_affected_rows()>0) {
+        $rstAggiornamento=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
+        if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])>0) {
                
         }
     }
@@ -915,7 +915,7 @@ function SalvaDatiRubrica() {
     
     foreach ($TipoTelefono as $valore) {
         $query="DELETE FROM tblTelefoni WHERE IDTipoTelefono=".$valore." AND ID=".$_POST["hdnID"];  
-        mysql_query($query);
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
 
     return;
@@ -936,10 +936,10 @@ function ConvertiData($data) {
 function PopolaListaVie($via) {
     // setta la stringa $query e estrae i dati dei tipi di via
     $query="SELECT idstradario,tipo FROM tblstradario";
-    $rstVie=mysql_query($query);
+    $rstVie=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
     // popola la lista con i dati estratti dal database
-    while ($vie=mysql_fetch_array($rstVie))
+    while ($vie=mysqli_fetch_array($rstVie))
     {
         if ($vie["tipo"]==$via) {
             echo ("<option value='".$vie["tipo"]."' selected>".htmlentities($vie["tipo"])."</option>\n");
@@ -956,10 +956,10 @@ function PopolaListaClassi($classe) {
   ConnettiDB();
   // setta la stringa $query e estrae i dati dei tipi di via
   $query="SELECT idclasse,classe FROM tblClassi";
-  $rstClassi=mysql_query($query);
+  $rstClassi=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
   // popola la lista con i dati estratti dal database
-  while ($classi=mysql_fetch_array($rstClassi))
+  while ($classi=mysqli_fetch_array($rstClassi))
     {
         if ($classi["idclasse"]==$classe) {
             echo ("<option value='".$classi["idclasse"]."' selected>".htmlentities($classi["classe"])."</option>\n");
@@ -978,8 +978,8 @@ function GetClasseIscritto($nome_classe) {
         $nome_classe="n. d.";
     } else {
         $query="SELECT idclasse,classe FROM tblClassi WHERE idclasse=".$_POST["myclassi"];
-        $rstClassi=mysql_query($query);
-        $nome_classe=mysql_fetch_object($rstClassi);
+        $rstClassi=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        $nome_classe=mysqli_fetch_object($rstClassi);
         $nome_classe=htmlentities($nome_classe->classe);
     }
     
@@ -994,8 +994,8 @@ function GetSezioneIscritto($nome_sezione) {
         $nome_sezione="n. d.";
     } else {
         $query="SELECT idsezione,sezione FROM tblSezioni WHERE IdSezione=".$_POST["mysezione"];
-        $rstSezioni=mysql_query($query);
-        $nome_sezione=mysql_fetch_object($rstSezioni);
+        $rstSezioni=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        $nome_sezione=mysqli_fetch_object($rstSezioni);
         $nome_sezione=htmlentities($nome_sezione->sezione);
     }    
           
@@ -1008,10 +1008,10 @@ function GetSezioneIscritto($nome_sezione) {
 function PopolaListaSezioni($sezione) {
     // setta la stringa $query e estrae i dati dei tipi di via
     $query="SELECT idsezione,sezione FROM tblSezioni";
-    $rstSezioni=mysql_query($query);
+    $rstSezioni=mysqli_query($GLOBALS["___mysqli_ston"], $query);
               
     // popola la lista con i dati estratti dal database
-    while ($sezioni=mysql_fetch_array($rstSezioni))
+    while ($sezioni=mysqli_fetch_array($rstSezioni))
       {
           if ($sezioni["idsezione"]==$sezione) {
               echo ("<option value='".$sezioni["idsezione"]."' selected>".htmlentities($sezioni["sezione"])."</option>\n");
@@ -1029,22 +1029,22 @@ function GetRubricaTelefonica($errore) {
 
     // legge nel db i tipi di telefono ammessi
     $query="SELECT idtipotelefono,tipotelefono FROM tbltipitelefono";
-    $rstTipo=mysql_query($query);  
+    $rstTipo=mysqli_query($GLOBALS["___mysqli_ston"], $query);  
     
     // controlla che nel db vi siano tipi di telefono
-    if (mysql_num_rows($rstTipo)<1){
+    if (mysqli_num_rows($rstTipo)<1){
         $errore=1;
         return $errore;
     } 
     
     // legge i telefoni associati all'iscritto
     $query_telefono="SELECT idtelefono,idtipotelefono,id,prefisso,numero,telsms,PrefissoInt FROM tblTelefoni WHERE id='".$_POST['hdnID']."' ORDER BY idtipotelefono ASC";
-    $rstTelefono=mysql_query($query_telefono);
+    $rstTelefono=mysqli_query($GLOBALS["___mysqli_ston"], $query_telefono);
   
-    $telefono = mysql_fetch_object($rstTelefono); 
+    $telefono = mysqli_fetch_object($rstTelefono); 
   
     // costruisce la tabella
-    while ($tipo=mysql_fetch_object($rstTipo)) {
+    while ($tipo=mysqli_fetch_object($rstTipo)) {
             if (($tipo->idtipotelefono)==($telefono->idtipotelefono)) {
                 $prefisso=($telefono->prefisso);
                 $numero= ($telefono->numero);
@@ -1056,7 +1056,7 @@ function GetRubricaTelefonica($errore) {
                 $prefisso_intnaz=($telefono->PrefissoInt);
                 
                 //avanza di uno 
-                $telefono = mysql_fetch_object($rstTelefono); 
+                $telefono = mysqli_fetch_object($rstTelefono); 
             } else {
                 $prefisso="";
                 $numero= "";
@@ -1108,9 +1108,9 @@ function GetRubricaTelefonica($errore) {
 // ****************** > FUNZIONE POPOLA LISTBOX CON GRADI PARENTELA < *****************************
 function GetGradoParentela()
 {
-    $query=mysql_query("SELECT * FROM tblgradiparentela ORDER BY IdGradoParentela");
+    $query=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM tblgradiparentela ORDER BY IdGradoParentela");
     
-    while($result=mysql_fetch_object($query))
+    while($result=mysqli_fetch_object($query))
     {
       echo "<option value='".((int)$result->IdGradoParentela-1)."'>".htmlentities($result->GradoParentela)."</option>\n";
     }
@@ -1121,9 +1121,9 @@ function GetGradoParentela()
 // ****************** > FUNZIONE POPOLA LISTBOX CON RUOLO PARENTELA < *****************************
 function GetRuolo()
 {
-    $query=mysql_query("SELECT * FROM tblruoloparentela ORDER BY IdRuoloParentela");
+    $query=mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM tblruoloparentela ORDER BY IdRuoloParentela");
     
-    while($result=mysql_fetch_object($query))
+    while($result=mysqli_fetch_object($query))
     {
       echo "<option value='".htmlentities($result->IdRuoloParentela)."'>".htmlentities($result->RuoloParentela)."</option>\n";
     }
@@ -1143,12 +1143,12 @@ function GetParentelaInfo() {
     // cerca l'id della famiglia dell'iscritto
     $query="SELECT IdFamiglia,IdGradoParentela FROM tblparentela WHERE IdFamigliare=".$_POST["hdnID"];
 
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    if (mysql_num_rows($result) <1) {
+    if (mysqli_num_rows($result) <1) {
         echo "n. d.";
     } else {
-          $famiglia=mysql_fetch_object($result);
+          $famiglia=mysqli_fetch_object($result);
           $grado_parentela=$famiglia->IdGradoParentela;
           
           // estrae i famigliari dell'iscritto
@@ -1159,12 +1159,12 @@ function GetParentelaInfo() {
                   AND NOT IdFamigliare=".$_POST["hdnID"]." 
                   ORDER BY IdGradoParentela";
           
-          $result=mysql_query($query);
-          if (mysql_num_rows($result) >0) {
+          $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+          if (mysqli_num_rows($result) >0) {
           
           //inserisce le iconcine dei famigliari
           echo "<table cellpadding=\2\" class=\"famigliari_iscritto\"><tr>";
-          while ($famigliari=mysql_fetch_object($result)) {
+          while ($famigliari=mysqli_fetch_object($result)) {
                   $i++;
                   if($i > 6) {
                       echo "</tr><tr>";
@@ -1237,10 +1237,10 @@ function CreaTabellaFamigliari()
     // controlla se l'iscritto è già associato a una famiglia 
     $query="SELECT IdFamigliare,IdFamiglia,IdGradoParentela FROM tblparentela WHERE IdFamigliare=".$_POST["hdnID"];
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     // se l'iscritto non è associato a nessuna famiglia esce dalla funzione
-    if (mysql_num_rows($result) < 1) {
+    if (mysqli_num_rows($result) < 1) {
         echo "<tr>";
         echo "<th class='cella_parentela_dispari' colspan='7'>nessun dato disponbile</th>";
         echo "</tr>";
@@ -1248,7 +1248,7 @@ function CreaTabellaFamigliari()
     }
 
     // recupera l'id della famiglia associata all'iscritto
-    $famiglia=mysql_fetch_object($result);
+    $famiglia=mysqli_fetch_object($result);
     $id_famiglia=$famiglia->IdFamiglia;
     
     // recupera il grado di parentela dell'iscritto
@@ -1260,16 +1260,16 @@ function CreaTabellaFamigliari()
             FROM (tblparentela INNER JOIN tblgradiparentela ON tblparentela.IdGradoParentela=tblgradiparentela.IdGradoParentela-1) 
             WHERE tblparentela.IdFamiglia=".$id_famiglia." ORDER BY tblparentela.IdGradoParentela";
     
-    $result_famigliari=mysql_query($query); 
+    $result_famigliari=mysqli_query($GLOBALS["___mysqli_ston"], $query); 
         
-    if (mysql_num_rows($result_famigliari) <= 1) {
+    if (mysqli_num_rows($result_famigliari) <= 1) {
         echo "<tr>";
         echo "<th class='cella_parentela_dispari' colspan='7'>nessun dato disponbile</th>";
         echo "</tr>";
         return;
     } 
     
-    while ($dati=mysql_fetch_object($result_famigliari)) {    
+    while ($dati=mysqli_fetch_object($result_famigliari)) {    
       if ($_POST["hdnID"]!=($dati->IdFamigliare)) { // evita di visualizzare l'iscritto nella tabella    
 
         //utilizzo dei valori estratti per ricostruire i dati dei parenti dell'iscritto
@@ -1277,15 +1277,15 @@ function CreaTabellaFamigliari()
                 FROM Catechismi INNER JOIN tblClassi ON Catechismi.Classe=tblClassi.IdClasse 
                 WHERE Catechismi.ID=".($dati->IdFamigliare);
         
-        $result_parente=mysql_query($query);
-        if (mysql_num_rows($result) == 0) {
+        $result_parente=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        if (mysqli_num_rows($result) == 0) {
             echo "<tr>";
             echo "<th class='cella_parentela_dispari' colspan='7'>nessun dato disponbile</th>";
             echo "</tr>";
             return;
         } 
         
-        $dati_parente=mysql_fetch_object($result_parente);
+        $dati_parente=mysqli_fetch_object($result_parente);
         
             $i++;
             if ($i % 2) {
@@ -1359,9 +1359,9 @@ function ControlloGenitoriFamiglia() {
     if ($_POST["GradoParentela"]==2 || $_POST["GradoParentela"]==3){    
         $query ="SELECT IdGradoParentela,IdFamiglia FROM tblparentela WHERE IdFamiglia=". $_POST["id_famiglia"]. " AND IdGradoParentela=".$_POST["GradoParentela"];
     
-        $result=mysql_query($query);
+        $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-        if (mysql_num_rows($result)>0) {
+        if (mysqli_num_rows($result)>0) {
             return true;
         }
     }
@@ -1386,11 +1386,11 @@ function CancellaDatiParentela() {
     // cancella i dati dall'archivio
     if ($IdElementiFamiglia < 3) {
         $query="DELETE FROM tblparentela WHERE IdFamiglia=".$IdFamiglia;
-        mysql_query($query); 
+        mysqli_query($GLOBALS["___mysqli_ston"], $query); 
     } else {
           foreach ($IdFamigliare as $valore) {
               $query="DELETE FROM tblparentela WHERE IdFamigliare=".$valore;  
-              mysql_query($query);
+              mysqli_query($GLOBALS["___mysqli_ston"], $query);
           }
     }
     
@@ -1405,10 +1405,10 @@ function ControllaScheda($variazione) {
     $query ="SELECT * FROM Catechismi WHERE ID=".$_POST["hdnID"];
     
     // invia la richiesta dati al db
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     // recupera le informazioni inviate dal server Mysql
-    $record=mysql_fetch_array($result);
+    $record=mysqli_fetch_array($result);
     
     // controlla se i dati sono stati cambiati              
     if (htmlentities($_POST["cognome"])!=htmlentities($record["Cognome"])) {
@@ -1598,9 +1598,9 @@ function GetInfoRuolo() {
                  WHERE tblanimatori.ID =".$_POST['hdnID']."
                  ORDER BY tblanimatori.IdRuolo";
     
-        $result= mysql_query($query);
+        $result= mysqli_query($GLOBALS["___mysqli_ston"], $query);
         // costruisce i ruoli dell'iscritto
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             if ($ruoli==null) {
                 $ruoli.=$row->Sigla."/";
             } else {
@@ -1655,10 +1655,10 @@ function CreaTabellaRuoli()
             WHERE tblanimatori.ID =".$_POST["hdnID"]."
             ORDER BY tblruolioratorio.IDRuoloOratorio ASC, tblClassi.IDClasse, tblSezioni.IDSezione ASC";
     
-    $result =mysql_query($query);
+    $result =mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     //CALCOLA QUANTE "PAGINE" DI TABELLA SERVONO IN BASE AL NUMERO MAX DI ELEMENTI E AL NUMERO DI RUOLI ASSEGNATI
-    $nr_ruoli=mysql_num_rows($result); //trova il numero di ruoli assegnati all'iscritto
+    $nr_ruoli=mysqli_num_rows($result); //trova il numero di ruoli assegnati all'iscritto
     
     // trova il numero "grezzo" delle pagine che servono
     $valore=($nr_ruoli/$nrelementi_tabella);
@@ -1700,11 +1700,11 @@ function CreaTabellaRuoli()
 
             $posizione=($_POST["nrpagina_tabella_ruoli"]-1)*$nrelementi_tabella;
             
-            mysql_data_seek($result,$posizione);
+            mysqli_data_seek($result, $posizione);
         }
     
     //COSTRUISCE LA TABELLA
-    while ($row=mysql_fetch_object($result))
+    while ($row=mysqli_fetch_object($result))
     {
         // controlla che nella costruzione della tabella non venga superato il numero degli elementi consentiti
         $indice++;
@@ -1737,7 +1737,7 @@ function GetLegendaRuoli()
     
     $query="SELECT * FROM tblruolioratorio ORDER BY IdRuoloOratorio ASC";
     
-    $result=mysql_query($query);
+    $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     echo "<table id=\"tabellalegendaruoli\" class=\"layout_tabella_legenda_ruoli\">";
     echo "<tr>";
@@ -1745,7 +1745,7 @@ function GetLegendaRuoli()
     echo "<th>RUOLO</th>";
     echo "</tr>";
     
-    while ($row=mysql_fetch_object($result)) {
+    while ($row=mysqli_fetch_object($result)) {
         $i++;
         if ($i!=1) { 
             if ($i % 2) {
@@ -1776,28 +1776,28 @@ function AggiungiRuolo()
   $query = "SELECT * FROM tblanimatori WHERE ID=".$_POST["hdnID"];
 
   
-  $result=mysql_query($query);
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
   /*if (mysql_num_rows($result)+1>7) {
     $errore=1;
     return $errore;
   }
   */
-  while($row=mysql_fetch_object($result)) {
+  while($row=mysqli_fetch_object($result)) {
       if ($row->IDRuolo == $_POST['myruolo'] && $row->IDClasse==$_POST['myruoloclasse'] && $row->IDSezione==$_POST['myruologruppo']) {
           $errore=2;
           return $errore;
       }
   }
   
-  mysql_query("START TRANSACTION");
+  mysqli_query($GLOBALS["___mysqli_ston"], "START TRANSACTION");
   
   $query="INSERT INTO tblanimatori (ID,IDRuolo,IDClasse,IDSezione)
           VALUES ('".$_POST['hdnID']."','".$_POST['myruolo']."','".$_POST['myruoloclasse']."','".$_POST['myruologruppo']."')";
   
-  $result=mysql_query($query);
+  $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
   
-  mysql_query("COMMIT");
+  mysqli_query($GLOBALS["___mysqli_ston"], "COMMIT");
   
   return $errore;
 }
@@ -1812,7 +1812,7 @@ function CancellaRuolo()
     
     foreach ($DatiDaCancellare as $valore) {
         $query="DELETE FROM tblanimatori WHERE IDAnimatore=".$valore;  
-        mysql_query($query);
+        mysqli_query($GLOBALS["___mysqli_ston"], $query);
     }
     return;
 }
@@ -1843,9 +1843,9 @@ function SalvaDatiParentelaNuovo()
     //recupera il sesso e la data di nascita
     $query="SELECT Sesso,Data_di_nascita FROM Catechismi WHERE ID =".$id_nucleo_A;
             
-    $nucleoA=mysql_query($query);
+    $nucleoA=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
-    $rowA=mysql_fetch_object($nucleoA);
+    $rowA=mysqli_fetch_object($nucleoA);
     
     $sesso_nucleo_A=$rowA->Sesso;
     $data_nucleo_A=(int)substr($rowA->Data_di_nascita,0,4);
@@ -1877,14 +1877,14 @@ function SalvaDatiParentelaNuovo()
              ON tblparentela.IdFamigliare = Catechismi.ID
              WHERE tblparentela.IdFamiglia=(SELECT IdFamiglia FROM tblparentela WHERE IdFamigliare=".$id_nucleo_A.")";
 
-    $nucleoA=mysql_query($query);
+    $nucleoA=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     
     //CONTROLLA SE ESISTE GIÀ UN ID DI FAMIGLIA IN RELAZIONE CON L'ISCRITTO DELLA SCHEDA APERTA, SE NO LO CREA
     if ($_POST["id_famiglia"]==-1) {
         $query="SELECT Max(IdFamiglia) as UltimoId FROM tblparentela";
-        $result_id_famiglia=mysql_query($query);
-        $dati=mysql_fetch_object($result_id_famiglia);
+        $result_id_famiglia=mysqli_query($GLOBALS["___mysqli_ston"], $query);
+        $dati=mysqli_fetch_object($result_id_famiglia);
         
         // setta l'id della famiglia
         $id_famiglia_B =(($dati->UltimoId)+1);
@@ -1901,15 +1901,15 @@ function SalvaDatiParentelaNuovo()
             ON tblparentela.IdFamigliare = Catechismi.ID
             WHERE tblparentela.IdFamiglia =".$id_famiglia_B;
             
-    $nucleoB=mysql_query($query);
+    $nucleoB=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     // se non esiste nessun elemento del nucleo B bisogna trovare i dati necessari per i controlli
-    if (mysql_num_rows($nucleoB) < 1) {
+    if (mysqli_num_rows($nucleoB) < 1) {
         $query="SELECT Sesso,Data_di_nascita FROM Catechismi WHERE ID =".$id_nucleo_B;
             
-        $nucleoB1=mysql_query($query);
+        $nucleoB1=mysqli_query($GLOBALS["___mysqli_ston"], $query);
         
-        $rowB1=mysql_fetch_object($nucleoB1);
+        $rowB1=mysqli_fetch_object($nucleoB1);
     
         $data_nucleo_B=(int)substr($rowB1->Data_di_nascita,0,4);    
         $sesso_nucleo_B=$rowB1->Sesso;
@@ -1940,8 +1940,8 @@ function SalvaDatiParentelaNuovo()
     }
    
     // ******* CONTROLLO INCROCIATO DEI COMPONENTI DEI DUE NUCLEI**********    
-    if (mysql_num_rows($nucleoA)>0) { // esiste un nucleo A
-        while ($rowA=mysql_fetch_object($nucleoA)) { //nucleo A
+    if (mysqli_num_rows($nucleoA)>0) { // esiste un nucleo A
+        while ($rowA=mysqli_fetch_object($nucleoA)) { //nucleo A
             $id_nucleo_A=$rowA->IdFamigliare;
             $id_famiglia_A=$rowA->IdFamiglia;
             //preserva la scelta fatta dall'operatore per il grado di parentela
@@ -1965,8 +1965,8 @@ function SalvaDatiParentelaNuovo()
             // ottiene l'anno di nascita del componente del nucleo A
             $data_nucleo_A=(int)substr($rowA->Data_di_nascita,0,4);
                     
-            if (mysql_num_rows($nucleoB)>0) { // il nucleo B ha già elementi
-                while ($rowB=mysql_fetch_object($nucleoB)) { // nucleo B
+            if (mysqli_num_rows($nucleoB)>0) { // il nucleo B ha già elementi
+                while ($rowB=mysqli_fetch_object($nucleoB)) { // nucleo B
                     // ottiene i dati da confrontare con il nucleo A
                     $id_nucleo_B=$rowB->IdFamigliare;
                     $grado_nucleo_B =$rowB->IdGradoParentela;
@@ -2098,7 +2098,7 @@ function SalvaDatiParentelaNuovo()
                 }
                 
                 //bisogna tornare all'inizio del recordset B
-                mysql_data_seek($nucleoB,0);
+                mysqli_data_seek($nucleoB, 0);
                     
             } else { // NON C'È NESSUN COMPONENTE NEL NUCLEO B
                   // controlla l'inserimento dei genitori
@@ -2227,8 +2227,8 @@ function SalvaDatiParentelaNuovo()
             }
         }
     } else { // IL NUCLEO A NON HA ELEMENTI
-          if (mysql_num_rows($nucleoB)>0) { // il nucleo B ha già elementi
-                while ($rowB=mysql_fetch_object($nucleoB)) { // nucleo B
+          if (mysqli_num_rows($nucleoB)>0) { // il nucleo B ha già elementi
+                while ($rowB=mysqli_fetch_object($nucleoB)) { // nucleo B
                     // ottiene i dati da confrontare con il nucleo A
                     $id_nucleo_B=$rowB->IdFamigliare;
                     $grado_nucleo_B =$rowB->IdGradoParentela;
@@ -2400,7 +2400,7 @@ function SalvaDatiParentelaNuovo()
     }
     
     // VA (finalmente...!!) A SALVARE I DATI IN TABELLA
-    if (mysql_num_rows($nucleoA) > 0 && mysql_num_rows($nucleoB) > 0) {
+    if (mysqli_num_rows($nucleoA) > 0 && mysqli_num_rows($nucleoB) > 0) {
         // stabilisce quale famiglia deve modificare
         if ($id_famiglia_A < $id_famiglia_B) {
             $id_famiglia = $id_famiglia_A;
@@ -2412,22 +2412,22 @@ function SalvaDatiParentelaNuovo()
     
         // manda a mysql i dati
         $query ="UPDATE tblparentela SET IdFamiglia = '".$id_famiglia."' WHERE IdFamiglia = '".$famiglia_id."'";
-        $salvataggio=mysql_query($query) || die ($query);
+        $salvataggio=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
         
-    } elseif (mysql_num_rows($nucleoA) > 0 && mysql_num_rows($nucleoB) == 0){
+    } elseif (mysqli_num_rows($nucleoA) > 0 && mysqli_num_rows($nucleoB) == 0){
           $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_B','$grado_nucleo_B','$id_famiglia_A')";
-          $salvataggio=mysql_query($query) || die ($query);
+          $salvataggio=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
     
-    } elseif (mysql_num_rows($nucleoA) == 0 && mysql_num_rows($nucleoB) > 0){
+    } elseif (mysqli_num_rows($nucleoA) == 0 && mysqli_num_rows($nucleoB) > 0){
           $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_A','$grado_nucleo_A','$id_famiglia_B')";
-          $salvataggio=mysql_query($query) || die ($query);
+          $salvataggio=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
    
     } else {
           $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_B','$grado_nucleo_B','$id_famiglia_B')";
-          $salvataggio=mysql_query($query) || die ($query);
+          $salvataggio=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
           
           $query="INSERT INTO tblparentela (IdFamigliare,IdGradoParentela,IdFamiglia) VALUES('$id_nucleo_A','$grado_nucleo_A','$id_famiglia_B')";
-          $salvataggio=mysql_query($query) || die ($query);
+          $salvataggio=mysqli_query($GLOBALS["___mysqli_ston"], $query) || die ($query);
     }
     
    
@@ -2444,11 +2444,11 @@ function GetFamigliariParentelaNucleoA() {
                 WHERE tblparentela.IdFamiglia =".$_POST["id_famiglia_nucleo_A"]. "
                 ORDER BY tblparentela.IdGradoParentela";
         
-        $result = mysql_query($query);
+        $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
         
         echo "<table id=\"tabella_parentela_nucleo_A\"><tr>";
         
-        while ($row=mysql_fetch_object($result)) {
+        while ($row=mysqli_fetch_object($result)) {
             switch ($row->IdGradoParentela) {
                 case 1:
                     $classe="cella_parentela_nucleo_A_mamma";

@@ -410,7 +410,7 @@ table.ec td.layoutECusc {
       <div id="myoperatore">
         <?php
             $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-            $row = mysql_fetch_object($result);
+            $row = mysqli_fetch_object($result);
             $_POST["login"]= htmlentities($row->login);
         ?>
         | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 
@@ -636,7 +636,7 @@ table.ec td.layoutECusc {
                                 //if ($_POST["FiltroVoce"]!="F") {
                                     $result= RecuperaCapitolo();
                                     if ($result) {
-                                        $row=mysql_fetch_object($result);
+                                        $row=mysqli_fetch_object($result);
                                         echo (htmlentities($row->Capitolo));
                                     }
                                 //}
@@ -655,7 +655,7 @@ table.ec td.layoutECusc {
                     value="<?php 
                                 $result= RecuperaVoce();
                                 if ($result) {
-                                    $row=mysql_fetch_object($result);
+                                    $row=mysqli_fetch_object($result);
                                     echo (htmlentities($row->Voce));
                                     
                                     switch ($row->Movimentazione) {
@@ -740,10 +740,10 @@ if ($_SESSION['access_level'] >3) {
                         GROUP BY Year(DataOperazione)  
                         ORDER BY Year(DataOperazione) DESC";
                         
-                $anni=mysql_query($query);
+                $anni=mysqli_query($GLOBALS["___mysqli_ston"], $query);
                 
                 if ($anni) {
-                    while ($row=mysql_fetch_object($anni)) {
+                    while ($row=mysqli_fetch_object($anni)) {
                         echo "<option name=\"yearBilancio\" id=\"yearBilancio\" value=\"".$row->Anno."\">".$row->Anno."</option>";
                     }
                 }

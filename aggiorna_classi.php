@@ -35,7 +35,7 @@ function AggiornaClassi() {
     $rstIscritti = GetIscritto();
 
     If ($rstIscritti) {
-        while ($row=mysql_fetch_object($rstIscritti)) {
+        while ($row=mysqli_fetch_object($rstIscritti)) {
           // recupera l'anno di nascita dell'iscritto
           $anno_nascita_iscritto=(int)substr($row->Data_di_nascita,0,4);
           
@@ -44,11 +44,11 @@ function AggiornaClassi() {
       
           // aggiorna la classe nel database
           $query_aggiornamento="UPDATE Catechismi SET Classe=".$classe_aggiornata.", Sezione=1 WHERE ID=".($row->ID);
-          $result_aggiornamento=mysql_query($query_aggiornamento);
+          $result_aggiornamento=mysqli_query($GLOBALS["___mysqli_ston"], $query_aggiornamento);
       
           // controlla che non vengano restituiti errori da Mysql
-          if (mysql_errno() <> 0) {
-		          throw new Exception("La routine di aggiornamento ha restituito il seguente errore: ".mysql_errno().": ".mysql_error()."<br/><br/>Statement SQL: ".$query_aggiornamento);
+          if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		          throw new Exception("La routine di aggiornamento ha restituito il seguente errore: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).": ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))."<br/><br/>Statement SQL: ".$query_aggiornamento);
 		          exit();
 	        }  
       
@@ -162,7 +162,7 @@ function fncAggiorna() {
       <div id="myoperatore">
         <?php
             $result = GetOperatore($idoperatore); // legge nome e cognome dell'operatore in base al suo ID
-            $row = mysql_fetch_object($result);
+            $row = mysqli_fetch_object($result);
             $_POST["login"]= htmlentities($row->login);
         ?>
         | operatore connesso: <strong><?php echo htmlentities($row->Nome).' '.htmlentities($row->Cognome) ?></strong > | 
@@ -189,7 +189,7 @@ function fncAggiorna() {
 function GetIscritto () {
     $query="SELECT ID,Data_di_nascita,Classe,Sezione FROM Catechismi ORDER BY ID";
     
-    $result =mysql_query($query);
+    $result =mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
     return $result;
 }

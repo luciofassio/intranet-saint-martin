@@ -32,7 +32,7 @@ ConnettiDB();
 
 // ottiene il nome dell'operatore
 $result=GetOperatore($idoperatore); 
-$row=mysql_fetch_object($result);
+$row=mysqli_fetch_object($result);
 $nome_operatore=$row->Nome;
 $result=null;
 $row=null;
@@ -205,10 +205,10 @@ switch ($azione) {
         ORDER BY GruppoSacramento";
 
     // invia la query a Mysql
-    $rstGruppi=mysql_query($query);
+    $rstGruppi=mysqli_query($GLOBALS["___mysqli_ston"], $query);
     
     // controlla se ci sono gruppi da analizzare e stampare
-    $nr_gruppi=mysql_num_rows($rstGruppi);
+    $nr_gruppi=mysqli_num_rows($rstGruppi);
     if ($nr_gruppi>0) {
         //Visualizza le informazioni prima di inviarle alla stampante
         VisualizzaInfo($rstGruppi);
@@ -242,14 +242,14 @@ switch ($azione) {
               ORDER BY tblsacramenti.ParrocchiaBattesimo";
 
       // invia la query a Mysql
-      $result=mysql_query($query);
+      $result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
       
-      if (mysql_num_rows($result)==0) {
+      if (mysqli_num_rows($result)==0) {
           NoGruppiIscritti('iscritti');
           exit();
       } 
       
-      while ($parrocchia=mysql_fetch_object($result)) {
+      while ($parrocchia=mysqli_fetch_object($result)) {
           VisualizzaNotifica($parrocchia->ParrocchiaBattesimo);
       }
       
@@ -284,9 +284,9 @@ $query="SELECT tblsacramenti.*,Catechismi.Cognome,Catechismi.Nome,Catechismi.Dat
         AND DATE(tblgruppisacramenti.GruppoSacramento)='".ConvertiData($data_celebrazione)."' 
         ORDER BY Catechismi.Cognome,Catechismi.Nome";
         
-      $rstBattezzati=mysql_query($query);
+      $rstBattezzati=mysqli_query($GLOBALS["___mysqli_ston"], $query);
         
-      if (mysql_num_rows($rstBattezzati) !=0) {
+      if (mysqli_num_rows($rstBattezzati) !=0) {
           ?>
           <div id="contenutopagina">
                   <?php 
@@ -331,7 +331,7 @@ $query="SELECT tblsacramenti.*,Catechismi.Cognome,Catechismi.Nome,Catechismi.Dat
                       <th class="tabelladati">Data Battesimo</th>
                   </tr>
           <?php
-              while ($row=mysql_fetch_object($rstBattezzati)){
+              while ($row=mysqli_fetch_object($rstBattezzati)){
                   $i++;
                   echo "<tr>";
                   echo "<td class='datitabella'><strong>".$row->Nome." ".$row->Cognome."</strong></td>";
@@ -472,14 +472,14 @@ global $title;
             <fieldset style="text-align:left;margin-left:25px;font-size:small;width:400px;">
             <legend>&nbsp;Scegli data celebrazione...&nbsp;</legend>
             <?php 
-                $nr_gruppi=mysql_num_rows($rstGruppi);
+                $nr_gruppi=mysqli_num_rows($rstGruppi);
                 if ($nr_gruppi==1) {
                     $checked="checked";
                 } else {
                     $checked="";
                 }
                 
-                while ($gruppi=mysql_fetch_object($rstGruppi)) {
+                while ($gruppi=mysqli_fetch_object($rstGruppi)) {
                     echo "<input type=\"radio\" name=\"optGruppo\" value=\"".ConvertiData($gruppi->GruppoSacramento)."\"".$checked."/>&nbsp;&nbsp;".ConvertiData($gruppi->GruppoSacramento)."<br />";
                 }
             ?>

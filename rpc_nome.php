@@ -5,15 +5,15 @@ ConnettiDB();
 // controllo di avere una stringa da cercare
 if(isset($_POST['queryString'])) {
 	// contro sql injection
-	$queryString = mysql_real_escape_string($_POST['queryString']);
+	$queryString = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_POST['queryString']) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
 	if(strlen($queryString) >0) {
-		$query = mysql_query("SELECT ID, Cognome, Nome, BarCode FROM Catechismi WHERE Cancellato=False AND Nome LIKE '$queryString%' LIMIT 20");
-		if (mysql_errno() <> 0) {
-			echo("rpc_nome: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+		$query = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT ID, Cognome, Nome, BarCode FROM Catechismi WHERE Cancellato=False AND Nome LIKE '$queryString%' LIMIT 20");
+		if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+			echo("rpc_nome: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))."<br/><br/>".$sql);
 			exit();
 		}  
 		if($query) {
-			while ($row = mysql_fetch_object($query)) {
+			while ($row = mysqli_fetch_object($query)) {
     			echo '<li onClick="fill(\''.htmlentities($row->ID).'|'.htmlentities($row->Cognome).'|'.htmlentities($row->Nome).'|'.htmlentities($row->BarCode).'\');">'.htmlentities($row->Nome).' '.htmlentities($row->Cognome).'</li>';
       		}
 		} else {

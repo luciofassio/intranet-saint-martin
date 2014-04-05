@@ -6,15 +6,15 @@ ConnettiDB();
 // controllo di avere una stringa da cercare
 if(isset($_POST['queryString'])) {
 	// contro sql injection
-  $queryString = mysql_real_escape_string($_POST['queryString']);
+  $queryString = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ? mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_POST['queryString']) : ((trigger_error("[MySQLConverterToo] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
 	if(strlen($queryString) >0) {
-     $query =mysql_query("select idcomuni, comune, codicepostale, provincia from tblcomuni where comune like '".$queryString."%' ORDER BY comune  LIMIT 11");
+     $query =mysqli_query($GLOBALS["___mysqli_ston"], "select idcomuni, comune, codicepostale, provincia from tblcomuni where comune like '".$queryString."%' ORDER BY comune  LIMIT 11");
 		if($query) {
-		if (mysql_errno() <> 0) {
-			echo("rpc_comuni: ".mysql_errno().":".mysql_error()."<br/><br/>".$sql);
+		if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+			echo("rpc_comuni: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))."<br/><br/>".$sql);
 			exit();
 		}  
-      while ($row = mysql_fetch_object($query)) {
+      while ($row = mysqli_fetch_object($query)) {
               echo '<input type"hidden" id="mytown" value="'.htmlentities($row->idcomuni).'|'.htmlentities($row->comune).'|'.htmlentities($row->codicepostale).'|'.htmlentities($row->provincia).'\');">';
       }
 		} else {

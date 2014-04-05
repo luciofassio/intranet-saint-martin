@@ -21,12 +21,12 @@ $query="SELECT tblIscrizioni.IDRuolo, tblIscrizioni.IDIscrizione,tblIscrizioni.I
 		         ORDER BY Catechismi.Cognome, Catechismi.Nome";
 
 
-$result=mysql_query($query);
+$result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
 echo ("<table border =1>");
 echo ("<th>Nr.</th><th>Codice iscrizione</th><th>Cognome</th><th>Nome</th><th>Squadra</th><th>AbbPr</th><th>AbbCen</th><th>Pagamento</th><th>Note</th>");
 
-while ($record=mysql_fetch_array($result))
+while ($record=mysqli_fetch_array($result))
 {
 $indice++;
 
@@ -112,13 +112,13 @@ $query="SELECT tblIscrizioni.IDIscrizione,tblIscrizioni.IDEvento, tblIscrizioni.
 		         ORDER BY Catechismi.Cognome, Catechismi.Nome";
 
 
-$result=mysql_query($query);
+$result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
 echo ("<h4>ISCRITTI SENZA SQUADRA</h4>");
 echo ("<table border =1>");
 echo ("<th>Nr.</th><th>Codice iscrizione</th><th>Cognome</th><th>Nome</th><th>Squadra</th><th>AbbPr</th><th>AbbCen</th><th>Pagamento</th><th>Note</th>");
 
-while ($record=mysql_fetch_array($result))
+while ($record=mysqli_fetch_array($result))
 {
 	if ($record["IDSquadra"]==null || $record["IDSquadra"]=="") {
 		$indice++;

@@ -83,8 +83,8 @@ if ($_GET["id"] != "") {
 	ConnettiDB();
 	$rstPersona = GetPersona($_GET["id"]);
 	if($rstPersona) {
-		if(mysql_num_rows($rstPersona) > 0) {
-			$row = mysql_fetch_object($rstPersona);
+		if(mysqli_num_rows($rstPersona) > 0) {
+			$row = mysqli_fetch_object($rstPersona);
 			$nome = htmlentities($row->Nome);
 			$cognome = htmlentities($row->Cognome);
 		}

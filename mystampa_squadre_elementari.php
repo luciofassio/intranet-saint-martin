@@ -9,12 +9,12 @@ ConnettiDB();
 echo ("<h3>ELENCO ISCRITTI SUDDIVISI PER SQUADRE</h3>");
 $query="SELECT tblIscrizioni.IDEvento, tblIscrizioni.ID,tblIscrizioni.IDSquadra, tblSquadre.IDSquadra, tblSquadre.NomeSquadra, Catechismi.ID, Catechismi.Cognome, Catechismi.Nome FROM tblIscrizioni INNER JOIN tblSquadre ON tblIscrizioni.IDSquadra=tblSquadre.IDSquadra INNER JOIN Catechismi ON tblIscrizioni.ID=Catechismi.ID WHERE tblIscrizioni.IDEvento=16 ORDER BY tblSquadre.NomeSquadra, Catechismi.Cognome, Catechismi.Nome";
 
-$result=mysql_query($query);
+$result=mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
 echo ("<table border =1>");
 echo ("<th>Nr.</th><th>Cognome</th><th>Nome</th><th>Squadra</th>");
 
-while ($record=mysql_fetch_array($result))
+while ($record=mysqli_fetch_array($result))
 {
 $indice++;
 
