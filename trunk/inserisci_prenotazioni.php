@@ -191,9 +191,11 @@ $result = GetOperatore($idoperatore);
 $row = mysqli_fetch_object($result);
 // preparo il link alla stampa della privacy
 if ($hdnID != null) {
-	$stampa_privacy = "<a href=stampa_privacy_totale.php?id=".$hdnID." target=_blank >stampa privacy</a>";
+	$stampa_privacy = "| <a href=stampa_privacy_totale.php?id=".$hdnID." target=_blank >privacy </a>";
+	$stampa_ricevuta = "| <a href=stampa_ricevuta.php?id=".$hdnID."&idevento=".$_POST['Evento']." target=_blank >ricevuta </a>";
 } else {
-	$stampa_privacy = "stampa privacy";
+	$stampa_privacy = "| privacy ";
+	$stampa_ricevuta = "| ricevuta ";
 }
 ?>
       <div id="nomepagina">
@@ -201,8 +203,7 @@ if ($hdnID != null) {
       </div> <!-- fine sezione nome della pagina-->
       
       <!-- ******************** sezione barra di navigazione ***************************************-->
-      <div id="barranavigazione">
-        | <a href="homepage.php">home page</a> | <a href="xanagrafica.php">anagrafica oratorio</a> | <?php echo $stampa_privacy ?> |
+      <div id="barranavigazione">| <a href="homepage.php">home page</a> | <a href="xanagrafica.php">anagrafica oratorio</a> <?php echo $stampa_privacy.$stampa_ricevuta ?>
       </div> <!-- fine sezione barra di navigazione -->
    </div> <!-- fine sezione intestazione -->
      		
