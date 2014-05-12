@@ -1,0 +1,3 @@
+Errori
+
+1. manca campo SiglaRuolo in tbl_ruolier (?)
