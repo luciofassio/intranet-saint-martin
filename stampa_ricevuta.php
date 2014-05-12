@@ -133,7 +133,7 @@ if($rstIscrizione) {
         
         <div id="intestazione_pagina">	
             <p style="font-size:large"><img src="./Immagini/logoratorio.png" id="logo_oratorio" width ="40" height="40" alt="logo oratorio" />
-            <strong>Oratorio Saint Martin - Viale Europa, 1 - 11100 Aosta - Tel. 0165/554234 </strong></p>
+            <strong>Oratorio Saint Martin - Viale Europa 1 Aosta - Tel. 0165/554234 </strong></p>
 	    </div>
         <h2>Ricevuta di pagamento iscrizione </h2>
         
@@ -171,22 +171,9 @@ if($rstIscrizione) {
 <?php
 	}
 }
-
-function GetTesseratiByID($ID)
-{
-	$sql = "SELECT ID FROM Catechismi WHERE ID=%1\$s AND Cancellato=false";
-	$sql = sprintf($sql, $ID);
-	
-	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
-	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
-		throw new Exception("GetTesseratiByID: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
-		exit();
-	}  
-    return $result;
-}
 ?>
 </body>
-<!-- script type="text/javascript">
+<script type="text/javascript">
 	window.print();
-</script -->
+</script>
 </html>
