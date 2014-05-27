@@ -49,7 +49,7 @@ tr.totale {
 	font-weight: bold;
 }
 </style>
-<script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
 <script type="text/javascript">
 	function PrintPage() {
 		$("input[type='button']").hide();
@@ -119,8 +119,8 @@ if($rstIscritti) {
 			}
 			echo "<tr class=d".($rowIscritti->rownum % 2).">";		
 			echo "<td style=text-align:right>".$rowIscritti->rownum."</td>";
-			echo "<td style=text-align:right>".$rowIscritti->Cognome."</td>";
-			echo "<td style=text-align:right>".$rowIscritti->Nome."</td>";
+			echo "<td style=text-align:right>".htmlentities($rowIscritti->Cognome)."</td>";
+			echo "<td style=text-align:right>".htmlentities($rowIscritti->Nome)."</td>";
 			echo "<td style=text-align:right>".$cc."</td>";
 			echo "<td style=text-align:right>".$pa."</td>";
 			echo "<td style=text-align:right>".$ac."</td>";
