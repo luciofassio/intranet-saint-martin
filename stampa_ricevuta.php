@@ -2,6 +2,7 @@
 require('accesso_db.inc');
 require ('bar128.php');							// Our Library of Barcode Functions
 
+ini_set("default_charset", 'utf-8');
 ob_clear;
 ConnettiDB();
 $id = $_GET["id"];
@@ -105,6 +106,7 @@ ul {
 }
 
 </style>
+<script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
 </head>
 <body>
 
@@ -132,7 +134,7 @@ if($rstIscrizione) {
     <div id="contenutopagina">
         
         <div id="intestazione_pagina">	
-            <p style="font-size:large"><img src="./Immagini/logoratorio.png" id="logo_oratorio" width ="40" height="40" alt="logo oratorio" />
+            <p style="font-size:small"><img src="./Immagini/logoratorio.png" id="logo_oratorio" width ="40" height="40" alt="logo oratorio" />
             <strong>Oratorio Saint Martin - Viale Europa 1 Aosta - Tel. 0165/554234 </strong></p>
 	    </div>
         <h2>Ricevuta di pagamento iscrizione </h2>
@@ -146,20 +148,20 @@ if($rstIscrizione) {
         <div id="anagrafica">
         <table class="tabella_anagrafica" border="0">
             <tr>
-		        <td width="10%">Nominativo:</td><td width="23%"><strong><?php echo $rowPersona->Cognome." ".$rowPersona->Nome; ?></strong></td>
-                <td width="10%">Evento:</td><td width="23%"><strong><?php echo $evento ?></strong></td>
-		        <td width="10%">Cena finale:</td><td width="23%"><strong><?php echo $rowIscrizione->CenaFinale ? "s&iacute;" : "no" ?></strong></td>
+		        <td width="10%">Nominativo:</td><td width="23%"><strong><?php echo htmlentities($rowPersona->Cognome)." ".htmlentities($rowPersona->Nome); ?></strong></td>
+              <td width="10%">Evento:</td><td width="23%"><strong><?php echo $evento ?></strong></td>
+		        <td width="10%">Ospiti:</td><td width="23%"><strong><?php echo $rowIscrizione->CenaFinaleOspiti > 0 ? $rowIscrizione->CenaFinaleOspiti : "nessuno" ?></strong></td>
 		    </tr>
             <tr>
-		        <td width="10%">Indirizzo:</td><td width="23%"><strong><?php echo $rowPersona->Tipo_via." ".$rowPersona->Via." ".$rowPersona->numero_civico."<br/>".$rowPersona->CAP." ".$rowPersona->Citt?></strong></td>
-                <td width="10%">Note:</td><td width="23%"><strong><?php echo $rowIscrizione->Note ?></strong></td>
-		        <td width="10%">Ospiti:</td><td width="23%"><strong><?php echo $rowIscrizione->CenaFinaleOspiti > 0 ? $rowIscrizione->CenaFinaleOspiti : "nessuno" ?></strong></td>
-                </tr>
-	        <tr>
-                <td width="10%">Data di nascita:</td><td width="23%"><strong><?php echo date_format(date_create($rowPersona->Data_di_nascita), "d/m/Y") ?></strong></td>
-                <td width="10%">Importo:</td><td width="23%"><strong><?php echo "&euro; ".number_format($rowIscrizione->Pagamento, 2, ',', '.') ?></strong></td>
+		        <td width="10%">Indirizzo:</td><td width="23%"><strong><?php echo $rowPersona->Tipo_via." ".htmlentities($rowPersona->Via)." ".$rowPersona->numero_civico."<br/>".$rowPersona->CAP." ".htmlentities($rowPersona->Citt)?></strong></td>
+              <td width="10%">Note:</td><td width="23%"><strong><?php echo $rowIscrizione->Note ?></strong></td>
 		        <td width="10%">Evento speciale:</td><td width="23%"><strong><?php echo $rowIscrizione->EventoSpeciale ? "s&iacute;" : "no" ?></strong></td>
-                </tr>
+           </tr>
+	        <tr>
+              <td width="10%">Data di nascita:</td><td width="23%"><strong><?php echo date_format(date_create($rowPersona->Data_di_nascita), "d/m/Y") ?></strong></td>
+              <td width="10%">Importo:</td><td width="23%"><strong><?php echo "&euro; ".number_format($rowIscrizione->Pagamento, 2, ',', '.') ?></strong></td>
+		        <td width="10%">&nbsp;</td><td width="23%">&nbsp;</td>
+           </tr>
 		</table>
       <div style="float:left;margin-top:1em">
           <strong>Data:</strong> &nbsp; 
@@ -167,13 +169,17 @@ if($rstIscrizione) {
                     echo date("d/m/Y");
                 ?>
       </div>
-      
+		<div style="text-align:center;margin:25px 0px 25px 0px">
+			<input type="button" value="Chiudi" onclick="window.close();" />
+		</div>
 <?php
 	}
 }
 ?>
 </body>
 <script type="text/javascript">
-	window.print();
+		$("input[type='button']").hide();
+		window.print();
+		$("input[type='button']").show();
 </script>
 </html>

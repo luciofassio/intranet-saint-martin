@@ -145,8 +145,8 @@ if($rstIscritti) {
 			}
 			echo "<tr class=d".($rowIscritti->rownum % 2).">";		
 			echo "<td style=text-align:right>".$rowIscritti->rownum."</td>";
-			echo "<td style=text-align:left>".$rowIscritti->Cognome."</td>";
-			echo "<td style=text-align:left>".$rowIscritti->Nome."</td>";
+			echo "<td style=text-align:left>".htmlentities($rowIscritti->Cognome)."</td>";
+			echo "<td style=text-align:left>".htmlentities($rowIscritti->Nome)."</td>";
 			echo "<td style=text-align:right>".$dp."</td>";
 			echo "<td style=text-align:right>".$pa."</td>";
 			echo "<td style=text-align:left>".stripslashes($rowIscritti->Note)."</td>";

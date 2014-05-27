@@ -1,10 +1,10 @@
 <?php
-/* test Lucio */
+/* test Lucio 
 $dbserver = "localhost";
 $dbuser = "root";
 $dbpassword = "mysql";
 $dbname = "saint_martin_db";
-
+*/
 
 /*  test Marco 
 $dbserver = "localhost";
@@ -13,10 +13,10 @@ $dbpassword = "oratorio";
 $dbname = "db_oratorio";
 */
 
-/* produzione 
+/* produzione */
 $dbserver= "192.168.1.3";
 $dbuser = "root";
 $dbpassword = "mysql";
 $dbname = "saint_martin_db";
-*/
+
 ?>
