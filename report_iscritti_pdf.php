@@ -161,7 +161,7 @@ function GetIscritti() {
     return $result;
 }	
 ?>
-			<div style="text-align:center;margin:25px 0px 25px 0px">
+			<div style="text-align:center;margin:25px 0px 25px 0px">PrintPage
 				<input type="button" value="Stampa" onclick="PrintPage();" />
 				<input type="button" value="Chiudi" onclick="location.href='report.php';" />
 			</div>

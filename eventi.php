@@ -1,6 +1,7 @@
 <?php
 //echo phpinfo();
 //exit();
+ob_start();
 require('accesso_db.inc');
 require('business_layer.inc');
 require("funzioni_generali.inc");
@@ -15,10 +16,9 @@ $data_loaded = (bool)$_POST['data_loaded'];
 //echo "<hr/>chkiscrizione:".sprintf("%s", $_POST["chkIscrizione"])."-".gettype($_POST["chkIscrizione"])."<hr/>";
 
 $host  = $_SERVER['HTTP_HOST'];
-
+$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 // controllo l'autenticazione
 if (!isset($_SESSION['authenticated_user'])) {
-		$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 		header("Location: http://$host$uri/logon.php");
 		exit();
 }
@@ -152,12 +152,20 @@ switch (strtolower($_REQUEST["salva"])) {
 		break;
 	default:
 }
+if (strtolower($_REQUEST["nuovo"]) == "nuovo") {
+	header("Location: http://$host$uri/nuovo_evento.php");
+	exit();
+}
+
 ?>
       </div> <!-- fine corpo pagina -->
      
 		<!-- *********** bottone per salvare gli eventi ******************* -->
 		<div id="salva">
-			 <div style="text-align:center"><input name="salva" type="submit" value ="salva"/></div>
+			 <div style="text-align:center">
+			 	<input name="salva" type="submit" value ="salva"/>
+			 	<input name="nuovo" type="submit" value ="nuovo"/>
+			 </div>
 		</div>
     </form>  
 	</div>

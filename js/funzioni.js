@@ -687,6 +687,52 @@ function AggiornaListino(ruolo) {
 	});
 }
 
+// controllo di obbligatorietà
+function ControlloObbligatorio(campo) {
+	if (campo.value == "") {
+		nomecampo = $('label[for="' + campo.id + '"]').html();		
+		alert ("Il campo " + nomecampo + " \xe8 obbligatorio");
+		campo.className = "campoerrato";
+		campoLocale = campo;							// altrimenti la setTimeout non riconosce campo !!
+		setTimeout("campoLocale.focus();", 1);			// la setTimeout serve a farlo funzionare con FF
+		return false;
+	} else {
+		return true;		
+	}
+}
+
+// controllo di numericità
+function ControlloNumeroPositivo(campo) {
+		nomecampo = $('label[for="' + campo.id + '"]').html();
+		if (isNaN(campo.value.replace(",", "."))) {
+		alert ("Il valore inserito nel campo " + nomecampo + " non \xe8 numerico");
+		campo.className = "campoerrato";
+		campoLocale = campo;							// altrimenti la setTimeout non riconosce campo !!
+		setTimeout("campoLocale.focus();", 1);			// la setTimeout serve a farlo funzionare con FF
+		return false;
+	}
+	else {
+		if (campo.value == "") {						// se il campo è vuoto metto zero
+			return false;
+		}
+		if (Number(campo.value) <= 0) {
+			alert ("Il valore inserito deve essere positivo e maggiore di zero");
+			campo.className = "campoerrato";
+			campoLocale = campo;							// altrimenti la setTimeout non riconosce campo !!
+			setTimeout("campoLocale.focus();", 1);			// la setTimeout serve a farlo funzionare con FF
+			return false;
+		}
+		else {
+			campo.value = campo.value.replace(".", ",");	// sostituisco l'eventuale punto decimale con la virgola
+			campo.className = "";
+			return true;
+		}
+	}
+}		      
+
+
+
+
 // controllo di numericità
 function ControlloNumerico(campo) {
 	if (isNaN(campo.value.replace(",", "."))) {
@@ -694,20 +740,24 @@ function ControlloNumerico(campo) {
 		campo.className = "campoerrato";
 		campoLocale = campo;							// altrimenti la setTimeout non riconosce campo !!
 		setTimeout("campoLocale.focus();", 1);			// la setTimeout serve a farlo funzionare con FF
+		return false;
 	}
 	else {
 		if (campo.value == "") {						// se il campo è vuoto metto zero
 			campo.value = "0";
+			return true;
 		}
 		if (Number(campo.value) < 0) {
 			alert ("Il valore inserito deve essere positivo");
 			campo.className = "campoerrato";
 			campoLocale = campo;							// altrimenti la setTimeout non riconosce campo !!
 			setTimeout("campoLocale.focus();", 1);			// la setTimeout serve a farlo funzionare con FF
+			return false;
 		}
 		else {
 			campo.value = campo.value.replace(".", ",");	// sostituisco l'eventuale punto decimale con la virgola
 			campo.className = "";
+			return true;
 		}
 	}
 }		      
@@ -881,229 +931,3 @@ function AbilitaCampiPerSubmit() {
 }
 
 
-			/*********************** SEZIONE PRANZI ********************************/
-
-            //******** trova l'indice del checkbox del pranzo selezionato ********
-            /* eliminato
-
-            for (indice=0; indice < Pranzi.length; indice++) { 
-                if (Pranzi[indice].checked && !Pranzi[indice].disabled && CostoPranzi[indice].disabled) {
-            		    CostoPranzi[indice].disabled=false;
-                    
-                    // individua il ruolo selezionato dall'utente e assegna il costo alla casella di testo relativa
-                    var ruolo=document.SezioneIscrizioni.RuoloIscritto.options[document.SezioneIscrizioni.RuoloIscritto.selectedIndex].value;
-                    if (ruolo==0) { // nessun ruolo selezionato
-                        alert("Attenzione non e' stato selezionato nessun ruolo. Impossibile conteggiare il costo del pranzo");
-                        Pranzi[indice].checked=false;
-                        CostoPranzi[indice].disabled=true;
-                        PranziGratis[indice].disabled=false;                
-                        return;
-                    } else {
-                          CostoPranzi[indice].value=CostoPranzo[ruolo];
-                          PranziGratis[indice].disabled=true;
-                          break;
-                      }
-            	    } // chiude l'if pranzi
-            } //chiude il ciclo for
-                                  
-            // trova l'indice dei checkbox pranzi deselezionati per ristabilire situazione di partenza
-				    for (indice=0; indice < Pranzi.length; indice++) { //trova l'indice del checkbox deselezionato
-                if (!Pranzi[indice].checked && !CostoPranzi[indice].disabled) {
-            		    CostoPranzi[indice].disabled=true;
-            		    CostoPranzi[indice].value="";
-            		    PranziGratis[indice].disabled=false;
-            			  break;
-            	  }
-            } //chiude ciclo for
-
-            /*********************** SEZIONE CENE ********************************/
-             
-		        
-            //******** trova l'indice del checkbox della cena selezionata ********
-
-			/* eliminato
-			
-            for (indice=0; indice < Cene.length; indice++) { 
-                if (Cene[indice].checked && !Cene[indice].disabled && CostoCene[indice].disabled) {
-            		    CostoCene[indice].disabled=false;
-                    
-                    // individua il ruolo selezionato dall'utente e assegna il costo alla casella di testo relativa
-                    var ruolo=document.SezioneIscrizioni.RuoloIscritto.options[document.SezioneIscrizioni.RuoloIscritto.selectedIndex].value;
-                    if (ruolo==0) { // nessun ruolo selezionato
-                        alert("Attenzione non e' stato selezionato nessun ruolo. Impossibile conteggiare il costo della cena");
-                        Cene[indice].checked=false;
-                        CostoCene[indice].disabled=true;
-                        CeneGratis[indice].disabled=false;                
-                        return;
-                    } else {
-                          CostoCene[indice].value=CostoCena[ruolo];
-                          CeneGratis[indice].disabled=true;
-                          break;
-                      }
-            	    } // chiude l'if cene
-            } //chiude il ciclo for
-                                  
-            // trova l'indice dei checkbox cene deselezionate per ristabilire situazione di partenza
-				    for (indice=0; indice < Cene.length; indice++) { //trovo l'indice del checkbox deselezionato
-                if (!Cene[indice].checked && !CostoCene[indice].disabled) {
-            		    CostoCene[indice].disabled=true;
-            		    CostoCene[indice].value="";
-            		    CeneGratis[indice].disabled=false;
-            			  break;
-            	  }
-            } //chiude ciclo for
-            return;
-        } // ************** fine funzione Controllo Pagamenti *********************
-        */
-	
-	       /*     var Pranzi=document.getElementsByName("Pranzo");
-            var CostoPranzi=document.getElementsByName("CostiPranzo");
-            var PranziGratis=document.getElementsByName("PranzoGratis");
-            var PranzoAbbonamento=document.getElementsByName("AbbonamentoPranzo");
-            var ruolo=document.SezioneIscrizioni.RuoloIscritto.options[document.SezioneIscrizioni.RuoloIscritto.selectedIndex].value;
-                             
-            //****** controlla se l'utente ha selezionato il check dell'abbonamento pranzo *******
-            if (PranzoAbbonamento[0].checked) {
-                // disabilita i checkbox "gratis" e i textbox del costo dei pranzi
-                for (indice=0; indice < PranziGratis.length; indice++) {
-                      PranziGratis[indice].disabled=true;
-                      CostoPranzi[indice].disabled=true;
-                } //chiude il ciclo for
-                return;
-            } else {
-                  if (confirm("Attenzione! Sei sicuro di voler togliere all'iscritto l'abbonamento pranzi?")) {
-                      for (indice=0; indice < PranziGratis.length; indice++) {
-                          PranziGratis[indice].disabled=false;
-                          if (CostoPranzi[indice].value=="" && Pranzi[indice].checked) {
-                               if (ruolo==0) { // nessun ruolo selezionato
-                                  alert("Attenzione non e' stato selezionato nessun ruolo. Impossibile conteggiare il costo del pranzo");
-                                  PranzoAbbonamento[0].checked=true;
-                                  PranziGratis[indice].disabled=true;
-                                  return;
-                              } else {
-                                  CostoPranzi[indice].disabled=false;
-                                  CostoPranzi[indice].value=CostoPranzo[ruolo];
-                                  PranziGratis[indice].disabled=true;
-                                }
-                          } else {
-                              if (CostoPranzi[indice].value!="" ) {
-                                  if (CostoPranzi[indice].value=="0") {
-                                      CostoPranzi[indice].disabled=true;
-                                      PranziGratis[indice].disabled=false;
-                                  } else {
-                                      CostoPranzi[indice].disabled=false;
-                                      PranziGratis[indice].disabled=true;
-                                      Pranzi[indice].disabled=false;
-                                    }
-                                }
-                            }
-                      } //chiude il ciclo for
-                  } else {
-                        PranzoAbbonamento[0].checked=true;
-                    }
-                  }
-	      */
-		      
-		/*
-		            var Cene=document.getElementsByName("Cena");
-            var CostoCene=document.getElementsByName("CostiCena");
-            var CeneGratis=document.getElementsByName("CenaGratis");
-           	var CenaAbbonamento=document.getElementsByName("AbbonamentoCena");
-            var ruolo=document.SezioneIscrizioni.RuoloIscritto.options[document.SezioneIscrizioni.RuoloIscritto.selectedIndex].value;
-                             
-             //****** controlla se l'utente ha selezionato il check dell'abbonamento cena *******
-            if (CenaAbbonamento[0].checked) {
-                // disabilita i checkbox "gratis" e i textbox del costo delle cene
-                for (indice=0; indice < CeneGratis.length; indice++) {
-                      CeneGratis[indice].disabled=true;
-                      CostoCene[indice].disabled=true;
-                } //chiude il ciclo for
-                return;
-            } else {
-                  if (confirm("Attenzione! Sei sicuro di voler togliere all'iscritto l'abbonamento alle cene?")) {
-                      for (indice=0; indice < CeneGratis.length; indice++) {
-                          CeneGratis[indice].disabled=false;
-                          if (CostoCene[indice].value=="" && Cene[indice].checked) {
-                               if (ruolo==0) { // nessun ruolo selezionato
-                                  alert("Attenzione non e' stato selezionato nessun ruolo. Impossibile conteggiare il costo della cena");
-                                  CenaAbbonamento[0].checked=true;
-                                  CeneGratis[indice].disabled=true;
-                                  return;
-                              } else {
-                                  CostoCene[indice].disabled=false;
-                                  CostoCene[indice].value=CostoPranzo[ruolo];
-                                  CeneGratis[indice].disabled=true;
-                                }
-                          } else {
-                             if (CostoCene[indice].value!="") {
-                                  if (CostoCene[indice].value=="0") {
-                                      CostoCene[indice].disabled=true;
-                                      CeneGratis[indice].disabled=false;
-                                  } else {
-                                      CostoCene[indice].disabled=false;
-                                      CeneGratis[indice].disabled=true;
-                                      Cene[indice].disabled=false;
-                                  }  
-                                }
-                            }
-                      } //chiude il ciclo for
-                  } else {
-                        CenaAbbonamento[0].checked=true;
-                    }
-                  }
-		*/
-		// funzione per il controllo dei costi in base al ruolo all'interno dell'Er
-		// eliminata **************************************
-		/*function ControlloRuolo() {
-	
-            // individua il ruolo selezionato dall'utente
-              var ruolo=document.SezioneIscrizioni.RuoloIscritto.options[document.SezioneIscrizioni.RuoloIscritto.selectedIndex].value;
-            
-            // visualizza i costi del pranzo
-              var strPranzo = document.getElementById("etichettapranzo");
-              if (ruolo==0) {
-                strPranzo.innerText = " **** ";
-              } else {
-              		if (ruolo==5) {
-              			strPranzo.innerText = " Gratuito ";
-              		} else {
-	                    strPranzo.innerText = " "+CostoPranzo[ruolo];
-			 		  }                
-              	}
-              	
-             // visualizza i costi della cena
-              var strCena = document.getElementById("etichettacena");
-              if (ruolo==0) {
-              	strCena.innerText = " **** ";
-              } else {
-              		if (ruolo==5) {
-              			strCena.innerText = " Gratuita ";
-              		} else {
-	                    strCena.innerText =  " " + CostoCena[ruolo];
-			 		  }                
-              	}
- 				
- 				// visualizza i costi di iscrizione
- 				  var strIscrizioni = document.getElementById("etichettaiscrizione");
- 				  if (ruolo!=0) {
- 				  	if (ruolo==6) {
-              strIscrizioni.innerText = " **** ";
- 				  	} else {
-                strIscrizioni.innerText = " " + CostoIscrizione;
-             }
- 				  } else {
- 				  		strIscrizioni.innerText = " **** ";  
- 				  	}
- 				  	
- 				// visualizza i costi della cena finale
- 				  var strCenaFinale = document.getElementById("etichettacenafinale");
- 				  if (ruolo!=0) {
- 				  	strCenaFinale.innerText = " " + CostoCenaFinale;
- 				  } else {
- 				  		strCenaFinale.innerText = " **** ";
- 				  	}	
-              return;   
-           } // chiusura function ControlloRuolo()  */     
-		      
-		      
-		      

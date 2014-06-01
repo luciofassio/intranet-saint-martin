@@ -375,6 +375,20 @@ function GetNomeEventoCorrente()
     return $row["NomeEvento"];
 }
 
+function InsertEvento($evento, $data_evento, $durata) {
+	$sql = "INSERT tblEventi (NomeEvento, Data, Durata) VALUES('%1\$s', '%2\$s', %3\$s)";
+	$sql = sprintf($sql, str_replace("'", "''", $evento), convert($data_evento, 'd/m/Y', 'Y-m-d'), $durata);
+	//ob_clean();
+	//echo $sql;
+	//exit();
+	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+	if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
+		throw new Exception("InsertEvento: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))."<br/><br/>".$sql);
+		exit();
+	}  
+	return $result;
+}
+
 // legge l'elenco degli eventi al quale la persona è iscritta
 function GetEventiPartecipatiByID($ID) {
 	$sql = "SELECT distinct IDEvento FROM tblPrenotazioni t where id=%1\$s";
