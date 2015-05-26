@@ -33,7 +33,7 @@ ConnettiDB();
 <head>
    <title>Oratorio Saint-Martin / Home Page</title>
     
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	
   <?php SelectCSS("struttura_pagina"); ?>   
 
@@ -249,7 +249,7 @@ function ReleaseCredits(myaction) {
                   <li><strong>License:</strong> Gnu/Gpl v. 2.x</li>
                   <li><strong>Owner:</strong> Oratorio Saint-Martin de Corl&eacute;ans
                   <li><strong>Address:</strong> Viale Europa, 1 - 11100 Aosta (Italy)
-                  <li><strong>Developpers:</strong>
+                  <li><strong>Developers:</strong>
                       <ul>
                         <li>Lucio Fassio</li>
                         <li>Marco Fogliadini</li>

@@ -256,9 +256,9 @@ CreaForm($iniziogiorno, $giornosettimana, $iniziomese, $durata, strtotime($rowEv
              <legend>Conteggio complessivo&nbsp;</legend>
                  <div id="TotaleCosto">
                   	<input type="text" name="CostoTotaleEuroCalcolato" id="CostoTotaleEuroCalcolato" size="3" style="margin-bottom:5px" readonly="readonly" value="" onclick="CopiaInCostoTotaleEuro(this)" />                	
-                  	<label for="CostoTotaleEuroCalcolato"><strong>&euro; calcolati</strong></label>
+                  	<label for="CostoTotaleEuroCalcolato">&euro; calcolati</label>
                   	<input type="text" name="CostoTotaleEuro" id="CostoTotaleEuro" size="3" value="<?php echo number_format($CostoTotaleEuro, 2, ',', '.') ?>" />                	
-                  	<label for="CostoTotaleEuro"><strong>&euro; da pagare</strong></label>
+                  	<label for="CostoTotaleEuro">&euro; da pagare</label>
                   </div>
                   
                   <div id="CenaFinalePagamento">
