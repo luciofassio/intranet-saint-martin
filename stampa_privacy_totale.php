@@ -517,7 +517,7 @@ global $modulo;
                 echo "<td class=\"bordino\" colspan=\"2\">Fratelli/Sorelle: <strong>".$parentela."</strong></td>";
             } else {
         ?>
-        <td class="bordino" colspan="2">Ho altri fratelli/sorelle? &nbsp;<strong>Sì - No</strong>&nbsp;&nbsp;&nbsp;&nbsp;Come si chiamano? 
+        <td class="bordino" colspan="2">Ho altri fratelli/sorelle iscritti all'Oratorio? &nbsp;<strong>Sì - No</strong>&nbsp;&nbsp;&nbsp;&nbsp;Come si chiamano? 
         <br /> <br />Che classe fanno?
         <?php } ?>
 			</tr>
@@ -526,13 +526,15 @@ global $modulo;
 			   <td colspan="2">
             <table class="tabella_quota" border =0>
 			         <tr>
-			             <td class="larghezzacella">Verso la quota di <sup>(*)</sup></td>
-			             <td class="quadrato">&nbsp;</td>
-			             <td class="larghezzacella"><strong>&nbsp;&nbsp;20 &euro;</strong></td>
-                   <td class="quadrato">&nbsp;</td>
-                   <td class="larghezzacella"><strong>&nbsp;&nbsp;8 &euro;</strong> (2° figlio)</td>
-                   <td class="quadrato">&nbsp;</td>
-                   <td class="larghezzacella"><strong>&nbsp;&nbsp;Iscrizione gratuita</strong><br />&nbsp;&nbsp;(dal 3° figlio)</td>
+			         	<td class="larghezzacella">Verso la quota di <sup>(*)</sup></td>
+			            <td class="quadrato">&nbsp;</td>
+			            <td class="larghezzacella"><strong>&nbsp;&nbsp;20 &euro;</strong></td>
+                   	<td class="quadrato">&nbsp;</td>
+                   	<td class="larghezzacella"><strong>&nbsp;&nbsp;8 &euro;</strong> (2° figlio)</td>
+                   	<td class="quadrato">&nbsp;</td>
+                   	<td class="larghezzacella"><strong>&nbsp;&nbsp;Iscrizione<br />&nbsp;&nbsp;gratuita</strong><br />&nbsp;&nbsp;(dal 3° figlio)</td>
+							<td class="quadrato">&nbsp;</td>							
+							<td class="larghezzacella"><strong>&nbsp;&nbsp;Altro &euro;</strong> ______ </td>			         
 			         </tr>
             </table>
           </td>
@@ -550,8 +552,9 @@ global $modulo;
               <td class="interlinea" style="border-bottom:1px dotted grey;">
                   <strong>
                       Autorizzo mio figlio/a a partecipare alle attivit&agrave;
-                      fuori dal territorio parrocchiale <br />sollevando 
-                      la parrocchia da ogni responsabilit&agrave
+                      fuori dal territorio parrocchiale <br />sollevando l'oratorio Saint-Martin  
+                      e la parrocchia da ogni responsabilit&agrave
+                      <br />&nbsp;
                   </strong>
                   
               </td>
@@ -575,8 +578,9 @@ global $modulo;
           <tr>
               <td>
                   <strong>
-                      Autorizzo la pubblicazione sul sito della parrocchia (<span style="font-style: italic;">www.parrocchiasaintmartin.it</span>)
-                      <br />di video e fotografie prodotti durante le attivit&agrave;
+                      Autorizzo la pubblicazione, sul sito della parrocchia (<span style="font-style: italic;">www.parrocchiasaintmartin.it</span>)
+                      <br /> e su eventuali social network, di video e fotografie prodotti durante le attivit&agrave; 
+                      <br />sollevando l'oratorio Saint-Martin e la parrocchia da ogni responsabilit&agrave;
                   </strong>
               </td>
               
@@ -597,13 +601,14 @@ global $modulo;
               </td>
           </tr>
       </table>
+      <p style="text-align:right;padding-top:20px;">Firma _______________________________________ </p>
       </div>
             
       <div id="informativa">
       <p><h3>INFORMATIVA</h3></p>
 			
-			<p class="interlinea">In conformit&agrave; alla Legge
-			31/12/1996, nr. 675, riguardante la tutela delle persone e di altri
+			<p class="interlinea">In conformit&agrave; al D. L.
+			30/06/2003, nr. 196, riguardante la tutela delle persone e di altri
 			soggetti rispetto al trattamento dei dati personali, si informa
 			che:</p>
 			
@@ -743,7 +748,7 @@ function GetTesserati($anno, $gruppo)
 	}
 	$sql .= "ORDER BY Classe,Cognome,Nome";
 	$sql = sprintf($sql, $anno, $gruppo);
-	
+		
 	$result = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
   if (((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)) <> 0) {
 		throw new Exception("GetTesserati: ".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_errno($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_errno()) ? $___mysqli_res : false)).":".((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));

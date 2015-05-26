@@ -77,7 +77,6 @@ ul {
 
 #contenutopagina {
 	width: 100%;
-	height: 810%;
 	text-align: left;
 	padding:0px 0px 0px 0px;
 	margin: 0 auto;
@@ -104,7 +103,11 @@ ul {
   border: 1px dotted grey;
   border-spacing: 0.5em 1em;
 }
-
+@media print {
+   .noprint{
+      display: none !important;
+   }
+}
 </style>
 <script type="text/javascript" src="./js/jquery-1.2.1.pack.js"></script>
 </head>
@@ -170,7 +173,7 @@ if($rstIscrizione) {
                 ?>
       </div>
 		<div style="text-align:center;margin:25px 0px 25px 0px">
-			<input type="button" value="Chiudi" onclick="window.close();" />
+			<input class="noprint" type="button" value="Chiudi" onclick="window.close();" />
 		</div>
 <?php
 	}
@@ -178,8 +181,6 @@ if($rstIscrizione) {
 ?>
 </body>
 <script type="text/javascript">
-		$("input[type='button']").hide();
 		window.print();
-		$("input[type='button']").show();
 </script>
 </html>
